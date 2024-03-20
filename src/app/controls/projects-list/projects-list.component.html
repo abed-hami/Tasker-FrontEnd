@@ -1,0 +1,326 @@
+
+<div class="mt-12 mx-4 py-7  px-8 bg-white pro ">
+  <div>
+    
+    <button  class="text-blue-500 border border-blue-600 py-2 px-2 rounded inline-flex items-center mb-2" (click)="showDialog()">
+    Create Project
+    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6 ml-2">
+      <path d="M12 6v12m-6-6h12"></path>
+    </svg>
+  </button>
+  </div>
+
+<p-dialog header="Header" [modal]="true" [(visible)]="visible" [style]="{width: '50vw'}" [maximizable]="true">
+  <!-- component -->
+  <div class="flex items-center justify-center p-6">
+    <!-- Author: FormBold Team -->
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form (reset)="true" autocomplete="off">
+          <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Project Name
+                    </label>
+                    <input type="text" name="name" id="name" [(ngModel)]="project.name" [required]="true"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="category" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Category
+                    </label>
+                    <input type="text" name="category" id="category" [(ngModel)]="project.category" [required]="true"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+        </div>
+
+            <div class="-mx-3 flex flex-wrap">
+              <div class="w-full px-3 sm:w-1/2">
+                  <div class="mb-5">
+                      <label for="startdate" class="mb-3 block text-base font-medium text-[#07074D]">
+                          StartDate
+                      </label>
+                      <input type="date" name="startdate" id="startdate" [(ngModel)]="project.startDate" [required]="true"
+                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/2">
+                  <div class="mb-5">
+                      <label for="enddate" class="mb-3 block text-base font-medium text-[#07074D]">
+                          EndDate
+                      </label>
+                      <input type="date" name="enddate" id="enddate" [(ngModel)]="project.endDate" [required]="true"
+                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+              </div>
+          </div>
+            <div class="-mx-3 flex flex-wrap">
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <label for="budget" class="mb-3 block text-base font-medium text-[#07074D]">
+                            Budget
+                        </label>
+                        <input type="number" name="budget" id="budget" [(ngModel)]="project.budget" [required]="true"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                </div>
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <label for="additionalbudget" class="mb-3 block text-base font-medium text-[#07074D]">
+                            Spare Budget
+                        </label>
+                        <input type="number" name="additionalbudget" id="additionalbudget" [(ngModel)]="project.additionalBudget" [required]="true"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5 pt-3">
+
+              <div class="w-full  sm:w-full">
+                <div class="mb-5">
+                    <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Description
+                    </label>
+                    <textarea type="number" name="description" id="description" [(ngModel)]="project.description" [required]="true"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ></textarea>
+                </div>
+            </div>
+
+
+            </div>
+
+            <div>
+                <button (click)="createProject()"
+                    class="hover:shadow-form w-full rounded-md bg-blue-500 py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                    Create Project
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</p-dialog>
+  <table class=" w-full min-w-max table-auto text-left">
+    <thead>
+      <tr>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Project <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+                </svg>
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Teamlead <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+            </svg>
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Function <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+            </svg>
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Status <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+            </svg>
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Deadline <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+            </svg>
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Actions</p>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr >
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">React Project</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Start date: 10 Dec 2023</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <img src="https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">John Michael</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">johncreative-tim.com</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex flex-col">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Manager</p>
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Organization</p>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="w-max">
+            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-green-500/20 text-green-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+              <span class="">Completed</span>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">23/04/18</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <button class="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+            <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
+              </svg>
+            </span>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Angular Project</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Start date: 10 Dec 2023</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <img src="https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg" alt="Alexa Liras" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Alexa Liras</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">alexacreative-tim.com</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex flex-col">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Programator</p>
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Developer</p>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="w-max">
+            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-purple-500/20 text-purple-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+              <span class="">active</span>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">23/04/18</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <button class="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+            <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
+              </svg>
+            </span>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Tailwind Project</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Start date: 10 Dec 2023</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <img src="https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg" alt="Laurent Perrier" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Laurent Perrier</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">laurentcreative-tim.com</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex flex-col">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Executive</p>
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Projects</p>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="w-max">
+            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-yellow-500/20 text-yellow-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+              <span class="">Scheduled
+</span>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">19/09/17</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <button class="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+            <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
+              </svg>
+            </span>
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Laravel Project</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Start date: 10 Dec 2023</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <img src="https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg" alt="Michael Levi" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Michael Levi</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">michaelcreative-tim.com</p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex flex-col">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">Programator</p>
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Developer</p>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="w-max">
+            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-green-500/20 text-green-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+              <span class="">Completed</span>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">24/12/08</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <button class="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30" type="button">
+            <span class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="h-4 w-4">
+                <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32L19.513 8.2z"></path>
+              </svg>
+            </span>
+          </button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

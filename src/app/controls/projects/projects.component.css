@@ -2561,6 +2561,11 @@ textarea.form-control {
   .custom-file-input ~ .custom-file-label[data-browse]::after {
     content: attr(data-browse); }
 
+    .pro{
+      height:500px !important;
+
+    }
+
 .custom-file-label {
   position: absolute;
   top: 0;

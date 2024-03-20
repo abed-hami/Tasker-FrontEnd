@@ -21,6 +21,7 @@
     "@fullcalendar/angular": "^6.1.10",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/interaction": "^6.1.11",
+    "ngx-toastr": "^18.0.0",
     "primeicons": "^6.0.1",
     "primeng": "^17.11.0",
     "rxjs": "~7.8.0",

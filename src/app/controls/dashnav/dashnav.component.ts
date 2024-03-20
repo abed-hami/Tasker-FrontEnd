@@ -42,4 +42,8 @@ export class DashnavComponent {
     ];
 }
 
+logout(){
+  localStorage.clear()
+}
+
 }

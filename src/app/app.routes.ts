@@ -8,6 +8,7 @@ import { TasksComponent } from './controls/tasks/tasks.component';
 import { TodoComponent } from './controls/todo/todo.component';
 import { ProfileComponent } from './controls/profile/profile.component';
 import { ProjectsComponent } from './controls/projects/projects.component';
+import { ProjectsListComponent } from './controls/projects-list/projects-list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -18,7 +19,11 @@ export const routes: Routes = [
     {path:'',component:TasksComponent},
     {path:'todo',component:TodoComponent},
     {path:'profile',component:ProfileComponent},
-    {path:'projects',component:ProjectsComponent}
+    {path:'projects',component:ProjectsComponent,
+      children:[
+        {path:'',component:ProjectsListComponent},
+      ]
+  }
   ]
 }
 

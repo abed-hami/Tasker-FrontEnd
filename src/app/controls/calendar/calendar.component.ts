@@ -14,15 +14,18 @@ import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 })
 export class CalendarComponent {
 
+  event:any=[
+    { title: 'event 1', date: '2024-03-01', end:'2024-03-03', color:'red',priority:'high', description:'blablabla' },
+    { title: 'event 2', date: '2024-03-02', end:'2024-03-16' },
+    { title: 'event 3', date: '2024-03-02' }
+  ]
+
+
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
     dateClick: (arg) => this.handleDateClick(arg),
-    events: [
-      { title: 'event 1', date: '2024-03-01', end:'2024-03-03', color:'red',priority:'high', description:'blablabla' },
-      { title: 'event 2', date: '2024-03-02', end:'2024-03-16' },
-      { title: 'event 3', date: '2024-03-02' }
-    ],
+    events: this.event,
     eventClick: (arg) => this.handleEventClick(arg),
 
   };

@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-const headers = {
-  Authorization: 'Bearer ' + localStorage.getItem('myToken')
-};
+
 @Injectable({
   providedIn: 'root',
 
@@ -23,7 +21,7 @@ export class LoginService {
     return localStorage.getItem("myToken");
   }
 
-  getHeader(){
-    return headers
-  }
+ getUserInfo(){
+  return this.http.get("https://localhost:7183/api/Member/GetLoggedInUser");
+ }
 }
