@@ -1,49 +1,105 @@
 import { Component } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
-
 import { CalendarOptions } from '@fullcalendar/core';
-import { a1 } from '@fullcalendar/core/internal-common';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import { TaskService } from '../../services/task.service';
+import { CookiesService } from '../../services/cookies.service';
+import { DialogModule } from 'primeng/dialog';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-calendar',
   standalone: true,
-  imports: [FullCalendarModule],
+  imports: [FullCalendarModule,DialogModule,CommonModule,FormsModule],
   templateUrl: './calendar.component.html',
   styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
+  visible: boolean = false;
 
-  event:any=[
-    { title: 'event 1', date: '2024-03-01', end:'2024-03-03', color:'red',priority:'high', description:'blablabla' },
-    { title: 'event 2', date: '2024-03-02', end:'2024-03-16' },
-    { title: 'event 3', date: '2024-03-02' }
-  ]
+  constructor(private taskService: TaskService, private cookieService: CookiesService) {}
 
+  tasks: any;
+  selectedEvent:any={
+    name:"",
+    description:"",
+    priority:""
+  }
+
+  ngOnInit() {
+    this.getUserTasks();
+  }
+
+  getUserTasks() {
+    this.taskService.getUserTasks(this.cookieService.getCookieId()).subscribe(
+      (data: any) => {
+        this.tasks = data.map((task: { taskName: any; taskStart: any; taskDeadline: any; taskDescription: any; taskPriority: any; }) => ({
+          title: task.taskName,
+          date: this.formatDate(task.taskStart),
+          end: this.formatDate(task.taskDeadline),
+          color:this.getColorByPriority(task.taskPriority),
+          description: task.taskDescription,
+          priority: task.taskPriority
+        }));
+        this.updateCalendarOptions();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+
+  formatDate(dateString: any): any {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  getColorByPriority(priority: string): string {
+    switch (priority) {
+      case 'high' || 'High':
+        return 'red';
+      case 'Medium' || 'medium':
+        return 'yellow';
+      default:
+        return 'green';
+    }
+  }
+
+  updateCalendarOptions() {
+    this.calendarOptions.events = this.tasks;
+  }
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
     dateClick: (arg) => this.handleDateClick(arg),
-    events: this.event,
-    eventClick: (arg) => this.handleEventClick(arg),
 
+    eventClick: (arg) => this.handleEventClick(arg),
   };
 
   handleDateClick(arg: DateClickArg) {
     console.log('date click! ' + arg.dateStr);
   }
 
-  handleEventClick(arg: a1) {
+  handleEventClick(arg: any) {
     const event = arg.event;
+
+    const name = event.title;
+
     const description = event.extendedProps['description'];
     const priority = event.extendedProps['priority'];
 
-    let message = 'Event: ' + event.title + '\n';
-    message += 'Description: ' + description + '\n';
-    message += 'Priority: ' + priority;
+    this.selectedEvent.name=name
+    this.selectedEvent.description=description
+    this.selectedEvent.priority=priority
+    console.log(this.selectedEvent)
+    this.visible=true
 
-    alert(message);
+
   }
-
 }

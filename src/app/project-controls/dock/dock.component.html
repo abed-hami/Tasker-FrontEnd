@@ -1,0 +1,7 @@
+<div class="dock-window">
+  <p-dock [model]="items" [position]="'left'">
+      <ng-template pTemplate="item" let-item>
+          <a>{{item.label}}</a>
+      </ng-template>
+  </p-dock>
+</div>

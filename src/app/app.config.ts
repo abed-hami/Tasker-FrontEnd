@@ -8,5 +8,5 @@ import { jwtInterceptor } from './services/jwt.interceptor';
 import { provideToastr } from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes),provideHttpClient(withInterceptors([jwtInterceptor])),provideAnimationsAsync(),provideToastr()],
+  providers: [provideRouter(routes),provideHttpClient(withInterceptors([jwtInterceptor])),provideAnimationsAsync(),provideToastr(), provideAnimationsAsync()],
 };

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SignupService } from '../../services/signup.service';
+import { signup } from '../../models/signup';
 
 @Component({
   selector: 'app-signup',
@@ -12,14 +13,7 @@ import { SignupService } from '../../services/signup.service';
 })
 export class SignupComponent {
 
-  registerObject={
-    firstName:'',
-    lastName:'',
-    email:'',
-    password:'',
-    position:'',
-    picture:'profile.jpg'
-  }
+  registerObject:signup = new signup()
 
   constructor(private http:HttpClient, private signupService:SignupService){}
 

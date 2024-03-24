@@ -7,6 +7,9 @@
 tbody{
   tr:hover{
     background-color: rgb(247, 247, 247) ;
+
+  }
+  a{
     cursor: pointer;
   }
 }
@@ -16,4 +19,3 @@ tbody{
   display: flex;
   justify-content: space-between;
 }
-
