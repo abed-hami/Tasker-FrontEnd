@@ -9,16 +9,18 @@ import { MenuItem } from 'primeng/api';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { BadgeModule } from 'primeng/badge';
 import { CommonModule } from '@angular/common';
+import { DockComponent } from "../../project-controls/dock/dock.component";
+import { CookiesService } from '../../services/cookies.service';
 @Component({
     selector: 'app-dashboard',
     standalone: true,
     templateUrl: './dashboard.component.html',
     styleUrl: './dashboard.component.css',
-    imports: [CommonModule,CalendarComponent, SidebarComponent, NavbarComponent, DashnavComponent,TabMenuModule,BadgeModule]
+    imports: [CommonModule, CalendarComponent, SidebarComponent, NavbarComponent, DashnavComponent, TabMenuModule, BadgeModule, DockComponent]
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private http:HttpClient,private service:LoginService){
+  constructor(private http:HttpClient,private service:LoginService,private cookieService:CookiesService){
 
   }
 
@@ -26,7 +28,7 @@ export class DashboardComponent implements OnInit {
 
   activeItem: MenuItem | undefined;
 
-  ngOnInit() {
+  async ngOnInit() {
       this.items = [
           { label: 'Home', icon: 'pi pi-fw pi-home' },
           { label: 'Calendar', icon: 'pi pi-fw pi-calendar' },
@@ -36,11 +38,33 @@ export class DashboardComponent implements OnInit {
       ];
 
       this.activeItem = this.items[0];
+
+      this.getUserInfo()
+
+
+
+
   }
 
 
 
+  id:any
+
   mytoken=localStorage.getItem('myToken')
 
+  async getUserInfo() {
+    return new Promise<void>((resolve, reject) => {
+      this.service.getUserInfo().subscribe(
+        (data: any) => {
+          this.id = data.id;
+          console.log(this.id)
+          this.cookieService.setCookie(this.mytoken,this.id)
+          resolve();
+        },
+        error => {
+          reject(error); }
+      );
+    });
+  }
 
 }

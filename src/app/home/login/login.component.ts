@@ -4,6 +4,8 @@ import { Component, inject } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { login } from '../../models/login';
+import { CookiesService } from '../../services/cookies.service';
 
 @Component({
   selector: 'app-login',
@@ -14,15 +16,16 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  loginObject:any={
-    email:'',
-    password:''
-  }
+
+
+  loginObject:login=new login()
 
   token:any
 
+  useId:any
 
-  constructor(private loginService: LoginService, private http:HttpClient,private router:Router) {}
+
+  constructor(private loginService: LoginService, private http:HttpClient,private router:Router,private cookieService:CookiesService) {}
 
 
   loginFunction(){
@@ -33,15 +36,17 @@ export class LoginComponent {
     }
     else{
       this.loginService.Login(this.loginObject).subscribe((data)=>{
-
-
+        console.log()
       this.token=data
       localStorage.setItem("myToken", this.token.token);
+
 
       this.router.navigate(["/dashboard"])
     })
     }
 
   }
+
+
 
 }

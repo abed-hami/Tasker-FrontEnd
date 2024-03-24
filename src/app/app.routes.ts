@@ -9,14 +9,19 @@ import { TodoComponent } from './controls/todo/todo.component';
 import { ProfileComponent } from './controls/profile/profile.component';
 import { ProjectsComponent } from './controls/projects/projects.component';
 import { ProjectsListComponent } from './controls/projects-list/projects-list.component';
+import { TasksListComponent } from './controls/tasks-list/tasks-list.component';
+import { MemberPageComponent } from './controls/member-page/member-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent},
   {path:'login', component:LoginComponent},
   {path:'signup', component:SignupComponent},
   { path: 'dashboard', component: DashboardComponent, children: [
+    {path: '', component: MemberPageComponent},
     {path: 'calendar', component: CalendarComponent },
-    {path:'',component:TasksComponent},
+    {path:'tasks',component:TasksComponent,children:[
+      {path:'',component:TasksListComponent}
+    ]},
     {path:'todo',component:TodoComponent},
     {path:'profile',component:ProfileComponent},
     {path:'projects',component:ProjectsComponent,

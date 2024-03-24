@@ -8,26 +8,20 @@ import { ToastService } from '../../services/toast.service';
 import { MessageService } from 'primeng/api';
 import { ToastrModule } from 'ngx-toastr';
 import { ToastrService } from 'ngx-toastr';
+import { projects } from '../../models/project';
+import { DockComponent } from "../../project-controls/dock/dock.component";
 @Component({
-  selector: 'app-projects-list',
-  standalone: true,
-  imports: [DialogModule,FormsModule,ToastrModule],
-  templateUrl: './projects-list.component.html',
-  styleUrl: './projects-list.component.css'
+    selector: 'app-projects-list',
+    standalone: true,
+    templateUrl: './projects-list.component.html',
+    styleUrl: './projects-list.component.css',
+    imports: [DialogModule, FormsModule, ToastrModule, DockComponent]
 })
 export class ProjectsListComponent {
-  project:any={
-    name:"",
-    startDate:"",
-    endDate:"",
-    budget:"",
-    description:"",
-    category:"",
-    status:"pending",
-    managerId: null,
-    additionalBudget:""
 
-  }
+
+
+  project:projects=new projects()
   visible: boolean = false;
 
   constructor(private Loginservice:LoginService, private projectService:ProjectService,private toastr:ToastService){
@@ -53,6 +47,7 @@ export class ProjectsListComponent {
 
 
     createProject(){
+
       this.projectService.createProject(this.project).subscribe(
         (data)=>{
               this.toastr.showSuccess("project created successfully!")
@@ -68,7 +63,7 @@ export class ProjectsListComponent {
         (data:any)=>{
           this.id=data.id
           this.email=data.email
-          this.project.managerId = this.id;
+          this.project.memberId=data.id
         },
         (error)=>{
           console.log(error)

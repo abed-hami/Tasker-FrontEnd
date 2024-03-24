@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { TagModule } from 'primeng/tag';
 import { ClockComponent } from "../clock/clock.component";
 import { ProgressBarModule } from 'primeng/progressbar';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     standalone: true,
     templateUrl: './tasks.component.html',
     styleUrl: './tasks.component.css',
-    imports: [CommonModule, TagModule, ClockComponent,ProgressBarModule]
+    imports: [RouterModule]
 })
 export class TasksComponent {
 

@@ -26,7 +26,7 @@
 
 
 
-      <form action="#" method="POST" class="space-y-4" autocomplete="off" >
+      <form action="#" method="POST" class="space-y-4" autocomplete="off" #loginForm="ngForm"  (submit)="this.loginForm.reset()">
 
         <div class="pb-2">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
