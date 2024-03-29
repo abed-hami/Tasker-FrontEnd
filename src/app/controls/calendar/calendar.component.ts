@@ -40,7 +40,8 @@ export class CalendarComponent {
           end: this.formatDate(task.taskDeadline),
           color:this.getColorByPriority(task.taskPriority),
           description: task.taskDescription,
-          priority: task.taskPriority
+          priority: task.taskPriority,
+          
         }));
         this.updateCalendarOptions();
       },
@@ -72,6 +73,7 @@ export class CalendarComponent {
 
   updateCalendarOptions() {
     this.calendarOptions.events = this.tasks;
+
   }
 
   calendarOptions: CalendarOptions = {
@@ -80,7 +82,10 @@ export class CalendarComponent {
     dateClick: (arg) => this.handleDateClick(arg),
 
     eventClick: (arg) => this.handleEventClick(arg),
+
   };
+
+
 
   handleDateClick(arg: DateClickArg) {
     console.log('date click! ' + arg.dateStr);

@@ -11,4 +11,8 @@ export class TaskService {
   getUserTasks(id:any){
     return this.http.get('https://localhost:7183/api/Task/GetUserTask/'+id)
   }
+
+  updateStatus(id:any){
+    return this.http.put("https://localhost:7183/api/Task/UpdateStatus/"+id,null)
+  }
 }

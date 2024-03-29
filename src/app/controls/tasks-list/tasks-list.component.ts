@@ -4,10 +4,22 @@ import { LoginService } from '../../services/login.service';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
+import { SubtasksService } from '../../services/subtasks.service';
+import { ToastService } from '../../services/toast.service';
+import { ButtonModule } from 'primeng/button';
+import { CommentsService } from '../../services/comments.service';
+import { Comment } from '../../models/comment';
+import { FormsModule } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
+import { CookiesService } from '../../services/cookies.service';
+import { RouterModule } from '@angular/router';
+import { ProgressBarModule } from 'primeng/progressbar';
+import { Request } from '../../models/request';
+import { RequestService } from '../../services/request.service';
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
-  imports: [CommonModule,DialogModule,DividerModule],
+  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css'
 })
@@ -17,25 +29,110 @@ export class TasksListComponent {
 
   id:any
   tasks:any
-  colors:any=[]
+  subTasks:any
+  progress:any
+  comments:any
+  count:any
+  completed:any
+  request:Request=new Request()
+  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService){}
 
-  constructor(private taskService:TaskService, private loginService:LoginService){}
 
+  getAllSubCount(id:any){
+    this.subTaskService.getCount(id).subscribe(
+      (data)=>{
+        this.count=data
+        console.log(this.count)
+      },
+      (error)=>console.log(error)
+    )
+  }
 
+  sendRequest(taskId:any){
+    this.request.taskId=taskId;
+    this.request.issuerId=this.cookie.getCookieId()
+    this.request.status="pending"
+    this.requestService.sendRequest(this.request).subscribe(
+      (data)=>{
+        this.toast.showSuccess("Request Sent Successfully")
+      },
+      (error)=>this.toast.showError("Error Sending Request")
+    )
+
+  }
+
+  getCompletedCount(id:any){
+    this.subTaskService.getCompletedCount(id).subscribe(
+      (data)=>{
+        this.completed=data
+      },(error)=>console.log(error)
+    )
+  }
 
 
   ngOnInit(){
 
     this.getUserInfo()
 
+
   }
 
-  
+  getTaskComments(taskId:any){
+    this.commentsService.GetTaskComments(taskId).subscribe(
+      (data)=>{
+        this.comments=data
+      },
+      (error)=>console.log(error)
+    )
+  }
+
+  getProgress(taskId:any){
+    this.subTaskService.getProgress(taskId).subscribe(
+      (data:any)=>{
+        this.progress= Math.round(data);
+
+      },
+      (error)=>console.log(error)
+    )
+    return this.progress
+  }
+
+  updateStatus(subId:any,taskId:any){
+    this.subTaskService.updateStatus(subId).subscribe(
+      (data:any)=>{
+        this.toast.showInfo("subtask status updated ")
+        this.getCompletedCount(taskId)
+        this.getProgress(taskId)
+      },
+      (error)=>console.log(error)
+    )
+  }
+
+  submitTask(id:any){
+    this.taskService.updateStatus(id).subscribe(
+      (data)=>{
+        this.toast.showSuccess('Task Completed')
+        this.getUserTasks()
+      },
+      (error)=>{
+        this.toast.showWarn('Subtasks Not Completed ')
+      }
+    )
+  }
+
+
 
   getColor(priority:any){
-    if(priority=='high'){return 'red'}
-    else if(priority=='medium'){return 'yellow'}
+    if(priority=='high'||priority=='High'){return 'red'}
+    else if(priority=='medium' || priority=='Medium'){return 'yellow'}
     else{return 'green'}
+  }
+
+  getStatusColor(status:string) {
+    if(status=='scheduled'){ return "blue" }
+    else if(status=='in-progress'){ return "purple" }
+    else if(status=='revision' || status=='testing'){return  'orange'}
+    else{ return 'gray' }
   }
 
   getUserInfo(){
@@ -49,33 +146,69 @@ export class TasksListComponent {
   }
 
   taskId:any
+  width:any
 
   showDetailsDialog(id:any){
     this.taskId=id
     this.visible1=true
+    this.getTaskComments(id)
+    this.postComment(id)
+    this.getSubTasks(id)
+    this.getCompletedCount(id)
+    this.getAllSubCount(id)
+
+    this.width=`style="width: ${this.getProgress(id)}%"`
   }
 
   showSubDialog(id:any){
-    this.taskId=id
+
     this.visible2=true
+    this.getSubTasks(id)
   }
 
   getUserTasks(){
     this.taskService.getUserTasks(this.id).subscribe(
       (data:any)=>{
         this.tasks=data
-        if(data.taskPriority=='High'){
-          this.colors.push('red')
-        }
-        else if(data.taskPriority=='Medium'){
-          this.colors.push('yellow')
-        }
-        else{
-          this.colors.push('green')
-        }
+        console.log(data)
+
 
       }
     )
+  }
+
+  getSubTasks(taskId:any){
+    this.subTaskService.getSubTaskByTaskId(taskId).subscribe(
+      (data:any)=>{
+        this.subTasks=data
+
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
+  comment:Comment=new Comment()
+
+  postComment(taskId:any){
+    this.comment.commentDate= new Date()
+    this.comment.taskId=this.taskId
+    this.comment.memberId= this.cookie.getCookieId()
+
+  }
+
+  addComment(){
+    this.commentsService.PostComment(this.comment).subscribe(
+      (data)=>{
+        this.getTaskComments(this.comment.taskId)
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+
+
   }
 
 }

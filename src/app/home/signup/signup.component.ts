@@ -3,11 +3,12 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SignupService } from '../../services/signup.service';
 import { signup } from '../../models/signup';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,RouterModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
