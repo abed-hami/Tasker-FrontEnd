@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { DockModule } from 'primeng/dock';
+import { TabMenuModule } from 'primeng/tabmenu';
 @Component({
   selector: 'app-dock',
   standalone: true,
-  imports: [DockModule],
+  imports: [DockModule,TabMenuModule],
   templateUrl: './dock.component.html',
   styleUrl: './dock.component.css'
 })
@@ -12,46 +13,17 @@ export class DockComponent {
 
   items: MenuItem[] | undefined;
 
-    position: string = "'top'";
+  activeItem: MenuItem | undefined;
 
-    positionOptions = [
-        {
-            label: 'Bottom',
-            value: 'bottom'
-        },
-        {
-            label: 'Top',
-            value: 'top'
-        },
-        {
-            label: 'Left',
-            value: 'left'
-        },
-        {
-            label: 'Right',
-            value: 'right'
-        }
-    ];
+  ngOnInit() {
+      this.items = [
+          { label: 'Dashboard', icon: 'pi pi-fw pi-home' },
+          { label: 'Calendar', icon: 'pi pi-fw pi-calendar' },
+          { label: 'Team', icon: 'pi pi-fw pi-user' },
+          { label: 'Documentation', icon: 'pi pi-fw pi-file' },
+          { label: 'Settings', icon: 'pi pi-fw pi-cog' }
+      ];
 
-    ngOnInit() {
-        this.items = [
-            {
-                label: 'dashboard',
-
-            },
-            {
-                label: 'App Store',
-
-            },
-            {
-                label: 'Photos',
-
-            },
-            {
-                label: 'Trash',
-                
-            }
-        ];
-    }
-
+      this.activeItem = this.items[0];
+  }
 }

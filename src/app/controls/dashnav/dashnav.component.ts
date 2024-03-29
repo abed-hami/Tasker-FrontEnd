@@ -7,16 +7,18 @@ import { LoginService } from '../../services/login.service';
 import { DialogModule } from 'primeng/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { CookiesService } from '../../services/cookies.service';
+import { Router, NavigationEnd,RouterModule } from '@angular/router';
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-dashnav',
   standalone: true,
-  imports: [BadgeModule, MenuModule, MenubarModule,DialogModule],
+  imports: [BadgeModule, MenuModule, MenubarModule,DialogModule,RouterModule],
   templateUrl: './dashnav.component.html',
   styleUrl: './dashnav.component.css'
 })
 export class DashnavComponent {
 
-  constructor(private userService:LoginService,private cookieService:CookiesService){}
+  constructor(private userService:LoginService,private cookieService:CookiesService,private router: Router){}
 
   name:any
   visible: boolean = false;
@@ -62,6 +64,8 @@ export class DashnavComponent {
 
     this.cookieService.deleteCookie()
 
+
+
   }
 
   getUserInfo(){
@@ -78,5 +82,6 @@ export class DashnavComponent {
     localStorage.clear()
     this.cookieService.deleteCookie()
   }
+ 
 
 }

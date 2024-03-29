@@ -6,109 +6,173 @@
   </div>
 
 
-  <p-dialog header="Task Details" [modal]="true" [(visible)]="visible1" [style]="{width: '50vw', height:'80vh'}">
-    <div class="flex items-center justify-center h-full">
-      <div class="max-w-4xl bg-white w-full rounded-lg  p-6 ">
-        <div *ngFor="let task of tasks; let i = index" [hidden]="task.taskId !== taskId">
-          <div class="border-b mb-4">
-            <div class="grid grid-cols-2 gap-4 mt-4">
-              <div class="text-gray-600">Task name:</div>
-              <div>{{ task.taskName }}</div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-              <div class="text-gray-600">Project Name:</div>
-              <div>{{ task.projectName }}</div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-              <div class="text-gray-600">Start Date:</div>
-              <div>{{ task.taskStart | date }}</div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-              <div class="text-gray-600">Deadline:</div>
-              <div>{{ task.taskDeadline | date }}</div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4 ">
-              <div class="text-gray-600">Priority:</div>
-              <div>
-                <div class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-{{getColor(task.taskPriority)}}-100 text-{{getColor(task.taskPriority)}}-600"
-                     >
-                  {{ task.taskPriority }}
-                </div>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-              <div class="text-gray-600">Manager:</div>
-              <div>
-                {{ task.managerName }} - <span class="text-blue-500">{{ task.managerEmail }}</span>
-              </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4">
-              <div class="text-gray-600">Budget:</div>
-              <div>${{ task.taskBudget }}</div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-4 mb-4">
-              <div class="text-gray-600">Description:</div>
-              <div>{{ task.taskDescription }}</div>
-            </div>
+  <p-dialog header="Task Details" [modal]="true" [(visible)]="visible1" [style]="{  }" [maximizable]="true" >
+    <div class="flex h-full">
+
+      <div class="max-w-2xl bg-white w-full rounded-lg p-6 mr-8 mb-2">
+  <div *ngFor="let task of tasks; let i = index" [hidden]="task.taskId !== taskId" >
+    <div class="border-b w-full mb-4">
+      <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2 md:col-span-1">
+          <div class="flex items-center gap-3">
+            <span class="text-gray-600">Task Name:</span>
+            <span class="ml-2 text-gray-400">{{ task.taskName }}</span>
+          </div>
+          <div class="flex items-center mt-5 gap-3">
+            <span class="text-gray-600">Project Name:</span>
+            <span class="ml-2 text-gray-400">{{ task.projectName }}</span>
+          </div>
+          <div class="flex items-center mt-5 gap-3">
+            <span class="text-gray-600">Start Date:</span>
+            <span class="ml-2 text-gray-400">{{ task.taskStart | date }}</span>
+          </div>
+          <div class="flex items-center mt-5 gap-3">
+            <span class="text-gray-600">Deadline:</span>
+            <span class="ml-2 text-gray-400">{{ task.taskDeadline | date }}</span>
           </div>
         </div>
+        <div class="col-span-2 md:col-span-1 gap-3 ">
+          <div class="flex items-center">
+            <span class="text-gray-600">Priority:</span>
+            <span class="ml-2 inline-block px-3 py-1 rounded-full text-xs font-semibold bg-{{getColor(task.taskPriority)}}-100 text-{{getColor(task.taskPriority)}}-600">
+              {{ task.taskPriority }}
+            </span>
+          </div>
+          <div class="flex items-center mt-5 gap-3">
+            <span class="text-gray-600">Progress:</span>
+            <div class="overflow-hidden bg-blue-50 h-1.5  w-full">
+              <p-progressBar [value]="progress"></p-progressBar>>
+
+            </div>
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{progress}}%</p>
+          </div>
+          <div class="flex items-center mt-5 gap-3">
+            <span class="text-gray-600">Manager:</span>
+            <span class="ml-2 text-blue-500 ">{{ task.managerEmail }}</span>
+          </div>
+          <div class="flex items-center mt-5 gap-3">
+            <span class="text-gray-600">Budget:</span>
+            <span class="ml-2 text-gray-400">${{ task.taskBudget }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4  flex items-center gap-3">
+        <span class="text-gray-600 mb-1">Description:</span>
+        <span class="text-gray-400">{{ task.taskDescription }}</span>
+      </div>
+      <div class="flex mb-3 mt-4">
+        <button class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600" (click)="submitTask(task.taskId)">Submit Task</button>
+    </div>
+    </div>
+
+  </div>
 
         <div class="mt-6">
-          <h3 class="font-bold mb-4">Comments</h3>
-          <div  class="border rounded-md p-3 mb-3">
-            <div class="flex items-center gap-3">
-              <img src="https://avatars.githubusercontent.com/u/22263436?v=4"
-                   class="object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400">
-              <h3 class="font-bold">User Name</h3>
-            </div>
-            <p class="text-gray-600 mt-2">jhghkhjb</p>
+          <h3 class="font-bold text-lg mb-4">Comments</h3>
+          <div class="overflow-y-auto max-h-60">
+            <ng-container *ngFor="let comment of comments">
+              <div class="border rounded-md p-3 mb-3">
+                <div class="flex items-center gap-3">
+                  <img src="assets/images/profile.jpg"
+                       class="object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400">
+                  <h3 class="font-bold text-base">{{comment.memberName}}</h3>
+                </div>
+                <p class="text-gray-600 mt-2 text-base">{{comment.comment}}</p>
+                <p class="text-gray-300 text-xs mt-1">{{comment.commentDate|date}}</p>
+              </div>
+            </ng-container>
           </div>
-          <form>
-            <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white mb-4"
-                      name="body" placeholder="Type Your Comment" required></textarea>
+
+          <!-- Comment Form -->
+          <form #form="ngForm" (submit)="form.reset()" class="mb-8">
+            <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"
+                      name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1"></textarea>
             <div class="flex justify-end">
-              <button type="submit" class="px-4 py-2 rounded-md text-white text-sm bg-blue-500 hover:bg-blue-600">Post Comment</button>
+              <button type="submit" class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600" (click)="addComment()">Post Comment</button>
             </div>
           </form>
         </div>
       </div>
+      <div class="border-l h-screen"></div>
+      <div>
+        <div class="flex flex-col max-h-60 overflow-auto mb-10 overflow-x-hidden">
+          <h3 class="font-bold text-lg mb-3 ml-2 sticky top-0 bg-white">Subtasks <span class="ml-2 text-blue-500 text-sm">{{completed}} <span class="text-black">/</span> {{count}}</span></h3>
+
+
+          <div class="flex flex-col mb-8 gap-3.5 flex-1 px-4 mt-1" *ngIf="subTasks">
+              <ul class="flex flex-col gap-3.5 w-full sm:max-w-md mx-auto">
+                  <li class="w bg-gray-100 p-3 rounded-md" *ngFor="let sub of subTasks">
+                      <div class="flex justify-between items-center">
+                          <div class="mr-4">{{sub.name}}</div>
+                          <div>
+                              <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id,sub.taskId)" [checked]="sub.status === 'Completed'"/>
+                          </div>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+
+
+
+      </div>
+
+      <div class="request px-4 py-10">
+
+        <h3 class="font-bold text-lg mb-2">Requests</h3>
+        <form #requestForm="ngForm" (submit)="requestForm.reset()">
+          <div class="flex flex-col">
+
+            <select name="type" id="type" [(ngModel)]="request.type" id="requestType" class="w-full bg-gray-100 rounded border border-gray-400 leading-normal py-2 px-3 font-medium text-base focus:outline-none focus:bg-white mb-4">
+              <option value="financial">Financial</option>
+              <option value="extension">Extension</option>
+            </select>
+
+            <textarea name="description" id="description" [(ngModel)]="request.description" class="w-auto bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-24 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"  placeholder="Type your request here"></textarea>
+
+            <button (click)="sendRequest(taskId)" type="submit" class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600">Submit</button>
+
+          </div>
+      </form>
+    </div>
+      </div>
+
+
+
     </div>
   </p-dialog>
 
 
-  <p-dialog header="SubTasks" [modal]="true" [(visible)]="visible2" [style]="{width: '40vw'}">
+
+
+  <!-- <p-dialog header="SubTasks" [modal]="true" [(visible)]="visible2" [style]="{width: '40vw'}">
 
 
 
-  <div class="relative w-full max-w-lg">
 
-    <div class=" relative space-y-4">
-      <div class="p-5 bg-gray-100 rounded-lg flex items-center justify-between space-x-8">
-        <div class="flex-1 flex justify-between items-center">
-          <div class="h-4 w-48 bg-gray-300 rounded"></div>
-          <div class="w-24 h-6 rounded-lg bg-purple-300"></div>
+      @if(subTasks){
+
+        <div class="bg-white white:bg-gray-900 rounded-lg  w-full">
+          <ul class="w-full text-surface dark:text-dark">
+            <ng-container *ngFor="let sub of subTasks">
+               <li class="flex items-center justify-between border-b-2 border-neutral-100 py-4 dark:border-dark/10">
+              <span>{{sub.name}}</span>
+              <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id)"/>
+            </li>
+            </ng-container>
+
+
+          </ul>
         </div>
-      </div>
-      <div class="p-5 bg-gray-100 rounded-lg flex items-center justify-between space-x-8">
-        <div class="flex-1 flex justify-between items-center">
-          <div class="h-4 w-48 bg-gray-300 rounded"></div>
-          <div class="w-24 h-6 rounded-lg bg-purple-300"></div>
-        </div>
-      </div>
-      <div class="p-5 bg-gray-100 rounded-lg flex items-center justify-between space-x-8">
-        <div class="flex-1 flex justify-between items-center">
-          <div class="h-4 w-48 bg-gray-300 rounded"></div>
-          <div class="w-24 h-6 rounded-lg bg-purple-300"></div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
-  </p-dialog>
+
+      }
 
 
-  <table class=" w-auto min-w-max table-auto text-left ">
+  </p-dialog> -->
+
+
+  <table class=" w-full min-w-max table-auto text-left ">
     <thead>
       <tr>
         <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
@@ -146,17 +210,14 @@
         <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
           <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Project</p>
         </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Details</p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">SubTasks</p>
-        </th>
+
+
       </tr>
     </thead>
     <tbody>
       @for(task of tasks; track task.id){
-        <tr  >
+        @if(task.taskStatus!="completed"){
+            <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
         <td class="p-4 border-b border-blue-gray-50">
           <div class="flex items-center gap-3">
             <div class="flex flex-col">
@@ -177,28 +238,25 @@
         <td class="p-4 border-b border-blue-gray-50">
           <div class="flex items-center gap-3">
             <div class="overflow-hidden bg-blue-50 h-1.5 rounded-full w-full">
-              <span
-                class="h-full bg-blue-500 w-full block rounded-full"
-                style="width: 62%"
-              ></span>
+              <p-progressBar [value]="50"></p-progressBar>
 
             </div>
-            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">60%</p>
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{progress}}%</p>
           </div>
         </td>
 
 
         <td class="p-4 border-b border-blue-gray-50">
           <div class="w-max">
-            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-green-500/20 text-green-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
               <span class="">{{task.taskStatus}}</span>
             </div>
           </div>
         </td>
         <td class="p-4 border-b border-blue-gray-50">
           <div class="w-max">
-            <ng-container *ngFor="let c of colors">
-              <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{c}}-100 text-{{c}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+            <ng-container >
+              <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getColor(task.taskPriority)}}-100 text-{{getColor(task.taskPriority)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
               <span class="">{{task.taskPriority}}</span>
             </div>
             </ng-container>
@@ -211,13 +269,12 @@
         <td class="p-4 border-b border-blue-gray-50">
           <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.projectName}}</p>
         </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <a class="block antialiased font-sans text-sm leading-normal text-blue-600 font-normal"  (click)="showDetailsDialog(task.taskId)">more...</a>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <a class="block antialiased font-sans text-sm leading-normal text-blue-600 font-normal"  (click)="showSubDialog(task.taskId)">sub</a>
-        </td>
+
+
+
       </tr>
+        }
+
       }
 
 

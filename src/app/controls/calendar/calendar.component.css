@@ -155,7 +155,7 @@ strong {
   font-weight: bolder; }
 
   .Calender{
-    width:1000px !important;
+    width:900px !important;
     height:700px !important;
     margin:auto !important;
     background-color: white;
@@ -19089,14 +19089,13 @@ g[aria-describedby="id-22-description"] {
   overflow: hidden;
   margin-left: 210px;
   padding: 105px 10px 0px 10px;
-  min-height: 100vh;
+  min-height: 120vh;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
   background-color: #F9FAFB;
-
 }
 
 @media (min-width: 1300px) {
