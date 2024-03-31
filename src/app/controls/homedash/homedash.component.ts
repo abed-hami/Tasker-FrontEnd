@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { CalendarComponent } from "../calendar/calendar.component";
+import { DashcardsComponent } from "../../home-controls/dashcards/dashcards.component";
+import { PriorityPieComponent } from "../../home-controls/priority-pie/priority-pie.component";
+import { ProjectsbarComponent } from "../../home-controls/projectsbar/projectsbar.component";
+
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,16 +13,15 @@ import { CookiesService } from '../../services/cookies.service';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RemindersComponent } from "../../home-controls/reminders/reminders.component";
 @Component({
-  selector: 'app-calendar',
-  standalone: true,
-  imports: [FullCalendarModule,DialogModule,CommonModule,FormsModule],
-  templateUrl: './calendar.component.html',
-  styleUrl: './calendar.component.css'
+    selector: 'app-homedash',
+    standalone: true,
+    templateUrl: './homedash.component.html',
+    styleUrl: './homedash.component.css',
+    imports: [CalendarComponent, DashcardsComponent, PriorityPieComponent, ProjectsbarComponent, FullCalendarModule, DialogModule, CommonModule, FormsModule, RemindersComponent]
 })
-export class CalendarComponent {
-  visible: boolean = false;
-
+export class HomedashComponent {
   constructor(private taskService: TaskService, private cookieService: CookiesService) {}
 
   tasks: any;
@@ -27,16 +31,12 @@ export class CalendarComponent {
     priority:""
   }
 
-  ngOnInit() {
-    this.getUserTasks();
-  }
-
   getUserTasks() {
     this.taskService.getUserTasks(this.cookieService.getCookieId()).subscribe(
       (data: any) => {
         this.tasks = data.map((task: { taskName: any; taskStart: any; taskDeadline: any; taskDescription: any; taskPriority: any; }) => ({
           title: task.taskName,
-          date: this.formatDate(task.taskStart),
+          date: this.formatDate(task.taskDeadline),
           end: this.formatDate(task.taskDeadline),
           description: task.taskDescription,
           priority: task.taskPriority,
@@ -78,32 +78,14 @@ export class CalendarComponent {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
-    dateClick: (arg) => this.handleDateClick(arg),
 
-    eventClick: (arg) => this.handleEventClick(arg),
 
   };
 
-
-
-  handleDateClick(arg: DateClickArg) {
-    console.log('date click! ' + arg.dateStr);
+  ngOnInit() {
+    this.getUserTasks();
   }
 
-  handleEventClick(arg: any) {
-    const event = arg.event;
-
-    const name = event.title;
-
-    const description = event.extendedProps['description'];
-    const priority = event.extendedProps['priority'];
-
-    this.selectedEvent.name=name
-    this.selectedEvent.description=description
-    this.selectedEvent.priority=priority
-    console.log(this.selectedEvent)
-    this.visible=true
 
 
-  }
 }

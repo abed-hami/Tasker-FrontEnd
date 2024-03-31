@@ -107,8 +107,9 @@
 </div>
 
 </p-dialog>
+<div class="overflow-auto max-h-[350px]">
   <table class=" w-full min-w-max table-auto text-left">
-    <thead>
+    <thead class="sticky top-0 bg-white">
       <tr>
         <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
             <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Project <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
@@ -144,6 +145,7 @@
       </tr>
     </thead>
     <tbody *ngFor="let project of projects" >
+
       <tr routerLink="view/{{project.projectId}}">
 
         <td class="p-4 border-b border-blue-gray-50">
@@ -185,4 +187,5 @@
 
     </tbody>
   </table>
+  </div>
 </div>
