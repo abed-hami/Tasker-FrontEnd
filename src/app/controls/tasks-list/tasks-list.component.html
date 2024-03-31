@@ -172,113 +172,119 @@
   </p-dialog> -->
 
 
-  <table class=" w-full min-w-max table-auto text-left ">
-    <thead>
-      <tr>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Task Name
-          </p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Lead
-          </p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Progress <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+    <div class="overflow-auto max-h-[350px]">
+      <table class=" w-full min-w-max table-auto text-left t ">
+      <thead class="sticky top-0 bg-white">
+        <tr>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+              <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Task Name
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Lead
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Progress <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
 
-            </svg>
-          </p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Status <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+              </svg>
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Status <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
 
-            </svg>
-          </p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Priority <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+              </svg>
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Priority <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
 
-            </svg>
-          </p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Deadline <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+              </svg>
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Deadline <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
 
-            </svg>
-          </p>
-        </th>
-        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
-          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Project</p>
-        </th>
+              </svg>
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Project</p>
+          </th>
 
 
-      </tr>
-    </thead>
-    <tbody>
-      @for(task of tasks; track task.id){
-        @if(task.taskStatus!="completed"){
-            <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
-        <td class="p-4 border-b border-blue-gray-50">
-          <div class="flex items-center gap-3">
-            <div class="flex flex-col">
-              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.taskName}}</p>
-              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Start: {{ task.taskStart | date }}</p>
+        </tr>
+      </thead>
+      <tbody >
+        @for(task of tasks; track task.id){
+          @if(task.taskStatus!="completed"){
+              <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="flex items-center gap-3">
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.taskName}}</p>
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">Start: {{ task.taskStart | date }}</p>
+              </div>
             </div>
-          </div>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <div class="flex items-center gap-3">
-            <img src="assets/images/{{task.managerPhoto}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
-            <div class="flex flex-col">
-              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.managerName}}</p>
-              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{task.managerEmail}}</p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="flex items-center gap-3">
+              <img src="assets/images/{{task.managerPhoto}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.managerName}}</p>
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{task.managerEmail}}</p>
+              </div>
             </div>
-          </div>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <div class="flex items-center gap-3">
-            <div class="overflow-hidden bg-blue-50 h-1.5 rounded-full w-full">
-              <p-progressBar [value]="50"></p-progressBar>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="flex items-center gap-3">
+              <div class="overflow-hidden bg-blue-50 h-1.5 rounded-full w-full">
+                <p-progressBar [value]="50"></p-progressBar>
+
+              </div>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{progress}}%</p>
+            </div>
+          </td>
+
+
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="w-max">
+              <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+                <span class="">{{task.taskStatus}}</span>
+              </div>
+            </div>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="w-max">
+              <ng-container >
+                <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getColor(task.taskPriority)}}-100 text-{{getColor(task.taskPriority)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+                <span class="">{{task.taskPriority}}</span>
+              </div>
+              </ng-container>
 
             </div>
-            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{progress}}%</p>
-          </div>
-        </td>
-
-
-        <td class="p-4 border-b border-blue-gray-50">
-          <div class="w-max">
-            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
-              <span class="">{{task.taskStatus}}</span>
-            </div>
-          </div>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <div class="w-max">
-            <ng-container >
-              <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getColor(task.taskPriority)}}-100 text-{{getColor(task.taskPriority)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
-              <span class="">{{task.taskPriority}}</span>
-            </div>
-            </ng-container>
-
-          </div>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.taskDeadline | date}}</p>
-        </td>
-        <td class="p-4 border-b border-blue-gray-50">
-          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.projectName}}</p>
-        </td>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.taskDeadline | date}}</p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.projectName}}</p>
+          </td>
 
 
 
-      </tr>
+        </tr>
+
+          }
+
         }
 
-      }
+
+
+      </tbody>
+    </table>
+    </div>
 
 
 
-    </tbody>
-  </table>
 </div>

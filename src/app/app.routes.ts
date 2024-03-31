@@ -12,6 +12,7 @@ import { ProjectsListComponent } from './controls/projects-list/projects-list.co
 import { TasksListComponent } from './controls/tasks-list/tasks-list.component';
 import { MemberPageComponent } from './controls/member-page/member-page.component';
 import { ProjectViewComponent } from './project-controls/project-view/project-view.component';
+import { HomedashComponent } from './controls/homedash/homedash.component';
 
 
 export const routes: Routes = [
@@ -20,7 +21,7 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   {
     path: 'dashboard', component: DashboardComponent, children: [
-      { path: '', component: MemberPageComponent },
+      { path: '', component: HomedashComponent },
       { path: 'calendar', component: CalendarComponent },
       {
         path: 'tasks', component: TasksComponent, children: [

@@ -17,11 +17,12 @@ export class DockComponent {
 
   ngOnInit() {
       this.items = [
-          { label: 'Dashboard', icon: 'pi pi-fw pi-home' },
+          { label: 'Dashboard', icon: 'fa fa-bar-chart' },
           { label: 'Calendar', icon: 'pi pi-fw pi-calendar' },
-          { label: 'Team', icon: 'pi pi-fw pi-user' },
-          { label: 'Documentation', icon: 'pi pi-fw pi-file' },
-          { label: 'Settings', icon: 'pi pi-fw pi-cog' }
+          { label: 'Timeline', icon: 'far fa-stream' },
+          { label: 'Team', icon: 'fa fa-group' },
+          { label: 'Tasks', icon: 'pi pi-fw pi-file' },
+          { label: 'Requests', icon: 'pi pi-fw pi-envelope' }
       ];
 
       this.activeItem = this.items[0];
