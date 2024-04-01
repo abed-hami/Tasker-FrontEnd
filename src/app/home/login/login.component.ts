@@ -40,12 +40,19 @@ export class LoginComponent {
       this.token=data
       localStorage.setItem("myToken", this.token.token);
 
+        
+        this.router.navigate(['/dashboard'])
 
-      this.router.navigate(["/dashboard"])
     })
     }
 
   }
+
+  id:any
+
+
+
+
 
 
 

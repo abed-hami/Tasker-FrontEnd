@@ -3,6 +3,7 @@ import { ChartModule } from 'primeng/chart';
 import { ProjectService } from '../../services/project.service';
 import { CookieService } from 'ngx-cookie-service';
 import { CookiesService } from '../../services/cookies.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-projectsbar',
@@ -14,8 +15,29 @@ import { CookiesService } from '../../services/cookies.service';
 export class ProjectsbarComponent {
   data: any;
   options: any;
+  id:any
 
-  constructor(private projectService: ProjectService, private cookie: CookiesService) {}
+  constructor(private projectService: ProjectService, private cookie: CookiesService,private loginService:LoginService) {}
+
+  async getUserInfo(mytoken:any) {
+    return new Promise<void>((resolve, reject) => {
+      this.loginService.getUserInfo().subscribe(
+        (data: any) => {
+          this.id = data.id;
+          this.getData(this.id)
+          resolve();
+        },
+        error => {
+          reject(error); }
+      );
+    });
+  }
+
+  getData(id:any){
+    this.getCount(id)
+  }
+
+
 
   getCount(id: any) {
     this.projectService.getProjectTasks(id).subscribe((tasksData: any) => {
@@ -84,6 +106,6 @@ export class ProjectsbarComponent {
       }
     };
 
-    this.getCount(this.cookie.getCookieId());
+    this.getUserInfo(localStorage.getItem("myToken"))
   }
 }

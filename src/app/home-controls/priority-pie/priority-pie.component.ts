@@ -3,6 +3,7 @@ import { ChartModule } from 'primeng/chart';
 import { ProjectService } from '../../services/project.service';
 import { CookiesService } from '../../services/cookies.service';
 import { TaskService } from '../../services/task.service';
+import { LoginService } from '../../services/login.service';
 @Component({
   selector: 'app-priority-pie',
   standalone: true,
@@ -11,22 +12,38 @@ import { TaskService } from '../../services/task.service';
   styleUrl: './priority-pie.component.css'
 })
 export class PriorityPieComponent {
-
-  constructor(private taskService: TaskService, private cookie: CookiesService) { }
-
-  id: any;
   high: any;
-  low: any;
   medium: any;
-
+  low: any;
   data: any;
   options: any;
+  id:any
+
+  constructor(private taskService: TaskService, private cookie: CookiesService,private loginService:LoginService) { }
+
+  async getUserInfo(mytoken:any) {
+    return new Promise<void>((resolve, reject) => {
+      this.loginService.getUserInfo().subscribe(
+        (data: any) => {
+          this.id = data.id;
+          this.getData(this.id)
+          resolve();
+        },
+        error => {
+          reject(error); }
+      );
+    });
+  }
 
   ngOnInit() {
-    this.id = this.cookie.getCookieId();
-    this.getCountByPriority(this.id, "high");
-    this.getCountByPriority(this.id, "medium");
-    this.getCountByPriority(this.id, "low");
+    this.getUserInfo(localStorage.getItem('myToken'))
+
+  }
+
+  getData(id:any){
+    this.getCountByPriority(id, "high");
+    this.getCountByPriority(id, "medium");
+    this.getCountByPriority(id, "low");
   }
 
   getCountByPriority(id: any, priority: any) {
@@ -39,7 +56,7 @@ export class PriorityPieComponent {
         } else {
           this.low = data;
         }
-        this.getChart();
+        this.renderChart();
       },
       (error: any) => {
         console.log(error);
@@ -47,7 +64,7 @@ export class PriorityPieComponent {
     );
   }
 
-  getChart() {
+  renderChart() {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
 
@@ -56,8 +73,14 @@ export class PriorityPieComponent {
       datasets: [
         {
           data: [this.high, this.medium, this.low],
-          backgroundColor: [documentStyle.getPropertyValue('--red-500'), documentStyle.getPropertyValue('--yellow-500'), documentStyle.getPropertyValue('--green-500')],
-          hoverBackgroundColor: [documentStyle.getPropertyValue('--red-400'), documentStyle.getPropertyValue('--yellow-400'), documentStyle.getPropertyValue('--green-400')]
+          backgroundColor: [
+            '#FF5740',
+            '#FFC140',
+            '#6BFF40'
+          ],
+          hoverBackgroundColor: ['#FF5540',
+          '#FFC040',
+          '#6BFA40']
         }
       ]
     };
@@ -68,11 +91,9 @@ export class PriorityPieComponent {
         legend: {
           labels: {
             color: textColor,
-            
           }
         }
       }
     };
   }
-
 }

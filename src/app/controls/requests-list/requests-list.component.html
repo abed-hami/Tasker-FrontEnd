@@ -1,0 +1,100 @@
+<div class=" pl-5 py-5 m-auto mt-5 bg-white pro ">
+  <div class=" max-h-[400px]">
+    <table class=" w-full min-w-max table-auto text-left t ">
+    <thead class="sticky top-0 bg-white">
+      <tr>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Issuer Name
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Type
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Task</p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Status <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+            </svg>
+          </p>
+        </th>
+
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Description <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+            </svg>
+          </p>
+        </th>
+        <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Date</p>
+        </th>
+
+
+
+      </tr>
+    </thead>
+    <tbody  >
+      <ng-container *ngFor="let request of paginatedRequests">
+            <tr  class="cursor-pointer" >
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{request.memberName}}</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70"></p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{request.requestType}}</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70"></p>
+            </div>
+          </div>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="flex items-center gap-3">
+
+            <div class="flex flex-col">
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{request.requestType}}</p>
+              <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70"></p>
+            </div>
+          </div>
+        </td>
+
+
+
+        <td class="p-4 border-b border-blue-gray-50">
+          <div class="w-max">
+            <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg--200 text--500 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+              <span class="">{{request.requestStatus}}</span>
+            </div>
+          </div>
+        </td>
+
+        <td class="p-4 border-b border-blue-gray-50">
+          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{request.requestDescription}}</p>
+        </td>
+        <td class="p-4 border-b border-blue-gray-50">
+          <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{request.requestDate | date}}</p>
+        </td>
+
+
+
+      </tr>
+
+    </ng-container>
+
+
+    </tbody>
+
+  </table>
+  </div>
+
+</div>
+<div class="flex justify-end">
+    <button class=" px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i)" style="padding: 2px 8px;">{{ i + 1 }}</button>
+  </div>

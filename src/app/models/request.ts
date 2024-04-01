@@ -4,4 +4,5 @@ export class Request{
   type:any
   status:any
   taskId:any
+  requestDate:any
 }

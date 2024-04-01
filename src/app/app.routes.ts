@@ -13,6 +13,9 @@ import { TasksListComponent } from './controls/tasks-list/tasks-list.component';
 import { MemberPageComponent } from './controls/member-page/member-page.component';
 import { ProjectViewComponent } from './project-controls/project-view/project-view.component';
 import { HomedashComponent } from './controls/homedash/homedash.component';
+import { RequestsComponent } from './controls/requests/requests.component';
+import { Component } from '@angular/core';
+import { RequestsListComponent } from './controls/requests-list/requests-list.component';
 
 
 export const routes: Routes = [
@@ -29,6 +32,9 @@ export const routes: Routes = [
 
         ]
       },
+      {path:'request',component:RequestsComponent,
+        children:[{path:'',component:RequestsListComponent}]
+    },
       { path: 'todo', component: TodoComponent },
       { path: 'profile', component: ProfileComponent },
       {

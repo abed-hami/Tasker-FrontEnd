@@ -37,6 +37,20 @@ export class ProjectsListComponent {
   visible: boolean = false;
   projects:any
 
+  pageSize = 3;
+  pageNumber = 0;
+  get totalPages() {
+    return Math.ceil(this.projects.length / this.pageSize);
+  }
+  get paginatedProjects() {
+    const start = this.pageNumber * this.pageSize;
+    return (this.projects || []).slice(start, start + this.pageSize);
+  }
+
+  goToPage(page: number) {
+    this.pageNumber = page;
+  }
+
 
   constructor(private Loginservice:LoginService, private projectService:ProjectService,private toastr:ToastService,private team:TeamService,private cookie:CookiesService,private router:Router){}
 
@@ -65,6 +79,8 @@ export class ProjectsListComponent {
               this.manager.projectId=data.id
               this.toastr.showSuccess("project created successfully!")
               this.addManager(this.manager)
+              this.getProjectByMember()
+
         },
         (error)=>{
           this.toastr.showError("project creation error!")
@@ -72,7 +88,7 @@ export class ProjectsListComponent {
       )
     }
 
-    
+
 
     getUserInfo(){
       this.Loginservice.getUserInfo().subscribe(
@@ -90,10 +106,10 @@ export class ProjectsListComponent {
     addManager(manager:any){
       this.team.addTeamMember(manager).subscribe(
         (data:any)=>{
-          console.log('manager added')
+
         },
         (error)=>{
-          console.log('not addeddddd')
+
         }
 
       )
@@ -103,7 +119,7 @@ export class ProjectsListComponent {
       this.projectService.getUserProjects(this.cookie.getCookieId()).subscribe(
         (data)=>{
           this.projects=data
-          console.log(this.projects);
+
         }
 
       )

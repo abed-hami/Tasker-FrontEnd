@@ -23,8 +23,8 @@
             <span class="ml-2 text-gray-400">{{ task.projectName }}</span>
           </div>
           <div class="flex items-center mt-5 gap-3">
-            <span class="text-gray-600">Start Date:</span>
-            <span class="ml-2 text-gray-400">{{ task.taskStart | date }}</span>
+            <span class="text-gray-600">Budget:</span>
+            <span class="ml-2 text-gray-400">${{ task.taskBudget }}</span>
           </div>
           <div class="flex items-center mt-5 gap-3">
             <span class="text-gray-600">Deadline:</span>
@@ -38,6 +38,16 @@
               {{ task.taskPriority }}
             </span>
           </div>
+          <div class="flex items-center mt-5 gap-2">
+            <span class="text-gray-600">Status:</span>
+            <select class="ml-2 inline-block px-3 py-1 rounded-full text-xs font-semibold bg-{{getStatusColor(task.taskStatus)}}-100 text-{{getStatusColor(task.taskStatus)}}-600" [(ngModel)]="task.taskStatus" (ngModelChange)="changeTaskStatus(task.taskId, $event)">
+              <option value="in-progress">in-progress</option>
+              <option value="testing">testing</option>
+              <option value="pending">pending</option>
+              <option value="on-hold">on-hold</option>
+          </select>
+          </div>
+
           <div class="flex items-center mt-5 gap-3">
             <span class="text-gray-600">Progress:</span>
             <div class="overflow-hidden bg-blue-50 h-1.5  w-full">
@@ -50,10 +60,7 @@
             <span class="text-gray-600">Manager:</span>
             <span class="ml-2 text-blue-500 ">{{ task.managerEmail }}</span>
           </div>
-          <div class="flex items-center mt-5 gap-3">
-            <span class="text-gray-600">Budget:</span>
-            <span class="ml-2 text-gray-400">${{ task.taskBudget }}</span>
-          </div>
+
         </div>
       </div>
       <div class="mt-4  flex items-center gap-3">
@@ -172,7 +179,7 @@
   </p-dialog> -->
 
 
-    <div class="overflow-auto max-h-[350px]">
+    <div >
       <table class=" w-full min-w-max table-auto text-left t ">
       <thead class="sticky top-0 bg-white">
         <tr>
@@ -184,12 +191,12 @@
             <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Lead
             </p>
           </th>
-          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          <!-- <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
             <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Progress <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
 
               </svg>
             </p>
-          </th>
+          </th> -->
           <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
             <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Status <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
 
@@ -216,7 +223,7 @@
         </tr>
       </thead>
       <tbody >
-        @for(task of tasks; track task.id){
+        @for(task of paginatedTasks; track task.id){
           @if(task.taskStatus!="completed"){
               <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
           <td class="p-4 border-b border-blue-gray-50">
@@ -236,7 +243,7 @@
               </div>
             </div>
           </td>
-          <td class="p-4 border-b border-blue-gray-50">
+          <!-- <td class="p-4 border-b border-blue-gray-50">
             <div class="flex items-center gap-3">
               <div class="overflow-hidden bg-blue-50 h-1.5 rounded-full w-full">
                 <p-progressBar [value]="50"></p-progressBar>
@@ -244,12 +251,12 @@
               </div>
               <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{progress}}%</p>
             </div>
-          </td>
+          </td> -->
 
 
           <td class="p-4 border-b border-blue-gray-50">
             <div class="w-max">
-              <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+              <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-500 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
                 <span class="">{{task.taskStatus}}</span>
               </div>
             </div>
@@ -257,7 +264,7 @@
           <td class="p-4 border-b border-blue-gray-50">
             <div class="w-max">
               <ng-container >
-                <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getColor(task.taskPriority)}}-100 text-{{getColor(task.taskPriority)}}-600 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
+                <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getColor(task.taskPriority)}}-200 text-{{getColor(task.taskPriority)}}-500 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
                 <span class="">{{task.taskPriority}}</span>
               </div>
               </ng-container>
@@ -283,8 +290,12 @@
 
       </tbody>
     </table>
+
     </div>
 
 
 
 </div>
+<div class="flex justify-end">
+      <button class=" px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i)" style="padding: 2px 8px;">{{ i + 1 }}</button>
+    </div>

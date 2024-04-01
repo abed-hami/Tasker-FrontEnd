@@ -36,8 +36,19 @@ export class TasksListComponent {
   completed:any
   request:Request=new Request()
   constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService){}
+  pageSize = 4;
+  pageNumber = 0;
+  get totalPages() {
+    return Math.ceil(this.tasks.length / this.pageSize);
+  }
+  get paginatedTasks() {
+    const start = this.pageNumber * this.pageSize;
+    return (this.tasks || []).slice(start, start + this.pageSize);
+  }
 
-
+  goToPage(page: number) {
+    this.pageNumber = page;
+  }
   getAllSubCount(id:any){
     this.subTaskService.getCount(id).subscribe(
       (data)=>{
@@ -51,7 +62,8 @@ export class TasksListComponent {
   sendRequest(taskId:any){
     this.request.taskId=taskId;
     this.request.issuerId=this.cookie.getCookieId()
-    this.request.status="pending"
+    this.request.status="pending",
+    this.request.requestDate=new Date()
     this.requestService.sendRequest(this.request).subscribe(
       (data)=>{
         this.toast.showSuccess("Request Sent Successfully")
@@ -120,6 +132,17 @@ export class TasksListComponent {
     )
   }
 
+  changeTaskStatus(id:any,status:any){
+    this.taskService.UpdateTaskStatus(id,status).subscribe(
+      (data)=>{
+        this.toast.showInfo('Task Status Updated')
+        this.getUserTasks()
+      },
+      (error)=>{
+        this.toast.showWarn('Error occured ')
+      }
+    )
+  }
 
 
   getColor(priority:any){
@@ -129,9 +152,11 @@ export class TasksListComponent {
   }
 
   getStatusColor(status:string) {
-    if(status=='scheduled'){ return "blue" }
-    else if(status=='in-progress'){ return "purple" }
-    else if(status=='revision' || status=='testing'){return  'orange'}
+    if(status=='blocked'){ return 'red' }
+    else if(status=='in-progress' ){ return 'green' }
+    else if( status=='testing'){return  'purple'}
+    else if (status=='on-hold'){return 'yellow'}
+    else if (status=='open'){return 'indigo'}
     else{ return 'gray' }
   }
 

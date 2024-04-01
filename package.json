@@ -25,6 +25,7 @@
     "@fullcalendar/interaction": "^6.1.11",
     "chart.js": "^4.4.2",
     "ngx-cookie-service": "^17.1.0",
+    "ngx-pagination": "^6.0.3",
     "ngx-toastr": "^18.0.0",
     "primeicons": "^6.0.1",
     "primeng": "^17.11.0",
