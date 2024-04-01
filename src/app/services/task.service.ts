@@ -23,4 +23,8 @@ export class TaskService {
   getCountByPriority(id:any,priority:any){
     return this.http.get("https://localhost:7183/api/Task/GetCountByPriority/"+id+ "/" + priority);
   }
+
+  UpdateTaskStatus(id:any,status:any){
+    return this.http.put("https://localhost:7183/api/Task/UpdateStatus/"+id+"/"+status,null)
+  }
 }

@@ -19,6 +19,8 @@ export class CookiesService {
     return userId
   }
 
+
+
   getCookieToken(){
     const  token=this.cookie.get('myToken')
     return token

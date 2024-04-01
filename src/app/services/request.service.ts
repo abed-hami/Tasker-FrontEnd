@@ -11,4 +11,12 @@ export class RequestService {
   sendRequest(request:any){
     return this.http.post("https://localhost:7183/api/Request",request)
   }
+
+  getMemberRequests(memberId:any){
+    return this.http.get("https://localhost:7183/api/Request/GetMemberRequest/"+memberId)
+  }
+
+  getReceivedRequests(memberId:any){
+    return this.http.get("https://localhost:7183/api/Request/GetReceivedRequest/"+memberId)
+  }
 }
