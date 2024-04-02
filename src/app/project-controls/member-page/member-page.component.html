@@ -1,0 +1,154 @@
+<p-dialog header="Add Members" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+  <div class="flex items-center justify-center p-6">
+
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form autocomplete="off" #inviteForm="ngForm" (submit)="this.inviteForm.reset()">
+            <div class="-mx-3 flex flex-wrap mb-3">
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <label for="memberId" class="mb-3 block text-base text-[#07074D]">
+                            Member
+                        </label>
+
+
+
+                              <select id="memberId" name="memberId" [(ngModel)]="teamInvitation.memberId" ngModel required="true"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+
+                            <ng-container *ngFor="let member of allMembers">
+                              <option value="{{member.id}}">{{member.email}}</option>
+                            </ng-container>
+
+
+                        </select>
+
+
+                    </div>
+                </div>
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <label for="position" class="mb-3 block text-base font-medium text-[#07074D]">
+                            Role/Position
+                        </label>
+
+                        <input type="text" name="position" id="position" [required]="true" [(ngModel)]="teamInvitation.position" ngModel required="true"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="hover:shadow-form w-full rounded-md bg-blue-500 py-3 px-8 text-center text-base font-semibold text-white outline-none" (click)="addMember()">
+                    Invite Member
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</p-dialog>
+
+
+
+<div class=" pl-5 py-5 m-auto mt-6 bg-white pro ">
+  <div class="buttons flex gap-3 pb-3">
+
+    <h6>Project Team</h6>
+    <button
+  class="group cursor-pointer outline-none hover:rotate-90 duration-300"
+  title="Add Member" (click)="showDialog()"
+>
+  <svg
+    class="stroke-blue-500 fill-none group-hover:fill-bluee-500 group-active:stroke-blue-200 group-active:fill-blue-600 group-active:duration-0 duration-300"
+    viewBox="0 0 24 24"
+    height="20px"
+    width="20px"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      stroke-width="1.5"
+      d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+    ></path>
+    <path stroke-width="1.5" d="M8 12H16"></path>
+    <path stroke-width="1.5" d="M12 16V8"></path>
+  </svg>
+</button>
+
+
+  </div>
+
+
+    <div >
+      <table class=" w-full min-w-max table-auto text-left  ">
+      <thead class="sticky top-0 bg-white">
+        <tr>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+              <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Member Name
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Member Email
+            </p>
+          </th>
+
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Poistion
+            </p>
+          </th>
+
+
+
+        </tr>
+      </thead>
+      <tbody >
+        @for(task of paginatedTeam; track task.id){
+
+              <tr  class="cursor-pointer t" >
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="flex items-center gap-3">
+              <img src="assets/images/{{task.managerPhoto}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.memberName}}</p>
+
+              </div>
+            </div>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="flex items-center gap-3">
+
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.memberEmail}}</p>
+
+              </div>
+            </div>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <div class="flex items-center gap-3">
+
+              <div class="flex flex-col">
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.memberPosition}}</p>
+
+              </div>
+            </div>
+          </td>
+
+
+        </tr>
+
+          }
+
+
+
+
+
+      </tbody>
+    </table>
+
+    </div>
+
+
+
+</div>
+<div class="flex justify-end">
+      <button class=" px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i)" style="padding: 2px 8px;">{{ i + 1 }}</button>
+    </div>

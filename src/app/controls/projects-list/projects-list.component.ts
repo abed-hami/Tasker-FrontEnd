@@ -51,6 +51,11 @@ export class ProjectsListComponent {
     this.pageNumber = page;
   }
 
+  setId(id:any){
+    this.projectService.SetId(id)
+    localStorage.setItem("projectId", id)
+  }
+
 
   constructor(private Loginservice:LoginService, private projectService:ProjectService,private toastr:ToastService,private team:TeamService,private cookie:CookiesService,private router:Router){}
 

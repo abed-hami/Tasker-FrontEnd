@@ -12,5 +12,8 @@ export class TeamService {
     return this.http.post("https://localhost:7183/api/Team",member)
   }
 
-  
+  getProject(projectId:any){
+    return this.http.get("https://localhost:7183/api/Team/GetByProject/"+projectId)
+  }
+
 }
