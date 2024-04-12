@@ -10,12 +10,17 @@ import { ProfileComponent } from './controls/profile/profile.component';
 import { ProjectsComponent } from './controls/projects/projects.component';
 import { ProjectsListComponent } from './controls/projects-list/projects-list.component';
 import { TasksListComponent } from './controls/tasks-list/tasks-list.component';
-import { MemberPageComponent } from './controls/member-page/member-page.component';
+
 import { ProjectViewComponent } from './project-controls/project-view/project-view.component';
 import { HomedashComponent } from './controls/homedash/homedash.component';
 import { RequestsComponent } from './controls/requests/requests.component';
 import { Component } from '@angular/core';
 import { RequestsListComponent } from './controls/requests-list/requests-list.component';
+import { MemberPageComponent } from './project-controls/member-page/member-page.component';
+import { ProjectRequestsComponent } from './project-controls/project-requests/project-requests.component';
+
+import { TimelineComponent } from './project-controls/timeline/timeline.component';
+import { ProjectTasksComponent } from './project-controls/project-tasks/project-tasks.component';
 
 
 export const routes: Routes = [
@@ -41,7 +46,12 @@ export const routes: Routes = [
         path: 'projects', component: ProjectsComponent,
         children: [
           { path: '', component: ProjectsListComponent },
-          { path: 'view/:id', component: ProjectViewComponent }
+          { path: 'view', component: ProjectViewComponent,
+        children:[
+          {path:'members',component:MemberPageComponent},
+          {path:'projectTasks',component:ProjectTasksComponent},
+          {path:'timeline',component:TimelineComponent}
+        ] }
 
         ]
       }

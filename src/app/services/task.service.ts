@@ -8,6 +8,10 @@ export class TaskService {
 
   constructor(private http:HttpClient) { }
 
+  assignTask(task:any){
+    return this.http.post("https://localhost:7183/api/Task",task)
+  }
+
   getUserTasks(id:any){
     return this.http.get('https://localhost:7183/api/Task/GetUserTask/'+id)
   }
@@ -26,5 +30,13 @@ export class TaskService {
 
   UpdateTaskStatus(id:any,status:any){
     return this.http.put("https://localhost:7183/api/Task/UpdateStatus/"+id+"/"+status,null)
+  }
+
+  getTasksForManager(id:any){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectForManager/"+id)
+  }
+
+  getProjectTasks(id:any,projectId:any){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectTask/"+id+"/"+projectId)
   }
 }

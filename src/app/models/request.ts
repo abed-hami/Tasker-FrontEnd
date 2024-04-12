@@ -5,4 +5,5 @@ export class Request{
   status:any
   taskId:any
   requestDate:any
+  amount:any
 }

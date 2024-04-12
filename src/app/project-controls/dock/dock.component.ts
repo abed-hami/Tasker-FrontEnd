@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { DockModule } from 'primeng/dock';
 import { TabMenuModule } from 'primeng/tabmenu';
 @Component({
   selector: 'app-dock',
   standalone: true,
-  imports: [DockModule,TabMenuModule],
+  imports: [DockModule,TabMenuModule,RouterModule],
   templateUrl: './dock.component.html',
   styleUrl: './dock.component.css'
 })
@@ -17,12 +18,11 @@ export class DockComponent {
 
   ngOnInit() {
       this.items = [
-          { label: 'Dashboard', icon: 'fa fa-bar-chart' },
-          { label: 'Calendar', icon: 'pi pi-fw pi-calendar' },
-          { label: 'Timeline', icon: 'far fa-stream' },
-          { label: 'Team', icon: 'fa fa-group' },
-          { label: 'Tasks', icon: 'pi pi-fw pi-file' },
-          { label: 'Requests', icon: 'pi pi-fw pi-envelope' }
+          { label: 'Dashboard', icon: 'fa fa-bar-chart',routerLink:"" },
+          { label: 'Timeline', icon: 'far fa-stream',routerLink:"timeline" },
+          { label: 'Team', icon: 'fa fa-group',routerLink:"members" },
+          { label: 'Tasks', icon: 'pi pi-fw pi-file',routerLink:"projectTasks" },
+          { label: 'Announcements', icon: 'fa fa-group',routerLink:"announcements" },
       ];
 
       this.activeItem = this.items[0];

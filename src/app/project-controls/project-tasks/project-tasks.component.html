@@ -1,7 +1,161 @@
+<p-dialog header="Assign Task" [modal]="true" [(visible)]="visible" [style]="{width: '50vw'}" [maximizable]="true">
+  <!-- component -->
+  <div class="flex items-center justify-center p-6">
+    <!-- Author: FormBold Team -->
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form  autocomplete="off" #createForm="ngForm" (submit)="this.createForm.reset()">
+          <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Task Name
+                    </label>
+                    <input type="text" name="name" id="name" [(ngModel)]="taskObject.name" [required]="true"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="category" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Member
+                    </label>
+
+                    <select id="memberId" name="memberId" [(ngModel)]="taskObject.memberId" ngModel required="true"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+
+                            <ng-container *ngFor="let member of team">
+                              <option value="{{member.memberId}}">{{member.memberEmail}}</option>
+                            </ng-container>
+
+
+                        </select>
+                </div>
+            </div>
+        </div>
+
+            <div class="-mx-3 flex flex-wrap">
+              <div class="w-full px-3 sm:w-1/2">
+                  <div class="mb-5">
+                      <label for="startdate" class="mb-3 block text-base font-medium text-[#07074D]">
+                          StartDate
+                      </label>
+                      <input type="date" name="startdate" id="startdate" [(ngModel)]="taskObject.startDate" [required]="true"
+                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+              </div>
+              <div class="w-full px-3 sm:w-1/2">
+                  <div class="mb-5">
+                      <label for="enddate" class="mb-3 block text-base font-medium text-[#07074D]">
+                          EndDate
+                      </label>
+                      <input type="date" name="deadline" id="deadline" [(ngModel)]="taskObject.deadline" [required]="true"
+                          class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+              </div>
+          </div>
+            <div class="-mx-3 flex flex-wrap">
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <label for="budget" class="mb-3 block text-base font-medium text-[#07074D]">
+                            Budget
+                        </label>
+                        <input type="number" name="budget" id="budget" [(ngModel)]="taskObject.budget" [required]="true"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                </div>
+                <div class="w-full px-3 sm:w-1/2">
+                    <div class="mb-5">
+                        <label for="additionalbudget" class="mb-3 block text-base font-medium text-[#07074D]">
+                            Priority
+                        </label>
+                        <select id="priority" name="priority" [(ngModel)]="taskObject.priority" ngModel required="true"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+
+
+                      <option value="low">Low</option>
+                      <option value="medium">Medium</option>
+                      <option value="high">High</option>
+
+
+                </select>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="-mx-3 flex flex-wrap">
+
+              <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Phase
+                    </label>
+                    <select id="phaseId" name="phaseId" [(ngModel)]="taskObject.phaseId" ngModel required="true"
+                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
+
+
+                    <ng-container *ngFor="let phase of phases">
+                      <option value="{{phase.id}}">{{phase.name}}</option>
+                    </ng-container>
+
+
+                </select>
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+              <div class="mb-5">
+                  <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
+                      Notes
+                  </label>
+                  <textarea  name="description" id="description" [(ngModel)]="taskObject.description" [required]="true"
+                      class="w-full rounded-md border border-[#e0e0e0] bg-white  px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ></textarea>
+              </div>
+          </div>
+
+
+            </div>
+
+
+            <div>
+                <button (click)="assignTask()"
+                    class="hover:shadow-form w-full rounded-md bg-blue-500 py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                    Assign Task
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</p-dialog>
+
 <div class=" pl-5 py-5 m-auto mt-5 bg-white pro ">
-  <div class="buttons pb-3">
+  <div class="buttons pb-3 flex gap-3">
 
     <h6>My Tasks</h6>
+    @if(position=="manager"){
+       <button
+    class="group cursor-pointer outline-none hover:rotate-90 duration-300"
+    title="Create Project" (click)="showDialog()"
+  >
+    <svg
+      class="stroke-blue-500 fill-none group-hover:fill-bluee-500 group-active:stroke-blue-200 group-active:fill-blue-600 group-active:duration-0 duration-300"
+      viewBox="0 0 24 24"
+      height="20px"
+      width="20px"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-width="1.5"
+        d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+      ></path>
+      <path stroke-width="1.5" d="M8 12H16"></path>
+      <path stroke-width="1.5" d="M12 16V8"></path>
+    </svg>
+  </button>
+    }
+
 
   </div>
 
@@ -11,8 +165,31 @@
 
       <div class="max-w-2xl bg-white w-full rounded-lg p-6 mr-8 mb-2">
   <div *ngFor="let task of tasks; let i = index" [hidden]="task.taskId !== taskId" >
+    @if(position=="manager"){
+      <div class="flex justify-end">
+      <button
+      class="group cursor-pointer outline-none duration-300"
+      title="Edit Task"
+        (click)="editTask(task.taskId)"
+    >
+      <svg
+        class="stroke-blue-500 fill-none group-hover:fill-bluee-500 group-active:stroke-blue-200 group-active:fill-blue-600 group-active:duration-0 duration-300"
+        viewBox="0 0 24 24"
+        height="25px"
+        width="25px"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-width="1.5"
+          d="M14.55 5.55L17 8L8 17H5V14L14.55 5.55ZM19 6L18 5L16 7L17 8L19 6Z"
+        ></path>
+      </svg>
+    </button>
+</div>
+    }
     <div class="border-b w-full mb-4">
       <div class="grid grid-cols-2 gap-4">
+
         <div class="col-span-2 md:col-span-1">
           <div class="flex items-center gap-3">
             <span class="text-gray-600">Task Name:</span>
@@ -40,12 +217,20 @@
           </div>
           <div class="flex items-center mt-5 gap-2">
             <span class="text-gray-600">Status:</span>
-            <select class="ml-2 inline-block px-3 py-1 rounded-full text-xs font-semibold bg-{{getStatusColor(task.taskStatus)}}-100 text-{{getStatusColor(task.taskStatus)}}-600" [(ngModel)]="task.taskStatus" (ngModelChange)="changeTaskStatus(task.taskId, $event)">
+            @if(id==task.assigneeId){
+              <select class="ml-2 inline-block px-3 py-1 rounded-full text-xs font-semibold bg-{{getStatusColor(task.taskStatus)}}-100 text-{{getStatusColor(task.taskStatus)}}-600" [(ngModel)]="task.taskStatus" (ngModelChange)="changeTaskStatus(task.taskId, $event)">
               <option value="in-progress">in-progress</option>
               <option value="testing">testing</option>
               <option value="pending">pending</option>
               <option value="on-hold">on-hold</option>
           </select>
+            }
+            @if(id!=task.assigneeId){
+
+              <span class="ml-2 inline-block px-3 py-1 rounded-full text-xs font-semibold bg-{{getStatusColor(task.taskStatus)}}-100 text-{{getStatusColor(task.taskStatus)}}-600">{{task.taskStatus}}</span>
+            }
+
+
           </div>
 
           <div class="flex items-center mt-5 gap-3">
@@ -57,8 +242,15 @@
             <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{progress}}%</p>
           </div>
           <div class="flex items-center mt-5 gap-3">
-            <span class="text-gray-600">Manager:</span>
+            @if(position!="manager"){
+              <span class="text-gray-600">Manager:</span>
             <span class="ml-2 text-blue-500 ">{{ task.managerEmail }}</span>
+            }
+            @if(position=="manager"){
+              <span class="text-gray-600">Assignee:</span>
+            <span class="ml-2 text-blue-500 ">{{ task.memberEmail }}</span>
+            }
+
           </div>
 
         </div>
@@ -67,9 +259,15 @@
         <span class="text-gray-600 mb-1">Description:</span>
         <span class="text-gray-400">{{ task.taskDescription }}</span>
       </div>
-      <div class="flex mb-3 mt-4">
+      @if(memberId==id){
+        <div class="flex mb-3 mt-4 flex justify-between">
         <button class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600" (click)="submitTask(task.taskId)">Submit Task</button>
+
+
+
     </div>
+      }
+
     </div>
 
   </div>
@@ -101,7 +299,7 @@
         </div>
       </div>
       <div class="border-l h-screen"></div>
-      <div>
+      <div class="" style="width: 350px !important;">
         <div class="flex flex-col max-h-60 overflow-auto mb-10 overflow-x-hidden">
           <h3 class="font-bold text-lg mb-3 ml-2 sticky top-0 bg-white">Subtasks <span class="ml-2 text-blue-500 text-sm">{{completed}} <span class="text-black">/</span> {{count}}</span></h3>
 
@@ -112,7 +310,7 @@
                       <div class="flex justify-between items-center">
                           <div class="mr-4">{{sub.name}}</div>
                           <div>
-                              <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id,sub.taskId)" [checked]="sub.status === 'Completed'"/>
+                              <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id,sub.taskId)" [checked]="sub.status === 'Completed'" [disabled]="disabling(memberId)"/>
                           </div>
                       </div>
                   </li>
@@ -123,7 +321,8 @@
 
       </div>
 
-      <div class="request px-4 py-10">
+        @if(memberId==id){
+           <div class="request px-4 py-10">
 
         <h3 class="font-bold text-lg mb-2">Requests</h3>
         <form #requestForm="ngForm" (submit)="requestForm.reset()">
@@ -146,6 +345,11 @@
           </div>
       </form>
     </div>
+        }
+
+
+
+
       </div>
 
 
@@ -156,32 +360,6 @@
 
 
 
-  <!-- <p-dialog header="SubTasks" [modal]="true" [(visible)]="visible2" [style]="{width: '40vw'}">
-
-
-
-
-      @if(subTasks){
-
-        <div class="bg-white white:bg-gray-900 rounded-lg  w-full">
-          <ul class="w-full text-surface dark:text-dark">
-            <ng-container *ngFor="let sub of subTasks">
-               <li class="flex items-center justify-between border-b-2 border-neutral-100 py-4 dark:border-dark/10">
-              <span>{{sub.name}}</span>
-              <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id)"/>
-            </li>
-            </ng-container>
-
-
-          </ul>
-        </div>
-
-
-
-      }
-
-
-  </p-dialog> -->
 
 
     <div >
@@ -192,10 +370,19 @@
               <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Task Name
             </p>
           </th>
-          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+          @if(position=="manager"){
+            <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Assigned To
+          </p></th>
+          }
+
+          @if(position!="manager"){
+            <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
             <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Lead
             </p>
           </th>
+          }
+
 
           <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
             <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Status <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
@@ -225,7 +412,7 @@
       <tbody >
         @for(task of paginatedTasks; track task.id){
           @if(task.taskStatus!="completed"){
-              <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
+              <tr (click)="showDetailsDialog(task.taskId,task.assigneeId)" class="cursor-pointer" >
           <td class="p-4 border-b border-blue-gray-50">
             <div class="flex items-center gap-3">
               <div class="flex flex-col">
@@ -234,7 +421,19 @@
               </div>
             </div>
           </td>
-          <td class="p-4 border-b border-blue-gray-50">
+          @if(position=="manager"){
+            <td class="p-4 border-b border-blue-gray-50">
+              <div class="flex items-center gap-3">
+                <img src="assets/images/{{task.assigneePicture}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+                <div class="flex flex-col">
+                  <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.assigneeName}}</p>
+                  <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{task.memberEmail}}</p>
+                </div>
+              </div>
+            </td>
+          }
+          @if(position!="manager"){
+            <td class="p-4 border-b border-blue-gray-50">
             <div class="flex items-center gap-3">
               <img src="assets/images/{{task.managerPhoto}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
               <div class="flex flex-col">
@@ -243,7 +442,9 @@
               </div>
             </div>
           </td>
-          
+          }
+
+
           <td class="p-4 border-b border-blue-gray-50">
             <div class="w-max">
               <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-500 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
