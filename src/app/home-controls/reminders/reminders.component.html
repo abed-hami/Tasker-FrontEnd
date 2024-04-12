@@ -1,9 +1,9 @@
 <div class="  bg-gray-100  overflow-y-auto">
   <div class="bg-white rounded-lg w-full p-4 shadow ">
-
+    <span class="text-gray-900 relative inline-block date uppercase font-medium tracking-widest mb-3">{{currentDate|date:'EEEE d'}}</span>
     <div *ngFor="let announcement of announcements">
 
-          <span class="text-gray-900 relative inline-block date uppercase font-medium tracking-widest mb-3">{{currentDate|date:'EEEE d'}}</span>
+
 @if(today==getDate(announcement.announcementDate)){
           <div class="flex mb-4">
             <div class="w-2/12">

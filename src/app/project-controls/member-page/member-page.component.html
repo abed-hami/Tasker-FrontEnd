@@ -54,7 +54,8 @@
   <div class="buttons flex gap-3 pb-3">
 
     <h6>Project Team</h6>
-    <button
+    @if(position=="manager"){
+      <button
   class="group cursor-pointer outline-none hover:rotate-90 duration-300"
   title="Add Member" (click)="showDialog()"
 >
@@ -73,6 +74,8 @@
     <path stroke-width="1.5" d="M12 16V8"></path>
   </svg>
 </button>
+    }
+
 
 
   </div>

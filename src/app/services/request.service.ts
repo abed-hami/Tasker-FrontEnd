@@ -16,6 +16,10 @@ export class RequestService {
     return this.http.put("https://localhost:7183/api/Request/UpdateStatus/"+id+"/"+status,null)
   }
 
+  getProjectRequest(projectId:any){
+    return this.http.get("https://localhost:7183/api/Request/GetProjectRequest/"+projectId)
+  }
+
   getMemberRequests(memberId:any){
     return this.http.get("https://localhost:7183/api/Request/GetMemberRequest/"+memberId)
   }

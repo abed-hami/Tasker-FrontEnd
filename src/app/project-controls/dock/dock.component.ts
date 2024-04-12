@@ -19,10 +19,10 @@ export class DockComponent {
   ngOnInit() {
       this.items = [
           { label: 'Dashboard', icon: 'fa fa-bar-chart',routerLink:"" },
-          { label: 'Timeline', icon: 'far fa-stream',routerLink:"projectTimeline" },
+          { label: 'Timeline', icon: 'far fa-stream',routerLink:"timeline" },
           { label: 'Team', icon: 'fa fa-group',routerLink:"members" },
           { label: 'Tasks', icon: 'pi pi-fw pi-file',routerLink:"projectTasks" },
-          { label: 'Requests', icon: 'pi pi-fw pi-envelope',routerLink:"projectRequests" }
+          { label: 'Announcements', icon: 'fa fa-group',routerLink:"announcements" },
       ];
 
       this.activeItem = this.items[0];

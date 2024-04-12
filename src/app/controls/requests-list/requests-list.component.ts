@@ -92,6 +92,13 @@ this.flag=0
 
 }
 
+getUnit(type:any){
+  if (type=="financial"){
+    return "$"
+  }
+  return "days"
+}
+
   getMemberRequests(memberId:any){
     if(this.selectedCity=='Sent' || this.selectedCity==undefined){
       this.requestService.getMemberRequests(memberId).subscribe(

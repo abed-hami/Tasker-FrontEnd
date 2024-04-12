@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
 export class MemberPageComponent {
 
   constructor(private teamService:TeamService,private route: ActivatedRoute,private projectService:ProjectService, private member:MemberService,private toast:ToastService){}
-
+  position:any
   teamInvitation:Team=new Team()
   projectId:any
   visible=false
@@ -32,6 +32,7 @@ export class MemberPageComponent {
 
 
   ngOnInit(){
+    this.position=localStorage.getItem('position')
     this.projectId=localStorage.getItem("projectId")
     this.getTeamByProject(this.projectId)
     this.getAllMembers()
@@ -42,6 +43,8 @@ export class MemberPageComponent {
     this.visible=true
   }
 
+
+
   addMember(){
     this.teamInvitation.projectId=this.projectId
     this.teamInvitation.status="invited"
@@ -51,6 +54,7 @@ export class MemberPageComponent {
 
       (data)=>{
         this.toast.showSuccess("Member Invited Successfully!")
+        this.visible=false
         this.ngOnInit()
       },
       (error)=>{

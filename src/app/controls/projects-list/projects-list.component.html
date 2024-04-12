@@ -161,7 +161,7 @@
     </thead>
     <tbody *ngFor="let project of paginatedProjects" >
 
-      <tr (click)="setId(project.projectId)" routerLink="view">
+      <tr (click)="setId(project.projectId)" routerLink="view" (click)="navigateto(project.teamPosition)">
 
         <td class="p-4 border-b border-blue-gray-50">
           <div class="flex items-center gap-3">

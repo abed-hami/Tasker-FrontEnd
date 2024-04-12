@@ -63,6 +63,11 @@ export class ProjectsListComponent {
     console.log(this.project);
   }
 
+  navigateto(position:any){
+    localStorage.setItem("position", position)
+    
+  }
+
 
   id:any
   email:any;

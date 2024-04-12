@@ -17,6 +17,10 @@ import { RequestsComponent } from './controls/requests/requests.component';
 import { Component } from '@angular/core';
 import { RequestsListComponent } from './controls/requests-list/requests-list.component';
 import { MemberPageComponent } from './project-controls/member-page/member-page.component';
+import { ProjectRequestsComponent } from './project-controls/project-requests/project-requests.component';
+
+import { TimelineComponent } from './project-controls/timeline/timeline.component';
+import { ProjectTasksComponent } from './project-controls/project-tasks/project-tasks.component';
 
 
 export const routes: Routes = [
@@ -44,7 +48,9 @@ export const routes: Routes = [
           { path: '', component: ProjectsListComponent },
           { path: 'view', component: ProjectViewComponent,
         children:[
-          {path:'members',component:MemberPageComponent}
+          {path:'members',component:MemberPageComponent},
+          {path:'projectTasks',component:ProjectTasksComponent},
+          {path:'timeline',component:TimelineComponent}
         ] }
 
         ]

@@ -18,6 +18,10 @@ export class ProjectService {
       return this.http.get("https://localhost:7183/api/Team/GetByMember/"+userId);
   }
 
+  getProject(id:any){
+    return this.http.get("https://localhost:7183/api/Project/"+id)
+  }
+
   getCount(memberId:any,position:any){
     return this.http.get("https://localhost:7183/api/Project/GetCount/"+memberId+"/"+position)
   }

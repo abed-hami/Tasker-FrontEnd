@@ -12,13 +12,14 @@ import { ClockComponent } from "./controls/clock/clock.component";
 import { CalendarComponent } from "./controls/calendar/calendar.component";
 import { SidebarComponent } from "./controls/sidebar/sidebar.component";
 import { DockComponent } from "./project-controls/dock/dock.component";
+import { TimelineComponent } from "./project-controls/timeline/timeline.component";
 
 @Component({
     selector: 'app-root',
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [CommonModule, RouterOutlet, NavbarComponent, LandingComponent, HomeComponent, LoginComponent, SignupComponent, DashboardComponent, ClockComponent, CalendarComponent, SidebarComponent, DockComponent]
+    imports: [CommonModule, RouterOutlet, NavbarComponent, LandingComponent, HomeComponent, LoginComponent, SignupComponent, DashboardComponent, ClockComponent, CalendarComponent, SidebarComponent, DockComponent, TimelineComponent]
 })
 export class AppComponent {
   title = 'Tasker';
