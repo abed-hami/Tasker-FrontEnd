@@ -14,15 +14,17 @@ import { TeamService } from '../../services/team.service';
 import { CookiesService } from '../../services/cookies.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { DropdownModule } from 'primeng/dropdown';
 @Component({
     selector: 'app-projects-list',
     standalone: true,
     templateUrl: './projects-list.component.html',
     styleUrl: './projects-list.component.css',
-    imports: [DialogModule, FormsModule, ToastrModule, DockComponent,CommonModule,RouterModule]
+    imports: [DialogModule, FormsModule, ToastrModule, DockComponent,CommonModule,RouterModule,DropdownModule]
 })
 export class ProjectsListComponent {
-
+  selectedCity={name:"All"};
+  invitations:any
   manager:any={
     projectId:0,
     memberId: this.cookie.getCookieId(),
@@ -31,7 +33,14 @@ export class ProjectsListComponent {
   }
 
 
+  getInvitations(memberId:any){
+    this.projectService.getInvitations(memberId).subscribe(
+      (data)=>{
+        this.invitations=data
 
+      }
+    )
+  }
 
   project:projects=new projects()
   visible: boolean = false;
@@ -39,6 +48,7 @@ export class ProjectsListComponent {
 
   pageSize = 3;
   pageNumber = 0;
+  options: any
   get totalPages() {
     return Math.ceil(this.projects.length / this.pageSize);
   }
@@ -49,6 +59,50 @@ export class ProjectsListComponent {
 
   goToPage(page: number) {
     this.pageNumber = page;
+  }
+
+
+  get totalInvitedPages() {
+    return Math.ceil(this.invitations.length / this.pageSize);
+  }
+  get paginatedInvitedProjects() {
+    const start = this.pageNumber * this.pageSize;
+    return (this.invitations || []).slice(start, start + this.pageSize);
+  }
+
+  goToPage2(page: number) {
+    this.pageNumber = page;
+  }
+
+  visible2=false
+  teamId:any
+
+  showDialog2(id:any){
+    this.teamId=id
+
+    this.visible2=true
+  }
+
+  rejectInvitation(){
+    this.projectService.rejectInvitation(this.teamId).subscribe(
+      (data)=>{
+        this.toastr.showError("Project Invitation Rejected")
+        this.selectedCity.name='Invited'
+        this.visible2=false
+        this.getInvitations(this.cookie.getCookieId())
+      }
+    )
+  }
+
+  acceptInvitation(){
+    this.projectService.acceptInvitation(this.teamId).subscribe(
+      (data)=>{
+        this.toastr.showSuccess("Project Invitation Accepted")
+        this.selectedCity.name='All'
+        this.visible2=false
+        this.getProjectByMember(this.cookie.getCookieId())
+      }
+    )
   }
 
   setId(id:any){
@@ -65,19 +119,32 @@ export class ProjectsListComponent {
 
   navigateto(position:any){
     localStorage.setItem("position", position)
-    
+
   }
 
 
   id:any
   email:any;
+
+  showAll=true
+  showInvited=false
     showDialog() {
         this.visible = true;
     }
 
     ngOnInit(){
       this.getUserInfo()
-      this.getProjectByMember()
+
+      this.getInvitations(this.cookie.getCookieId())
+
+      this.options = [
+
+        { name: 'All' },
+        { name: 'Invited' },
+
+
+
+    ];
     }
 
 
@@ -89,7 +156,8 @@ export class ProjectsListComponent {
               this.manager.projectId=data.id
               this.toastr.showSuccess("project created successfully!")
               this.addManager(this.manager)
-              this.getProjectByMember()
+              this.getUserInfo()
+              this.visible=false
 
         },
         (error)=>{
@@ -104,6 +172,7 @@ export class ProjectsListComponent {
       this.Loginservice.getUserInfo().subscribe(
         (data:any)=>{
           this.id=data.id
+          this.getProjectByMember(this.id)
           this.email=data.email
           this.project.memberId=data.id
         },
@@ -125,8 +194,8 @@ export class ProjectsListComponent {
       )
     }
 
-    getProjectByMember(){
-      this.projectService.getUserProjects(this.cookie.getCookieId()).subscribe(
+    getProjectByMember(id:any){
+      this.projectService.getUserProjects(id).subscribe(
         (data)=>{
           this.projects=data
 

@@ -9,6 +9,7 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToastService } from '../../services/toast.service';
+import { TaskService } from '../../services/task.service';
 @Component({
   selector: 'app-requests-list',
   standalone: true,
@@ -20,15 +21,17 @@ export class RequestsListComponent {
   options: any;
   visible=false
 
-  selectedCity: any;
+  selectedCity= {name:"Sent"};
 
 
    flag=0
-  constructor(private requestService:RequestService,private cookie:CookiesService,private toast:ToastService){}
+  constructor(private requestService:RequestService,private cookie:CookiesService,private toast:ToastService,private taskService:TaskService){}
 
   requests:any
   pageSize = 4;
 pageNumber = 0;
+pageSize2 = 4;
+pageNumber2 = 0;
 received:any
 requestId:any
 
@@ -45,6 +48,7 @@ openDialog(requestId:any){
 }
 
 updateRequestStatus(requestId:any,status:any){
+
   this.requestService.updateRequestStatus(requestId,status).subscribe(
     (data)=>{
       if(status=="accepted"){
@@ -66,9 +70,7 @@ goToPreviousPage() {
 }
 
 get totalPages() {
-  if(this.selectedCity==undefined||this.selectedCity.name=='Sent'){
 
-  }
   return Math.ceil(this.requests.length / this.pageSize);
 
 }
@@ -92,6 +94,27 @@ this.flag=0
 
 }
 
+
+get totalReceivedPages() {
+
+  return Math.ceil(this.received.length / this.pageSize2);
+
+}
+
+goToReceivedPage(page: number) {
+  this.pageNumber2 = page;
+}
+
+
+ get paginatedReceivedRequests() {
+  const start = this.pageNumber2 * this.pageSize2;
+
+  return (this.received || []).slice(start, start + this.pageSize2);
+
+
+
+}
+
 getUnit(type:any){
   if (type=="financial"){
     return "$"
@@ -100,19 +123,19 @@ getUnit(type:any){
 }
 
   getMemberRequests(memberId:any){
-    if(this.selectedCity=='Sent' || this.selectedCity==undefined){
+    if(this.selectedCity.name=='Sent' || this.selectedCity==undefined){
       this.requestService.getMemberRequests(memberId).subscribe(
       (data)=>{
           this.requests=data
-          console.log(data)
+
       }
     )
     }
-    else if(this.selectedCity=='Received'){
+    else if(this.selectedCity.name=='Received'){
       this.requestService.getReceivedRequests(memberId).subscribe(
         (data)=>{
             this.requests=data
-
+            
         }
       )
     }
@@ -131,7 +154,7 @@ getUnit(type:any){
     this.requestService.getReceivedRequests(memberId).subscribe(
       (data)=>{
           this.received=data
-          console.log(data)
+
       }
     )
   }

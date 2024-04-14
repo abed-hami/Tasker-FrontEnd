@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
       this.service.getUserInfo().subscribe(
         (data: any) => {
           this.id = data.id;
-          console.log(this.id)
+          
           this.cookieService.setCookie(this.mytoken,this.id)
           resolve();
         },

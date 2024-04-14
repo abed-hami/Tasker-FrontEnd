@@ -24,7 +24,7 @@ export class RemindersComponent {
     this.announcementService.getAnnouncementByMember(memberId).subscribe(
       (data:any)=>{
         this.announcements=data
-        console.log(data)
+
       }
     )
   }
@@ -42,7 +42,7 @@ export class RemindersComponent {
 
   getDate(date:any){
     const datePart = date.split("T")[0];
-    console.log(datePart);
+    
     return datePart
   }
 

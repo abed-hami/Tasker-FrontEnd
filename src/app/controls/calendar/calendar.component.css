@@ -1,79 +1,8 @@
 
 
 @charset "UTF-8";
-/*!
-*
-* Template: webkit - Responsive Bootstrap 4 Admin Dashboard Template
-* Author: iqonic.design
-* Design and Developed by: iqonic.design
-* NOTE: This file contains the styling for responsive Template.
-*
-*/
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-:root {
-  --iq-primary: #5773FF;
-  --iq-secondary: #F35421;
-  --iq-success: #50C6B4;
-  --iq-info: #51BBFE;
-  --iq-warning: #FFCF52;
-  --iq-danger: #931F1D;
-  --iq-light: #c7cbd3;
-  --iq-dark: #01041b;
-  --iq-orange: #F35421;
-  --iq-purple: #4731b6;
-  --iq-skyblue: #158df7;
-  --iq-light-gray: #f4f5fa;
-  --iq-white: #fff;
-  --iq-primary: #5773FF;
-  --iq-secondary: #F35421;
-  --iq-success: #50C6B4;
-  --iq-info: #51BBFE;
-  --iq-warning: #FFCF52;
-  --iq-danger: #931F1D;
-  --iq-light: #c7cbd3;
-  --iq-dark: #01041b;
-  --iq-orange: #F35421;
-  --iq-purple: #4731b6;
-  --iq-skyblue: #158df7;
-  --iq-light-gray: #f4f5fa;
-  --iq-white: #fff; }
 
-:root {
-  --blue: #5773FF;
-  --indigo: #6610f2;
-  --purple: #4731b6;
-  --pink: #e83e8c;
-  --red: #931F1D;
-  --orange: #F35421;
-  --yellow: #FFCF52;
-  --green: #50C6B4;
-  --teal: #20c997;
-  --cyan: #51BBFE;
-  --white: #fff;
-  --gray: #6c757d;
-  --gray-dark: #01041b;
-  --skyblue: #158df7;
-  --primary: #5773FF;
-  --secondary: #F35421;
-  --success: #50C6B4;
-  --info: #51BBFE;
-  --warning: #FFCF52;
-  --danger: #931F1D;
-  --light: #c7cbd3;
-  --dark: #01041b;
-  --orange: #F35421;
-  --purple: #4731b6;
-  --skyblue: #158df7;
-  --light-gray: #f4f5fa;
-  --white: #fff;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
 
 *,
 *::before,

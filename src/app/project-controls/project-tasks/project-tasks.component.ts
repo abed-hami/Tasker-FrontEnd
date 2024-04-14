@@ -11,6 +11,7 @@ import { CommentsService } from '../../services/comments.service';
 import { Comment } from '../../models/comment';
 import { FormsModule } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { CookiesService } from '../../services/cookies.service';
 import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -74,7 +75,7 @@ export class ProjectTasksComponent {
     this.subTaskService.getCount(id).subscribe(
       (data)=>{
         this.count=data
-        console.log(this.count)
+
       },
       (error)=>console.log(error)
     )
@@ -120,20 +121,83 @@ export class ProjectTasksComponent {
     }
     return this.disable=false
   }
-
+  bool:any
   assignTask(){
       this.taskObject.projectId=this.projectId
       this.taskObject.status="pending"
-      this.taskService.assignTask(this.taskObject).subscribe(
+      this.taskObject.phaseId=null
+
+
+      this.taskService.checkBudget(this.taskObject.projectId,this.taskObject.budget).subscribe
+      (
         (data)=>{
-          this.toast.showSuccess("Task Assigned Successfully!")
-          this.getTasks()
+         this.bool=data
+
+         if(this.bool){
+          this.createTask(this.taskObject)
+         }
+         else{
+          this.toast.showWarn("Project Budget Insufficient!")
+         }
+         this.clearForm()
         },
         (error)=>{
-          this.toast.showWarn("Error Assigning Task!")
+          console.log(error)
+
         }
       )
+
+
+
+
+
   }
+  clearForm(){
+    this.taskObject = {
+      name: '',
+      memberId: '',
+      status:'',
+      startDate: '',
+      phaseId:'',
+      projectId:'',
+      deadline: '',
+      budget: '',
+      priority: '',
+      description: ''
+    };
+  }
+
+  createTask(taskObject:any){
+    this.taskService.assignTask(this.taskObject).subscribe(
+      (data)=>{
+        this.toast.showSuccess("Task Assigned Successfully!")
+
+        this.getTasks()
+        this.clearForm()
+
+      },
+      (error)=>{
+        if(error instanceof HttpErrorResponse){
+          if(error.status==404){
+            this.toast.showWarn("Member exceeded Task Limit!")
+          }
+          if(error.status==400){
+            this.toast.showWarn("Error In Task Dates!")
+          }
+        }
+
+      }
+    )
+
+
+  }
+
+
+
+
+
+
+
   team:any
   getTeamByProject(id:any){
     this.teamService.getProject(id).subscribe(
@@ -259,13 +323,18 @@ export class ProjectTasksComponent {
     this.getSubTasks(id)
   }
 
+  completedTasks:any
+
   getTasks(){
     if(this.position=="manager"){
       this.tasks=""
       this.taskService.getTasksForManager(this.projectId).subscribe(
         (data:any)=>{
-          this.tasks=data
-          console.log(data)
+
+              this.tasks=data
+
+
+
 
 
         }
@@ -276,7 +345,6 @@ export class ProjectTasksComponent {
       this.taskService.getProjectTasks(this.id,localStorage.getItem("projectId")).subscribe(
         (data:any)=>{
           this.tasks=data
-          console.log(data)
 
 
         }
