@@ -3,7 +3,7 @@
   <div class="flex items-center justify-center p-6">
     <!-- Author: FormBold Team -->
     <div class="mx-auto w-full max-w-[550px] bg-white">
-        <form  autocomplete="off" #createForm="ngForm" (submit)="this.createForm.reset()">
+        <form  autocomplete="off" #createForm="ngForm" >
           <div class="-mx-3 flex flex-wrap">
             <div class="w-full px-3 sm:w-1/2">
                 <div class="mb-5">
@@ -85,37 +85,19 @@
                 </div>
             </div>
 
-            <div class="-mx-3 flex flex-wrap">
-
-              <div class="w-full px-3 sm:w-1/2">
-                <div class="mb-5">
-                    <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
-                        Phase
-                    </label>
-                    <select id="phaseId" name="phaseId" [(ngModel)]="taskObject.phaseId" ngModel required="true"
-                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
 
 
-                    <ng-container *ngFor="let phase of phases">
-                      <option value="{{phase.id}}">{{phase.name}}</option>
-                    </ng-container>
+
+          <div class="mb-5">
+            <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
+                Notes
+            </label>
+            <textarea  name="description" id="description" [(ngModel)]="taskObject.description" [required]="true"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ></textarea>
+        </div>
 
 
-                </select>
-                </div>
-            </div>
-            <div class="w-full px-3 sm:w-1/2">
-              <div class="mb-5">
-                  <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
-                      Notes
-                  </label>
-                  <textarea  name="description" id="description" [(ngModel)]="taskObject.description" [required]="true"
-                      class="w-full rounded-md border border-[#e0e0e0] bg-white  px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ></textarea>
-              </div>
-          </div>
 
-
-            </div>
 
 
             <div>
@@ -137,7 +119,7 @@
     @if(position=="manager"){
        <button
     class="group cursor-pointer outline-none hover:rotate-90 duration-300"
-    title="Create Project" (click)="showDialog()"
+    title="Create Task" (click)="showDialog()"
   >
     <svg
       class="stroke-blue-500 fill-none group-hover:fill-bluee-500 group-active:stroke-blue-200 group-active:fill-blue-600 group-active:duration-0 duration-300"
@@ -411,7 +393,7 @@
       </thead>
       <tbody >
         @for(task of paginatedTasks; track task.id){
-          @if(task.taskStatus!="completed"){
+
               <tr (click)="showDetailsDialog(task.taskId,task.assigneeId)" class="cursor-pointer" >
           <td class="p-4 border-b border-blue-gray-50">
             <div class="flex items-center gap-3">
@@ -473,7 +455,7 @@
 
         </tr>
 
-          }
+
 
         }
 

@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { SignupService } from '../../services/signup.service';
 import { signup } from '../../models/signup';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [FormsModule,RouterModule],
+  imports: [CommonModule,FormsModule,RouterModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css'
 })
@@ -18,9 +19,17 @@ export class SignupComponent {
 
   constructor(private http:HttpClient, private signupService:SignupService){}
 
+  validateAndSignup(signupForm:any) {
+    if (signupForm.invalid) {
+      alert("Please fill out all required fields correctly.");
+      signupForm.reset()
+      return;
+    }
+    this.signup(signupForm);
+  }
 
 
-  signup(){
+  signup(signupForm:any){
     const lname  = document.getElementById( "lname" ) as HTMLInputElement;
     const fname  = document.getElementById( "fname" ) as HTMLInputElement;
     const email  = document.getElementById( "email" ) as HTMLInputElement;
@@ -29,14 +38,17 @@ export class SignupComponent {
 
     if(lname.value==="" || fname.value==="" || email.value===''||pass.value===''||position.value===''){
       alert("please fill all forms")
-    }else{
+    }
+    else{
        this.signupService.signup(this.registerObject).subscribe(
       (data:any)=>{
 
         alert("member created successfully")
+        signupForm.reset()
       },
       (error:any)=>{
         alert("error in registration")
+
       }
     )
 

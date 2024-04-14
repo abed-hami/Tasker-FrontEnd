@@ -58,7 +58,7 @@ export class MemberPageComponent {
         this.ngOnInit()
       },
       (error)=>{
-        this.toast.showError("Error Inviting Member!")
+        this.toast.showError("Member Already Invited!")
       }
     )
     }

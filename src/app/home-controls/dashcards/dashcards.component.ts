@@ -60,6 +60,7 @@ export class DashcardsComponent {
     this.getProjectCount(id)
     this.getDoneTasks(id)
     this.getManagedProjects(id)
+    this.getInvitationsCount(id)
 
   }
 
@@ -83,6 +84,15 @@ export class DashcardsComponent {
     this.projectService.getCount(memberId,"manager").subscribe(
       (data)=>{
         this.managedProjects=data
+      }
+    )
+  }
+
+  invitations:any
+  getInvitationsCount(memberId:any){
+    this.projectService.getInvitationsCount(memberId).subscribe(
+      (data)=>{
+        this.invitations=data
       }
     )
   }

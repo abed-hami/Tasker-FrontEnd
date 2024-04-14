@@ -36,8 +36,8 @@ export class CalendarComponent {
       (data: any) => {
         this.tasks = data.map((task: { taskName: any; taskStart: any; taskDeadline: any; taskDescription: any; taskPriority: any; }) => ({
           title: task.taskName,
-          date: this.formatDate(task.taskStart),
-          end: this.formatDate(task.taskDeadline),
+          
+          date: this.formatDate(task.taskDeadline),
           description: task.taskDescription,
           priority: task.taskPriority,
 

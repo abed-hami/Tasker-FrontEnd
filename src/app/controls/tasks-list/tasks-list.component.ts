@@ -124,6 +124,7 @@ export class TasksListComponent {
     this.taskService.updateStatus(id).subscribe(
       (data)=>{
         this.toast.showSuccess('Task Completed')
+        this.visible1=false
         this.getUserTasks()
       },
       (error)=>{

@@ -32,7 +32,10 @@
 </div>
 </p-dialog>
 <div class=" pl-5 py-5 m-auto mt-5 bg-white pro ">
-  <p-dropdown [options]="options" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select option" ></p-dropdown>
+  <div class="flex gap-3 justify-between">
+    <h6 class="pt-3">Requests</h6>
+  <p-dropdown [options]="options" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Select option" class="pb-1"></p-dropdown>
+  </div>
   <div class=" max-h-[400px]">
 
     <table class=" w-full min-w-max table-auto text-left t ">
@@ -138,6 +141,14 @@
   </div>
 
 </div>
-<div class="flex justify-end">
+@if(selectedCity.name=="Sent"){
+  <div class="flex justify-end">
     <button class=" px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i)" style="padding: 2px 8px;">{{ i + 1 }}</button>
   </div>
+}
+
+@if(selectedCity.name=="Received"){
+  <div class="flex justify-end">
+    <button class=" px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" *ngFor="let page of [].constructor(totalReceivedPages); let i = index" (click)="goToReceivedPage(i)" style="padding: 2px 8px;">{{ i + 1 }}</button>
+  </div>
+}

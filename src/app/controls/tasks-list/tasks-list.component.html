@@ -90,7 +90,7 @@
             </ng-container>
           </div>
 
-          <!-- Comment Form -->
+
           <form #form="ngForm" (submit)="form.reset()" class="mb-8">
             <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"
                       name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1"></textarea>
@@ -224,7 +224,7 @@
       </thead>
       <tbody >
         @for(task of paginatedTasks; track task.id){
-          @if(task.taskStatus!="completed"){
+
               <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
           <td class="p-4 border-b border-blue-gray-50">
             <div class="flex items-center gap-3">
@@ -243,7 +243,7 @@
               </div>
             </div>
           </td>
-          
+
           <td class="p-4 border-b border-blue-gray-50">
             <div class="w-max">
               <div class="relative grid items-center font-sans font-bold uppercase whitespace-nowrap select-none bg-{{getStatusColor(task.taskStatus)}}-200 text-{{getStatusColor(task.taskStatus)}}-500 py-1 px-2 text-xs rounded-md" style="opacity: 1;">
@@ -272,7 +272,7 @@
 
         </tr>
 
-          }
+          
 
         }
 

@@ -16,8 +16,11 @@ export class TaskService {
     return this.http.get('https://localhost:7183/api/Task/GetUserTask/'+id)
   }
 
+  checkBudget(id:any,amount:any){
+    return this.http.get('https://localhost:7183/api/Task/IsSufficientBudget/'+id+"/"+amount);
+  }
   updateStatus(id:any){
-    return this.http.put("https://localhost:7183/api/Task/UpdateStatus/"+id,null)
+    return this.http.put("https://localhost:7183/api/Task/UpdateTaskStatus/"+id,null)
   }
 
   getCountByStatus(id:any,status:any){

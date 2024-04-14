@@ -31,24 +31,7 @@ export class HomedashComponent {
     priority:""
   }
 
-  getUserTasks() {
-    this.taskService.getUserTasks(this.cookieService.getCookieId()).subscribe(
-      (data: any) => {
-        this.tasks = data.map((task: { taskName: any; taskStart: any; taskDeadline: any; taskDescription: any; taskPriority: any; }) => ({
-          title: task.taskName,
-          date: this.formatDate(task.taskDeadline),
-          end: this.formatDate(task.taskDeadline),
-          description: task.taskDescription,
-          priority: task.taskPriority,
 
-        }));
-        this.updateCalendarOptions();
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
 
 
   formatDate(dateString: any): any {
@@ -83,7 +66,7 @@ export class HomedashComponent {
   };
 
   ngOnInit() {
-    this.getUserTasks();
+   
   }
 
 
