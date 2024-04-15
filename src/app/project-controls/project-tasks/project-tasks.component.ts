@@ -142,9 +142,10 @@ export class ProjectTasksComponent {
          this.clearForm()
         },
         (error)=>{
-          console.log(error)
+          this.toast.showWarn("Fill All Fields")
 
-        }
+        },
+
       )
 
 

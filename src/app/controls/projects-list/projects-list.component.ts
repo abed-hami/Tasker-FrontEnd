@@ -46,7 +46,7 @@ export class ProjectsListComponent {
   visible: boolean = false;
   projects:any
 
-  pageSize = 3;
+  pageSize = 4;
   pageNumber = 0;
   options: any
   get totalPages() {

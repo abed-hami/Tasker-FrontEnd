@@ -71,7 +71,7 @@ this.projectId=localStorage.getItem("projectId")
 getTasks(){
     if(this.position=="manager"){
       this.tasks=""
-      this.taskService.getTasksForManager(localStorage.getItem("projectId")).subscribe(
+      this.taskService.getTasksForManager(this.projectId).subscribe(
         (data:any)=>{
           this.tasks=data
 
@@ -84,7 +84,7 @@ getTasks(){
     }
     else{
       this.tasks=""
-      this.taskService.getProjectTasks(this.id,localStorage.getItem("projectId")).subscribe(
+      this.taskService.getProjectTasks(this.id,this.projectId).subscribe(
         (data:any)=>{
           this.tasks=data
 
