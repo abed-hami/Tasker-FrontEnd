@@ -147,9 +147,9 @@
 
  -->
 
- <!-- Component Start -->
-<div class="flex flex-col w-screen h-screen justify-around overflow-auto text-gray-700 m-auto">
-  
+<!-- Component Start -->
+<!-- <div class="flex flex-col w-screen h-screen justify-around overflow-auto text-gray-700 m-auto">
+
 	<div class="flex flex-grow px-10 mt-4 space-x-12 overflow-auto ">
 		<div class="flex flex-col col flex-shrink-0 w-72 mx-4" cdkDropList
     #todoList="cdkDropList"
@@ -323,4 +323,163 @@
 
 
 
+</div> -->
+
+
+<p-dialog header="Create Iteam" [modal]="true" [(visible)]="visible" [style]="{width: '50vw'}" [maximizable]="true">
+  <!-- component -->
+  <div class="flex items-center justify-center p-6">
+    <!-- Author: FormBold Team -->
+    <div class="mx-auto w-full max-w-[550px] bg-white">
+        <form  autocomplete="off" #createForm="ngForm" (submit)="this.createForm.reset()">
+          <div class="-mx-3 flex flex-wrap">
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Item Name
+                    </label>
+                    <input type="text" name="todo1" id="todo1" [(ngModel)]="toDoObject.todo1" [required]="true"
+                        class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                </div>
+            </div>
+            <div class="w-full px-3 sm:w-1/2">
+                <div class="mb-5">
+                    <label for="category" class="mb-3 block text-base font-medium text-[#07074D]">
+                        Status
+                    </label>
+                    <select name="status" id="status" class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" [(ngModel)]="toDoObject.status" >
+                      <option value="to-do">To-Do</option>
+                      <option value="in-progress">In-Progress</option>
+                      <option value="done">Done</option>
+
+                      </select>
+
+                </div>
+            </div>
+        </div>
+
+            <div>
+                <button (click)="addItem()"
+                    class="hover:shadow-form w-full rounded-md bg-blue-500 py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                    Add Kanban Task
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</p-dialog>
+
+
+<div class="container-fluid pt-5">
+  <div class="row pb-4">
+    <div class="col-12">
+      <div class="d-flex justify-content-between">
+        <div class="flex gap-3">
+          <h2>Kanban Board</h2>
+          <button
+            class="group cursor-pointer outline-none duration-300 "
+            title="Create Project" (click)="showDialog()"
+          >
+            <svg
+              class="stroke-blue-500 fill-none hover:rotate-90 group-hover:fill-bluee-500 group-active:stroke-blue-200 group-active:fill-blue-600 group-active:duration-0 duration-300"
+              viewBox="0 0 24 24"
+              height="20px"
+              width="20px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-width="1.5"
+                d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+              ></path>
+              <path stroke-width="1.5" d="M8 12H16"></path>
+              <path stroke-width="1.5" d="M12 16V8"></path>
+            </svg>
+
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row pt-1 flex bg-white gap-3 p-3 py-4 " >
+    <div
+      class="col w-full py-4"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, 'to-do')"
+    >
+      <div class="bg-blue-400 border-0 py-1 px-3 flex justify-center">
+        <div>To-Do</div>
+      </div>
+      <div class="bg-gray-200 ticket-bg border py-2 px-1" id="3">
+        <!---->
+        <div
+          draggable="true"
+          *ngFor="let ticket of getStatusArray('To Do')"
+          class="card-Body-Hover m-1 rounded-1 task"
+          (dragstart)="onDragStart(ticket)"
+        >
+        <div class="my-1 fw-bold flex justify-between px-2"> <div>{{ ticket.todo1 }}</div> <div><i class="fa fa-trash-o cursor-pointer" style="font-size:12px;color:red" (click)="delete(ticket.id)"></i></div></div>
+          <div class="row">
+            <div class="col-3">
+              <p class="text-muted space-font m-0 pointer"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col w-full py-4"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, 'in-progress')"
+    >
+      <div class="bg-yellow-400 border-0 py-1 flex justify-center">
+        In-Progress <span> </span
+        ><!---->
+      </div>
+      <div class="bg-gray-200 ticket-bg border py-2 px-1" id="3">
+        <!---->
+        <div
+          draggable="true"
+          *ngFor="let ticket of getStatusArray('In Progress')"
+          class="card-Body-Hover m-1 rounded-1 task"
+          (dragstart)="onDragStart(ticket)"
+        >
+        <div class="my-1 fw-bold flex justify-between px-2"> <div>{{ ticket.todo1 }}</div> <div><i class="fa fa-trash-o cursor-pointer" style="font-size:12px;color:red" (click)="delete(ticket.id)"></i></div></div>
+          <div class="row">
+            <div class="col-3">
+              <p class="text-muted space-font m-0 pointer"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="col w-full py-4"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, 'done')"
+    >
+      <div class="bg-green-400 border-0 py-1 flex justify-center">
+        Done <span> </span
+        ><!---->
+      </div>
+      <div class="bg-gray-200 ticket-bg border py-2 px-1" id="3">
+        <!---->
+        <div
+          draggable="true"
+          *ngFor="let ticket of getStatusArray('Done')"
+          class="card-Body-Hover m-1 rounded-1 task"
+          (dragstart)="onDragStart(ticket)"
+        >
+        <div class="my-1 fw-bold flex justify-between px-2"> <div>{{ ticket.todo1 }}</div> <div><i class="fa fa-trash-o cursor-pointer" style="font-size:12px;color:red" (click)="delete(ticket.id)"></i></div></div>
+          <div class="row">
+            <div class="col-3">
+              <p class="text-muted space-font m-0 pointer"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
