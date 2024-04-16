@@ -3,6 +3,7 @@ import { TaskService } from '../../services/task.service';
 import { CookiesService } from '../../services/cookies.service';
 import { ProjectService } from '../../services/project.service';
 import { LoginService } from '../../services/login.service';
+import { RequestService } from '../../services/request.service';
 
 @Component({
   selector: 'app-dashcards',
@@ -12,7 +13,7 @@ import { LoginService } from '../../services/login.service';
   styleUrl: './dashcards.component.css'
 })
 export class DashcardsComponent {
-  constructor(private taskService:TaskService,private cookie:CookiesService, private projectService:ProjectService, private loginService:LoginService){}
+  constructor(private taskService:TaskService,private cookie:CookiesService, private projectService:ProjectService, private loginService:LoginService,private requestService:RequestService){}
 
   tasksCount:any
   projectsCount:any
@@ -39,6 +40,14 @@ export class DashcardsComponent {
       );
     });
   }
+  requestCount:any
+  getRequestCount(id:any){
+    this.requestService.getCount(id).subscribe(
+      (data)=>{
+        this.requestCount=data
+      }
+    )
+  }
 
   getTaskCount(memberId:any){
     return new Promise((resolve, reject) => {
@@ -61,6 +70,7 @@ export class DashcardsComponent {
     this.getDoneTasks(id)
     this.getManagedProjects(id)
     this.getInvitationsCount(id)
+    this.getRequestCount(id)
 
   }
 

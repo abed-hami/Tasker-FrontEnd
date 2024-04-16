@@ -57,7 +57,7 @@ updateRequestStatus(requestId:any,status:any){
       else{
         this.toast.showError("Request was denied!")
       }
-      this.ngOnInit()
+      
       this.visible=false
     } ,
    (err) =>{console.log(err)});
@@ -135,7 +135,7 @@ getUnit(type:any){
       this.requestService.getReceivedRequests(memberId).subscribe(
         (data)=>{
             this.requests=data
-            
+
         }
       )
     }

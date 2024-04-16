@@ -16,6 +16,14 @@ export class TaskService {
     return this.http.get('https://localhost:7183/api/Task/GetUserTask/'+id)
   }
 
+  getTaskById(id:any){
+    return this.http.get("https://localhost:7183/api/Task/"+id)
+  }
+
+  updateTask(object:any){
+    return this.http.put("https://localhost:7183/api/Task/"+object.id,object)
+  }
+
   checkBudget(id:any,amount:any){
     return this.http.get('https://localhost:7183/api/Task/IsSufficientBudget/'+id+"/"+amount);
   }
@@ -35,11 +43,11 @@ export class TaskService {
     return this.http.put("https://localhost:7183/api/Task/UpdateStatus/"+id+"/"+status,null)
   }
 
-  getTasksForManager(id:any){
-    return this.http.get("https://localhost:7183/api/Task/GetProjectForManager/"+id)
+  getTasksForManager(id:any,status:any){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectForManager/"+id+"/"+status)
   }
 
-  getProjectTasks(id:any,projectId:any){
-    return this.http.get("https://localhost:7183/api/Task/GetProjectTask/"+id+"/"+projectId)
+  getProjectTasks(id:any,projectId:any,status:string){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectTask/"+id+"/"+projectId+"/"+status)
   }
 }
