@@ -60,3 +60,83 @@
   transform: translateY(0px);
   transition-duration: 0.3s;
 }
+
+.pro{
+  border-radius: 15px !important;
+}
+
+
+
+tbody{
+  tr:hover{
+    background-color: rgb(247, 247, 247) ;
+
+  }
+  a{
+    cursor: pointer;
+  }
+}
+
+
+
+.B {
+  width: 120px;
+  height: 40px;
+  position: relative;
+  font-family: var(--font);
+  color: #3b82f6;
+  font-weight: 600;
+  background-color: #fff;
+  border: none;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  transition: all ease 100ms;
+  margin-top: 3px;
+}
+
+.B:hover {
+  background-color: #cbdcf8;
+}
+
+.B:focus {
+  background-color: #cbdcf8;
+}
+
+.B::before {
+  content: 'done✅';
+  position: absolute;
+  color: #3b82f6;
+  left: 0;
+  top: -14px;
+  right: 0;
+  transition: all ease 300ms;
+  opacity: 0%;
+}
+
+.B:focus::before {
+  opacity: 100%;
+  transform: translatey(26px);
+}
+
+.submit {
+  transition: all ease 100ms;
+  opacity: 100%;
+}
+
+.B:focus > .submit {
+  opacity: 0%;
+}
+
+.w{
+  width:290px !important
+}
+
+.request{
+  margin-top: 30px !important;
+  border-top:1px solid #E5E7EB;
+  padding-top: 15px
+
+}
+
+

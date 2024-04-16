@@ -16,6 +16,10 @@ export class RequestService {
     return this.http.put("https://localhost:7183/api/Request/UpdateStatus/"+id+"/"+status,null)
   }
 
+  getCount(id:any){
+    return this.http.get("https://localhost:7183/api/Request/GetReceivedRequestCount/"+id)
+  }
+
   getProjectRequest(projectId:any){
     return this.http.get("https://localhost:7183/api/Request/GetProjectRequest/"+projectId)
   }

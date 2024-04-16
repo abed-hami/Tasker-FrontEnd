@@ -21,17 +21,20 @@ import { Task } from '../../models/task';
 import { TeamService } from '../../services/team.service';
 import { PhasesService } from '../../services/phases.service';
 import { ProjectService } from '../../services/project.service';
+import { subtask } from '../../models/subtasks';
 
+import { DropdownModule } from 'primeng/dropdown';
 @Component({
   selector: 'app-project-tasks',
   standalone: true,
-  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule],
+  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule,DropdownModule],
   templateUrl: './project-tasks.component.html',
   styleUrl: './project-tasks.component.css'
 })
 export class ProjectTasksComponent {
   visible1=false
   visible2=false
+  selectedCity= {name:"Pending"};
   position:any
   id:any
   tasks:any
@@ -42,6 +45,7 @@ export class ProjectTasksComponent {
   count:any
   completed:any
   request:Request=new Request()
+  options:any
   constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private teamService:TeamService,private phaseService:PhasesService,private projectService:ProjectService){}
   pageSize = 4;
   pageNumber = 0;
@@ -49,11 +53,54 @@ export class ProjectTasksComponent {
   phases:any
   projectId:any
 
+  subObject : subtask=new subtask()
+
+  taskInfo:any
+
+  getTaskById(id:any){
+    this.taskService.getTaskById(id).subscribe(
+      (data:any)=>{
+        const deadline= data.deadline.split("T")
+        const start= data.startDate.split("T")
+        this.editTaskObject.id=data.id,
+        this.editTaskObject.name=data.name
+        this.editTaskObject.description=data.description
+        this.editTaskObject.budget=data.budget
+        this.editTaskObject.deadline=deadline[0]
+        this.editTaskObject.memberId=data.memberId
+        this.editTaskObject.priority=data.priority
+        this.editTaskObject.projectId=data.projectId
+        this.editTaskObject.startDate=start[0]
+        this.editTaskObject.status=data.status
+
+
+      }
+    )
+  }
+
+  editTask(){
+    this.taskService.updateTask(this.editTaskObject).subscribe(
+      (data)=>{
+        this.toast.showSuccess("Task Edited Successfully")
+        this.visible4=false
+        this.getTasks()
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
 
 
   taskObject : Task = new Task()
+
+  editTaskObject : Task = new Task()
   get totalPages() {
     return Math.ceil(this.tasks.length / this.pageSize);
+  }
+
+  get totalCompletedPages() {
+    return Math.ceil(this.completedTasks.length / this.pageSize);
   }
 
   getPhasesByProject(id:any){
@@ -66,6 +113,11 @@ export class ProjectTasksComponent {
   get paginatedTasks() {
     const start = this.pageNumber * this.pageSize;
     return (this.tasks || []).slice(start, start + this.pageSize);
+  }
+
+  get paginatedCompletedTasks() {
+    const start = this.pageNumber * this.pageSize;
+    return (this.completedTasks || []).slice(start, start + this.pageSize);
   }
 
   goToPage(page: number) {
@@ -110,7 +162,14 @@ export class ProjectTasksComponent {
     this.getUserInfo()
     this.getTeamByProject(this.projectId)
     this.getPhasesByProject(this.projectId)
+    this.options = [
 
+      { name: 'Pending' },
+      { name: 'Completed' },
+
+
+
+  ];
 
   }
 
@@ -155,6 +214,7 @@ export class ProjectTasksComponent {
   }
   clearForm(){
     this.taskObject = {
+      id:'',
       name: '',
       memberId: '',
       status:'',
@@ -167,7 +227,41 @@ export class ProjectTasksComponent {
       description: ''
     };
   }
+  visible3=false
+  visible4=false
 
+
+  showTaskDetails(taskId:any){
+    this.taskId=taskId
+
+    this.visible4=true;
+    this.getTaskById(taskId)
+
+  }
+
+
+
+
+  addSubTask(){
+    this.subObject.taskId=this.taskId
+    this.subObject.status="Pending"
+    this.subTaskService.addSubTask(this.subObject).subscribe(
+      (data)=>{
+        this.toast.showSuccess("SubTask Added Successfully")
+        this.subObject.name=""
+        this.getSubTasks(this.taskId)
+        this.getAllSubCount(this.taskId)
+        this.getProgress(this.taskId)
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
+  }
+
+  addSubDialog(){
+    this.visible3=true
+  }
   createTask(taskObject:any){
     this.taskService.assignTask(this.taskObject).subscribe(
       (data)=>{
@@ -178,14 +272,9 @@ export class ProjectTasksComponent {
 
       },
       (error)=>{
-        if(error instanceof HttpErrorResponse){
-          if(error.status==404){
-            this.toast.showWarn("Member exceeded Task Limit!")
-          }
-          if(error.status==400){
-            this.toast.showWarn("Error In Task Dates!")
-          }
-        }
+
+          this.messageResponse(error)
+
 
       }
     )
@@ -193,6 +282,15 @@ export class ProjectTasksComponent {
 
   }
 
+  messageResponse(status:any){
+    if(status.status==404){
+      return this.toast.showWarn("Member exceeded Task Limit!")
+    }
+    else{
+      return this.toast.showWarn("Error In Task Dates!")
+    }
+
+  }
 
 
 
@@ -247,6 +345,7 @@ export class ProjectTasksComponent {
     this.taskService.updateStatus(id).subscribe(
       (data)=>{
         this.toast.showSuccess('Task Completed')
+        this.visible1=false
         this.getTasks()
       },
       (error)=>{
@@ -314,9 +413,7 @@ export class ProjectTasksComponent {
     this.width=`style="width: ${this.getProgress(id)}%"`
   }
 
-  editTask(id:any){
-    alert(id)
-  }
+
 
   showSubDialog(id:any){
 
@@ -329,28 +426,39 @@ export class ProjectTasksComponent {
   getTasks(){
     if(this.position=="manager"){
       this.tasks=""
-      this.taskService.getTasksForManager(this.projectId).subscribe(
+      this.completedTasks=""
+      this.taskService.getTasksForManager(this.projectId,"null").subscribe(
         (data:any)=>{
 
               this.tasks=data
 
+        }
+      )
 
+      this.taskService.getTasksForManager(this.projectId,"completed").subscribe(
+        (data:any)=>{
 
-
+              this.completedTasks=data
 
         }
       )
     }
     else{
       this.tasks=""
-      this.taskService.getProjectTasks(this.id,localStorage.getItem("projectId")).subscribe(
+      this.completedTasks=""
+      this.taskService.getProjectTasks(this.id,localStorage.getItem("projectId"),"null").subscribe(
         (data:any)=>{
           this.tasks=data
+        }
+      )
 
-
+      this.taskService.getProjectTasks(this.id,localStorage.getItem("projectId"),"completed").subscribe(
+        (data:any)=>{
+          this.completedTasks=data
         }
       )
     }
+
 
   }
 

@@ -1,0 +1,183 @@
+<div class=" pl-5 pt-10 m-auto mt-5 bg-white pro ">
+  <div class="buttons pb-3">
+    <div class="flex gap-3">
+      <h6>Announcements</h6>
+    @if(position=="manager"){
+      <button
+   class="group cursor-pointer outline-none hover:rotate-90 duration-300"
+   title="Create Task" (click)="showDialog2()"
+ >
+   <svg
+     class="stroke-blue-500 fill-none group-hover:fill-bluee-500 group-active:stroke-blue-200 group-active:fill-blue-600 group-active:duration-0 duration-300"
+     viewBox="0 0 24 24"
+     height="20px"
+     width="20px"
+     xmlns="http://www.w3.org/2000/svg"
+   >
+     <path
+       stroke-width="1.5"
+       d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z"
+     ></path>
+     <path stroke-width="1.5" d="M8 12H16"></path>
+     <path stroke-width="1.5" d="M12 16V8"></path>
+   </svg>
+ </button>
+   }
+    </div>
+
+
+  </div>
+
+
+  <p-dialog header="Announcement Details" [modal]="true" [(visible)]="visible" [style]="{'width': '50vw'}" [maximizable]="true">
+    <div class="p-fluid p-3">
+      <div>
+        <div class="">
+          <div class="flex gap-10">
+            <div class="mb-5">
+              <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                  Announcement
+              </label>
+              <input type="text" name="announcement1" id="announcement1" [(ngModel)]="announcementObject.announcement1"   [required]="true"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+          </div>
+          <div class="mb-5">
+            <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                Date
+            </label>
+            <input type="datetime-local" name="announcementDate" id="announcementDate" [(ngModel)]="announcementObject.announcemenetDate"  [required]="true"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+          </div>
+          <div class="md:col-span-2">
+            <span class="mb-3 block text-base font-medium text-[#07074D]">Description:</span>
+            <textarea [(ngModel)]="announcementObject.description"  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ></textarea>
+          </div>
+        </div>
+        <div class="flex justify-around">
+          <div class="mt-4 flex justify-start">
+          <button class="px-4 py-2 rounded-md w-20 text-white text-base bg-blue-500 hover:bg-blue-600 focus:outline-none" (click)="editAnnouncement()">Edit </button>
+        </div>
+        <div class="mt-4 flex justify-start">
+          <button class="px-4 py-2 rounded-md w-20 text-white text-base bg-red-500 hover:bg-red-600 focus:outline-none" (click)="delete(announcementId)">Delete </button>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </p-dialog>
+
+
+  <p-dialog header="Announcement Form" [modal]="true" [(visible)]="visible2" [style]="{'width': '50vw'}" [maximizable]="true">
+    <div class="p-fluid p-3">
+      <form action="" #form="ngForm" (submit)="this.form.reset()" autocomplete="false">
+      <div>
+        <div class="">
+          <div class="flex gap-6">
+            <div class="mb-5">
+              <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                  Announcement
+              </label>
+              <input type="text" name="announcement1" id="announcement1" [(ngModel)]="announcementObject2.announcement1" ngModel  [required]="true" autocomplete="off"
+                  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+          </div>
+          <div class="mb-5">
+            <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                Date
+            </label>
+            <input type="datetime-local" name="announcementDate" id="announcementDate" [(ngModel)]="announcementObject2.announcemenetDate" ngModel [required]="true"
+                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+        </div>
+          </div>
+          <div class="md:col-span-2">
+            <span class="mb-3 block text-base font-medium text-[#07074D]">Description:</span>
+            <textarea name="description" id="description" ngModel [(ngModel)]="announcementObject2.description"  class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" ></textarea>
+          </div>
+        </div>
+        <div class="mt-4 flex justify-start">
+          <button class="px-4 py-2 w-20 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600 focus:outline-none" (click)="addAnnouncement()">Add </button>
+        </div>
+      </div>
+    </form>
+    </div>
+  </p-dialog>
+
+
+
+    <div >
+      <table class=" w-full min-w-max table-auto text-left t ">
+      <thead class="sticky top-0 bg-white">
+        <tr>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+              <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center text-center justify-between gap-2 font-normal leading-none opacity-70">Announcement
+            </p>
+          </th>
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Date
+            </p>
+          </th>
+
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Time
+            </p>
+          </th>
+
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Assignee <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+              </svg>
+            </p>
+          </th>
+
+          <th class="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50">
+            <p class="antialiased font-sans text-sm text-blue-gray-900 flex items-center justify-between gap-2 font-normal leading-none opacity-70">Description <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true" class="h-4 w-4">
+
+              </svg>
+            </p>
+          </th>
+
+        </tr>
+      </thead>
+      <tbody >
+        @for(task of announcements; track task.id){
+          @if(getDate(task.announcementDate)>=today){
+  <tr  class="cursor-pointer " (click)="showDialog(task.id)"  >
+
+
+                <td class="p-4 border-b border-blue-gray-50">
+                  <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.announcement}}</p>
+                </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.announcementDate | date}}</p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.announcementDate |date: 'h:mm a' }}</p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.assignee}}</p>
+          </td>
+          <td class="p-4 border-b border-blue-gray-50">
+            <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.announcementDescription}}</p>
+          </td>
+
+
+        </tr>
+          }
+
+
+
+
+
+        }
+
+
+
+      </tbody>
+    </table>
+
+    </div>
+
+
+
+</div>
+

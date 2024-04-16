@@ -21,6 +21,7 @@ import { ProjectRequestsComponent } from './project-controls/project-requests/pr
 
 import { TimelineComponent } from './project-controls/timeline/timeline.component';
 import { ProjectTasksComponent } from './project-controls/project-tasks/project-tasks.component';
+import { AnnouncementsComponent } from './project-controls/announcements/announcements.component';
 
 
 export const routes: Routes = [
@@ -50,7 +51,8 @@ export const routes: Routes = [
         children:[
           {path:'members',component:MemberPageComponent},
           {path:'projectTasks',component:ProjectTasksComponent},
-          {path:'timeline',component:TimelineComponent}
+          {path:'timeline',component:TimelineComponent},
+          {path:'announcements',component:AnnouncementsComponent},
         ] }
 
         ]

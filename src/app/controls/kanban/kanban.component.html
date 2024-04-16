@@ -415,7 +415,7 @@
         <!---->
         <div
           draggable="true"
-          *ngFor="let ticket of getStatusArray('To Do')"
+          *ngFor="let ticket of todo"
           class="card-Body-Hover m-1 rounded-1 task"
           (dragstart)="onDragStart(ticket)"
         >
@@ -442,7 +442,7 @@
         <!---->
         <div
           draggable="true"
-          *ngFor="let ticket of getStatusArray('In Progress')"
+          *ngFor="let ticket of inProgress"
           class="card-Body-Hover m-1 rounded-1 task"
           (dragstart)="onDragStart(ticket)"
         >
@@ -468,7 +468,7 @@
         <!---->
         <div
           draggable="true"
-          *ngFor="let ticket of getStatusArray('Done')"
+          *ngFor="let ticket of done"
           class="card-Body-Hover m-1 rounded-1 task"
           (dragstart)="onDragStart(ticket)"
         >

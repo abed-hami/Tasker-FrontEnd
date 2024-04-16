@@ -79,7 +79,9 @@ onDrop(event:any,status:any){
     record.status=status
 
     this.updateStatus(record.id,status)
-    this.ngOnInit()
+
+
+
   }
 
   this.currentItem=null
@@ -95,7 +97,9 @@ updateStatus(id:any,status:any){
 
   this.kanabService.updateStatus(id,status).subscribe(
     (data)=>{
-
+      this.getDoneList()
+    this.getPendingList()
+    this.getToDoList()
     },
     (error)=>{
       console.log(error)
@@ -126,9 +130,9 @@ drop(event: CdkDragDrop<any>) {
 
   constructor(private kanabService:KanbanService,private cookieService:CookiesService,private toast:ToastService,private cookie:CookiesService){}
 
-  todo:any[]=[]
-  done:any[]=[]
-  inProgress:any[]=[]
+  todo:any
+  done:any
+  inProgress:any
 
 
 

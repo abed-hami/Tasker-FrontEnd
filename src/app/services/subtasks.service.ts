@@ -27,4 +27,8 @@ export class SubtasksService {
   getProgress(taskId:any){
     return this.http.get("https://localhost:7183/api/SubTask/GetProgress/"+taskId)
   }
+
+  addSubTask(subtask:any){
+    return this.http.post("https://localhost:7183/api/SubTask",subtask)
+  }
 }
