@@ -33,6 +33,8 @@ export class ProjectsListComponent {
   }
 
 
+
+
   getInvitations(memberId:any){
     this.projectService.getInvitations(memberId).subscribe(
       (data)=>{
@@ -50,12 +52,28 @@ export class ProjectsListComponent {
   pageNumber = 0;
   options: any
   get totalPages() {
-    return Math.ceil(this.projects.length / this.pageSize);
+    return Math.ceil(this.filteredProjects.length / this.pageSize);
   }
+
+
+  searchTerm: string = '';
+
+
+  get filteredProjects() {
+    if (!this.searchTerm) {
+      return this.projects;
+    }
+
+    return this.projects.filter((project: any) =>
+      project.projectName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
   get paginatedProjects() {
     const start = this.pageNumber * this.pageSize;
-    return (this.projects || []).slice(start, start + this.pageSize);
+    return (this.filteredProjects || []).slice(start, start + this.pageSize);
   }
+
 
   goToPage(page: number) {
     this.pageNumber = page;

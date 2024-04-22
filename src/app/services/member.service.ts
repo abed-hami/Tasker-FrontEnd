@@ -15,4 +15,12 @@ export class MemberService {
   getAllMembers(){
     return this.http.get("https://localhost:7183/api/Member")
   }
+
+  updateUserInfo(userObject:any){
+    return this.http.put("https://localhost:7183/api/Member/"+userObject.id,userObject)
+  }
+
+  updatePassword(id:any,oldPassword:any,newPassword:any){
+    return this.http.put("https://localhost:7183/api/Member/UpdatePassword/"+id+"/"+oldPassword+"/"+newPassword,null)
+  }
 }

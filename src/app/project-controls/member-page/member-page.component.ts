@@ -93,16 +93,25 @@ export class MemberPageComponent {
     )
   }
 
-
+  searchTerm:any
   team:any
   pageSize = 5;
   pageNumber = 0;
   get totalPages() {
-    return Math.ceil(this.team.length / this.pageSize);
+    return Math.ceil(this.filteredProjects.length / this.pageSize);
+  }
+  get filteredProjects() {
+    if (!this.searchTerm) {
+      return this.team;
+    }
+
+    return this.team.filter((task: any) =>
+      task.memberName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
   get paginatedTeam() {
     const start = this.pageNumber * this.pageSize;
-    return (this.team || []).slice(start, start + this.pageSize);
+    return (this.filteredProjects || []).slice(start, start + this.pageSize);
   }
   goToPage(page: number) {
     this.pageNumber = page;

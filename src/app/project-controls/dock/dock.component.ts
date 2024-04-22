@@ -18,7 +18,7 @@ export class DockComponent {
 
   ngOnInit() {
       this.items = [
-          { label: 'Dashboard', icon: 'fa fa-bar-chart',routerLink:"" },
+          { label: 'Dashboard', icon: 'fa fa-bar-chart',routerLink:"projectDashboard" },
           { label: 'Timeline', icon: 'far fa-stream',routerLink:"timeline" },
           { label: 'Team', icon: 'fa fa-group',routerLink:"members" },
           { label: 'Tasks', icon: 'pi pi-fw pi-file',routerLink:"projectTasks" },

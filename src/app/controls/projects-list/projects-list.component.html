@@ -127,6 +127,8 @@
 
 </div>
 </p-dialog>
+
+
     <div class="mt-12 mx-4 py-7  px-8 bg-white pro ">
 
   <div class="flex gap-3 pb-3 justify-between">
@@ -152,10 +154,20 @@
     <path stroke-width="1.5" d="M12 16V8"></path>
   </svg>
 </button>
+
     </div>
 
-    <p-dropdown [options]="options" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Projects List" ></p-dropdown>
+    <div class="gap-3 flex">
 
+<p-dropdown [options]="options" [(ngModel)]="selectedCity" optionLabel="name" [showClear]="true" placeholder="Projects List" ></p-dropdown>
+
+      <div class="group">
+        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><g><path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path></g></svg>
+        <input placeholder="Search" type="search" class="input" [(ngModel)]="searchTerm" (input)="goToPage(0)">
+      </div>
+
+
+    </div>
 
 
   </div>
@@ -200,7 +212,7 @@
     </thead>
     <tbody *ngFor="let project of paginatedProjects" >
 
-      <tr (click)="setId(project.projectId)" routerLink="view" (click)="navigateto(project.teamPosition)">
+      <tr (click)="setId(project.projectId)" routerLink="view/projectDashboard" (click)="navigateto(project.teamPosition)">
 
         <td class="p-4 border-b border-blue-gray-50">
           <div class="flex items-center gap-3">
@@ -330,7 +342,10 @@
 </div>
 @if(selectedCity.name=='All'){
   <div class="flex justify-end">
-  <button class=" px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" *ngFor="let page of [].constructor(totalPages); let i = index" (click)="goToPage(i)" style="padding: 2px 8px;">{{ i + 1 }}</button>
+    <div class="flex justify-end">
+      <button *ngIf="pageNumber > 0" class="px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" (click)="goToPage(pageNumber - 1)" style="padding: 2px 8px;">Previous</button>
+      <button *ngIf="pageNumber < totalPages - 1" class="px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" (click)="goToPage(pageNumber + 1)" style="padding: 2px 8px;">Next</button>
+    </div>
 </div>
 }
 

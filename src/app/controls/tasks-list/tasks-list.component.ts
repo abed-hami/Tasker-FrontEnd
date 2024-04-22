@@ -38,12 +38,25 @@ export class TasksListComponent {
   constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService){}
   pageSize = 4;
   pageNumber = 0;
+
   get totalPages() {
     return Math.ceil(this.tasks.length / this.pageSize);
   }
+  searchTerm: string = '';
+
+
+  get filteredProjects() {
+    if (!this.searchTerm) {
+      return this.tasks;
+    }
+
+    return this.tasks.filter((task: any) =>
+      task.taskName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
   get paginatedTasks() {
     const start = this.pageNumber * this.pageSize;
-    return (this.tasks || []).slice(start, start + this.pageSize);
+    return (this.filteredProjects || []).slice(start, start + this.pageSize);
   }
 
   goToPage(page: number) {
