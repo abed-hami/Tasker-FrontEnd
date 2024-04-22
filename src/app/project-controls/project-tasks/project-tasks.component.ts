@@ -86,7 +86,7 @@ export class ProjectTasksComponent {
         this.getTasks()
       },
       (error)=>{
-        console.log(error)
+        this.toast.showWarn("Project Budget Insufficient")
       }
     )
   }
@@ -96,11 +96,11 @@ export class ProjectTasksComponent {
 
   editTaskObject : Task = new Task()
   get totalPages() {
-    return Math.ceil(this.tasks.length / this.pageSize);
+    return Math.ceil(this.filteredProjects.length / this.pageSize);
   }
 
   get totalCompletedPages() {
-    return Math.ceil(this.completedTasks.length / this.pageSize);
+    return Math.ceil(this.filteredCompletedProjects.length / this.pageSize);
   }
 
   getPhasesByProject(id:any){
@@ -110,14 +110,40 @@ export class ProjectTasksComponent {
       }
     )
   }
+  searchTerm: string = '';
+
+  searchTerm2:string=''
+
+
+  get filteredProjects() {
+    if (!this.searchTerm) {
+      return this.tasks;
+    }
+
+    return this.tasks.filter((task: any) =>
+      task.taskName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  get filteredCompletedProjects() {
+    if (!this.searchTerm2) {
+      return this.completedTasks;
+    }
+
+    return this.completedTasks.filter((task: any) =>
+      task.taskName.toLowerCase().includes(this.searchTerm2.toLowerCase())
+    );
+  }
+
+
   get paginatedTasks() {
     const start = this.pageNumber * this.pageSize;
-    return (this.tasks || []).slice(start, start + this.pageSize);
+    return (this.filteredProjects || []).slice(start, start + this.pageSize);
   }
 
   get paginatedCompletedTasks() {
     const start = this.pageNumber * this.pageSize;
-    return (this.completedTasks || []).slice(start, start + this.pageSize);
+    return (this.filteredCompletedProjects || []).slice(start, start + this.pageSize);
   }
 
   goToPage(page: number) {

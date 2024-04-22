@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home/home.component';
 import { LoginComponent } from './home/login/login.component';
 import { SignupComponent } from './home/signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+
 import { CalendarComponent } from './controls/calendar/calendar.component';
 import { TasksComponent } from './controls/tasks/tasks.component';
 import { TodoComponent } from './controls/todo/todo.component';
@@ -22,6 +23,7 @@ import { ProjectRequestsComponent } from './project-controls/project-requests/pr
 import { TimelineComponent } from './project-controls/timeline/timeline.component';
 import { ProjectTasksComponent } from './project-controls/project-tasks/project-tasks.component';
 import { AnnouncementsComponent } from './project-controls/announcements/announcements.component';
+import { ProjectDashComponent } from './project-controls/project-dash/project-dash.component';
 
 
 export const routes: Routes = [
@@ -49,6 +51,7 @@ export const routes: Routes = [
           { path: '', component: ProjectsListComponent },
           { path: 'view', component: ProjectViewComponent,
         children:[
+          {path:'projectDashboard',component:ProjectDashComponent},
           {path:'members',component:MemberPageComponent},
           {path:'projectTasks',component:ProjectTasksComponent},
           {path:'timeline',component:TimelineComponent},

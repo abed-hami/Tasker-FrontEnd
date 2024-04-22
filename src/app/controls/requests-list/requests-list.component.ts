@@ -28,9 +28,9 @@ export class RequestsListComponent {
   constructor(private requestService:RequestService,private cookie:CookiesService,private toast:ToastService,private taskService:TaskService){}
 
   requests:any
-  pageSize = 4;
+  pageSize = 6;
 pageNumber = 0;
-pageSize2 = 4;
+pageSize2 = 6;
 pageNumber2 = 0;
 received:any
 requestId:any
@@ -53,14 +53,25 @@ updateRequestStatus(requestId:any,status:any){
     (data)=>{
       if(status=="accepted"){
         this.toast.showSuccess("Request was accepted!")
+        this.visible=false
       }
-      else{
+      if(status=="denied"){
         this.toast.showError("Request was denied!")
+        this.visible=false
       }
-      
-      this.visible=false
+
+      this.getMemberRequests(this.cookie.getCookieId())
+    this.getReceivedRequests(this.cookie.getCookieId())
     } ,
-   (err) =>{console.log(err)});
+   (err) =>{
+  if(err.status==400){
+    this.toast.showWarn("Project Budget Insufficient")
+    this.getMemberRequests(this.cookie.getCookieId())
+    this.getReceivedRequests(this.cookie.getCookieId())
+    this.visible=false
+  }
+
+   });
 }
 
 goToPreviousPage() {
@@ -71,7 +82,7 @@ goToPreviousPage() {
 
 get totalPages() {
 
-  return Math.ceil(this.requests.length / this.pageSize);
+  return Math.ceil(this.filteredProjects.length / this.pageSize);
 
 }
 
@@ -84,7 +95,7 @@ goToPage(page: number) {
   const start = this.pageNumber * this.pageSize;
   if(this.selectedCity==undefined||this.selectedCity.name=='Sent'){
 this.flag=0
-  return (this.requests || []).slice(start, start + this.pageSize);
+  return (this.filteredProjects || []).slice(start, start + this.pageSize);
 
   }
   else{this.flag=1
@@ -92,6 +103,18 @@ this.flag=0
 
   }
 
+}
+
+selectedStatus= {name:"pending"};
+
+get filteredProjects() {
+  if (this.selectedStatus.name=="All") {
+    return this.requests;
+  }
+
+  return this.requests.filter((request: any) =>
+    request.requestStatus.toLowerCase().includes(this.selectedStatus.name.toLowerCase())
+  );
 }
 
 
@@ -158,18 +181,24 @@ getUnit(type:any){
       }
     )
   }
-
+options2:any
   ngOnInit(){
     this.getMemberRequests(this.cookie.getCookieId())
     this.getReceivedRequests(this.cookie.getCookieId())
     this.options = [
-
       { name: 'Sent' },
       { name: 'Received' },
-
-
-
   ];
+
+  this.options2 = [
+
+
+    { name: 'Pending' },
+    { name: 'Accepted' },
+    { name: 'Denied' },
+
+
+];
   }
 
 
