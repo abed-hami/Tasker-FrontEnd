@@ -14,6 +14,8 @@ export class LoginService {
 
   loginUrl="https://localhost:7183/api/Member/Login";
 
+  
+
   Login(member:any){
     return this.http.get(this.loginUrl+"/"+member.email+"/"+member.password);
   }
@@ -26,5 +28,5 @@ export class LoginService {
   return this.http.get("https://localhost:7183/api/Member/GetLoggedInUser");
  }
 
- 
+
 }

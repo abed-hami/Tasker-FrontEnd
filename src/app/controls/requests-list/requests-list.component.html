@@ -170,8 +170,8 @@
 @if(selectedCity.name=="Received"){
   <div class="flex justify-end">
     <div class="flex justify-end">
-      <button *ngIf="pageNumber > 0" class="px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" (click)="goToReceivedPage(pageNumber - 1)" style="padding: 2px 8px;">Previous</button>
-      <button *ngIf="pageNumber < totalReceivedPages - 1" class="px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" (click)="goToReceivedPage(pageNumber + 1)" style="padding: 2px 8px;">Next</button>
+      <button *ngIf="pageNumber > 0" class="px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" (click)="goToPage(pageNumber - 1)" style="padding: 2px 8px;">Previous</button>
+      <button *ngIf="pageNumber < totalReceivedPages - 1" class="px-2 border-blue-600 bg-gray-400 text-white text-sm shadow-md hover:bg-gray-500 focus:outline-none focus:bg-gray-500" (click)="goToPage(pageNumber + 1)" style="padding: 2px 8px;">Next</button>
     </div>
   </div>
 }

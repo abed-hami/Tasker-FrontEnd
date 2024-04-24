@@ -3,7 +3,7 @@ import { CalendarComponent } from "../calendar/calendar.component";
 import { DashcardsComponent } from "../../home-controls/dashcards/dashcards.component";
 import { PriorityPieComponent } from "../../home-controls/priority-pie/priority-pie.component";
 import { ProjectsbarComponent } from "../../home-controls/projectsbar/projectsbar.component";
-
+import { SidebarModule } from 'primeng/sidebar';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -19,7 +19,7 @@ import { RemindersComponent } from "../../home-controls/reminders/reminders.comp
     standalone: true,
     templateUrl: './homedash.component.html',
     styleUrl: './homedash.component.css',
-    imports: [CalendarComponent, DashcardsComponent, PriorityPieComponent, ProjectsbarComponent, FullCalendarModule, DialogModule, CommonModule, FormsModule, RemindersComponent]
+    imports: [CalendarComponent, DashcardsComponent, PriorityPieComponent, ProjectsbarComponent, FullCalendarModule, DialogModule, CommonModule, FormsModule, RemindersComponent,SidebarModule]
 })
 export class HomedashComponent {
   constructor(private taskService: TaskService, private cookieService: CookiesService) {}
@@ -66,7 +66,7 @@ export class HomedashComponent {
   };
 
   ngOnInit() {
-   
+
   }
 
 

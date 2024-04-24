@@ -10,6 +10,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ToastService } from '../../services/toast.service';
 import { TaskService } from '../../services/task.service';
+import { HubConnection, HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 @Component({
   selector: 'app-requests-list',
   standalone: true,
@@ -20,7 +21,7 @@ import { TaskService } from '../../services/task.service';
 export class RequestsListComponent {
   options: any;
   visible=false
-
+  private _hubConnection!: HubConnection;
   selectedCity= {name:"Sent"};
 
 
@@ -199,6 +200,30 @@ options2:any
 
 
 ];
+
+this._hubConnection = new HubConnectionBuilder()
+      .withUrl('https://localhost:7183/requestHub')
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    this._hubConnection
+      .start()
+      .then(() => console.log('request Connection started!'))
+      .catch(err => console.log(err));
+
+    this._hubConnection.on('receiveRequest', (request:any) => {
+      if(request==this.cookie.getCookieId()){
+        
+        this.getReceivedRequests(this.cookie.getCookieId())
+       console.log("okii")
+
+
+      }
+
+
+
+    });
+
   }
 
 

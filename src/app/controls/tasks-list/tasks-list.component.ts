@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { Request } from '../../models/request';
 import { RequestService } from '../../services/request.service';
+import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
@@ -94,10 +95,31 @@ export class TasksListComponent {
     )
   }
 
-
+  private _hubConnection!: HubConnection;
+  token:any
   ngOnInit(){
-
+  
     this.getUserInfo()
+
+    this._hubConnection = new HubConnectionBuilder()
+      .withUrl('https://localhost:7183/taskHub')
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    this._hubConnection
+      .start()
+      .then(() => console.log('Connection started!'))
+      .catch(err => console.log(err));
+
+    this._hubConnection.on('sendTask', (task:any) => {
+      if(task.memberId==this.id){
+        this.toast.showInfo("new task added")
+        this.getUserTasks()
+      }
+
+
+
+    });
 
 
   }
