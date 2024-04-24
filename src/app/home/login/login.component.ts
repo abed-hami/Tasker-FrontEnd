@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { login } from '../../models/login';
 import { CookiesService } from '../../services/cookies.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -25,14 +26,14 @@ export class LoginComponent {
   useId:any
 
 
-  constructor(private loginService: LoginService, private http:HttpClient,private router:Router,private cookieService:CookiesService) {}
+  constructor(private loginService: LoginService, private http:HttpClient,private router:Router,private cookieService:CookiesService,private toast:ToastService) {}
 
 
   loginFunction(){
     const email = document.getElementById('email') as HTMLInputElement
     const pass = document.getElementById('password') as HTMLInputElement
     if(email.value==''||pass.value==''){
-      alert("fill all fields")
+      this.toast.showWarn("Fill all fields")
     }
     else{
       this.loginService.Login(this.loginObject).subscribe((data)=>{
@@ -40,10 +41,13 @@ export class LoginComponent {
       this.token=data
       localStorage.setItem("myToken", this.token.token);
 
-        
+
         this.router.navigate(['/dashboard'])
 
-    })
+    },
+  (error)=>{
+    this.toast.showWarn("Wrong email or password")
+  })
     }
 
   }

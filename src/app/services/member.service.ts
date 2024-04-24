@@ -12,6 +12,7 @@ export class MemberService {
     return this.http.get("https://localhost:7183/api/Member/"+id)
   }
 
+
   getAllMembers(){
     return this.http.get("https://localhost:7183/api/Member")
   }
