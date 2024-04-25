@@ -14,6 +14,10 @@ export class NotificationsHubService {
     return this.http.get("https://localhost:7183/api/Notification/GetUserNotification/"+memberId)
   }
 
+  deleteNotification(id:any){
+    return this.http.delete("https://localhost:7183/api/Notification/"+id)
+  }
+
   getNotificationCount(memberId:any){
     return this.http.get("https://localhost:7183/api/Notification/GetNotificationCount/"+memberId)
   }

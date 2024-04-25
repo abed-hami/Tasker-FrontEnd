@@ -85,7 +85,7 @@
       </tr>
     </thead>
     <tbody  >
-      <ng-container *ngFor="let request of paginatedRequests">
+      <ng-container *ngFor="let request of paginatedRequests.slice().reverse()">
             <tr  class="cursor-pointer hover" (click)="openDialog(request.requestId)" >
         <td class="p-4 border-b border-blue-gray-50">
           <div class="flex items-center gap-3">

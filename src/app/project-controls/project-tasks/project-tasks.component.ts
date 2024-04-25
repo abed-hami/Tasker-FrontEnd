@@ -24,6 +24,7 @@ import { ProjectService } from '../../services/project.service';
 import { subtask } from '../../models/subtasks';
 
 import { DropdownModule } from 'primeng/dropdown';
+import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
 @Component({
   selector: 'app-project-tasks',
   standalone: true,
@@ -37,6 +38,7 @@ export class ProjectTasksComponent {
   selectedCity= {name:"Pending"};
   position:any
   id:any
+  private _hubConnection!: HubConnection;
   tasks:any
   taskId:any
   subTasks:any
@@ -196,6 +198,27 @@ export class ProjectTasksComponent {
 
 
   ];
+
+
+  this._hubConnection = new HubConnectionBuilder()
+      .withUrl('https://localhost:7183/taskHub')
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    this._hubConnection
+      .start()
+      .then(() => console.log('task Connection started!'))
+      .catch(err => console.log(err));
+
+    this._hubConnection.on('submitTask', (request:any) => {
+      if(request==this.cookie.getCookieId()){
+
+          this.getTasks()
+
+
+
+      }
+    });
 
   }
 
