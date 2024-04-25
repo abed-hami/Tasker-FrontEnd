@@ -41,6 +41,14 @@ export class DashnavComponent {
   valueToSend=this.visible;
   new:any
 
+  deleteNotification(id:any){
+    this.notificationService.deleteNotification(id).subscribe(
+      (data)=>{
+        this.getNotification(this.id)
+      }
+    )
+  }
+
   showDialog() {
     this.visible = true;
     if(this.new){
@@ -113,10 +121,6 @@ export class DashnavComponent {
 
 
     });
-
-
-
-
 
 
   }

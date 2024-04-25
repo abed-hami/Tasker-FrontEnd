@@ -1,5 +1,6 @@
 <!-- component -->
-<div class="flex h-screen">
+@if(loading==false){
+  <div class="flex h-screen">
   <!-- Left Pane -->
   <div class="hidden lg:flex items-center justify-center flex-1 bg-white text-black bg-dark dark:bg-gray-900">
     <div class="max-w-md ">
@@ -47,3 +48,12 @@
     </div>
   </div>
 </div>
+}
+
+@if(loading==true){
+  <div class="flex items-center justify-center" style="height: 100vh;">
+    <div class="spinner "></div>
+  </div>
+
+}
+

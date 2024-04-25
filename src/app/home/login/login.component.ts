@@ -25,6 +25,8 @@ export class LoginComponent {
 
   useId:any
 
+  loading=false
+
 
   constructor(private loginService: LoginService, private http:HttpClient,private router:Router,private cookieService:CookiesService,private toast:ToastService) {}
 
@@ -36,16 +38,17 @@ export class LoginComponent {
       this.toast.showWarn("Fill all fields")
     }
     else{
+      this.loading=true
+
       this.loginService.Login(this.loginObject).subscribe((data)=>{
-        console.log()
+
       this.token=data
       localStorage.setItem("myToken", this.token.token);
-
-
         this.router.navigate(['/dashboard'])
 
     },
   (error)=>{
+    this.loading=false
     this.toast.showWarn("Wrong email or password")
   })
     }

@@ -590,7 +590,8 @@
         </tr>
       </thead>
       <tbody >
-        @if(selectedCity.name=="Pending"){@for(task of paginatedTasks; track task.id){
+        @if(selectedCity.name=="Pending"){
+          @for(task of paginatedTasks.slice().reverse(); track task.id){
 
               <tr (click)="showDetailsDialog(task.taskId,task.assigneeId)" class="cursor-pointer" >
           <td class="p-4 border-b border-blue-gray-50">
@@ -659,7 +660,7 @@
 
 
         @if(selectedCity.name=="Completed"){
-          @for(task of paginatedCompletedTasks; track task.id){
+          @for(task of paginatedCompletedTasks.slice().reverse(); track task.id){
 
           <tr  class="cursor-pointer" >
       <td class="p-4 border-b border-blue-gray-50">

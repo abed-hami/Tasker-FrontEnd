@@ -213,18 +213,20 @@ this._hubConnection = new HubConnectionBuilder()
 
     this._hubConnection.on('receiveRequest', (request:any) => {
       if(request==this.cookie.getCookieId()){
-        
+
         this.getReceivedRequests(this.cookie.getCookieId())
        console.log("okii")
 
 
       }
-
-
-
     });
 
+    
+
   }
+
+
+
 
 
 }

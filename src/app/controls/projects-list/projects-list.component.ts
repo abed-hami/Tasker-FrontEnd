@@ -174,7 +174,7 @@ export class ProjectsListComponent {
               this.manager.projectId=data.id
               this.toastr.showSuccess("project created successfully!")
               this.addManager(this.manager)
-              this.getProjectByMember(this.id)
+              this.getUserInfo()
               this.visible=false
 
         },
