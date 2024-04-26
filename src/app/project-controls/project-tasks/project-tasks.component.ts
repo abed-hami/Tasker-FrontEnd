@@ -51,6 +51,7 @@ export class ProjectTasksComponent {
   constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private teamService:TeamService,private phaseService:PhasesService,private projectService:ProjectService){}
   pageSize = 4;
   pageNumber = 0;
+  pageNumber2 = 0;
   visible=false;
   phases:any
   projectId:any
@@ -144,13 +145,19 @@ export class ProjectTasksComponent {
   }
 
   get paginatedCompletedTasks() {
-    const start = this.pageNumber * this.pageSize;
+    const start = this.pageNumber2 * this.pageSize;
     return (this.filteredCompletedProjects || []).slice(start, start + this.pageSize);
   }
 
   goToPage(page: number) {
     this.pageNumber = page;
   }
+
+  goToPage2(page: number) {
+    this.pageNumber2 = page;
+  }
+
+
   getAllSubCount(id:any){
     this.subTaskService.getCount(id).subscribe(
       (data)=>{
@@ -198,6 +205,8 @@ export class ProjectTasksComponent {
 
 
   ];
+
+
 
 
   this._hubConnection = new HubConnectionBuilder()

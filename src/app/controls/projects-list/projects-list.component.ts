@@ -149,8 +149,11 @@ export class ProjectsListComponent {
     showDialog() {
         this.visible = true;
     }
+    route:any
 
     ngOnInit(){
+
+     
       this.getUserInfo()
 
       this.getInvitations(this.cookie.getCookieId())
@@ -168,7 +171,7 @@ export class ProjectsListComponent {
 
 
     createProject(){
-
+      this.project.additionalBudget=this.project.budget
       this.projectService.createProject(this.project).subscribe(
         (data:any)=>{
               this.manager.projectId=data.id

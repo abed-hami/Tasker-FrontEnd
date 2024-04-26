@@ -60,9 +60,9 @@ updateRequestStatus(requestId:any,status:any){
         this.toast.showError("Request was denied!")
         this.visible=false
       }
-
       this.getMemberRequests(this.cookie.getCookieId())
-    this.getReceivedRequests(this.cookie.getCookieId())
+      this.getReceivedRequests(this.cookie.getCookieId())
+
     } ,
    (err) =>{
   if(err.status==400){
@@ -110,10 +110,11 @@ selectedStatus= {name:"pending"};
 
 get filteredProjects() {
   if (this.selectedStatus.name=="All") {
-    return this.requests;
+    return this.requests.slice().reverse();
   }
 
-  return this.requests.filter((request: any) =>
+
+  return this.requests.slice().reverse().filter((request: any) =>
     request.requestStatus.toLowerCase().includes(this.selectedStatus.name.toLowerCase())
   );
 }
@@ -133,7 +134,7 @@ goToReceivedPage(page: number) {
  get paginatedReceivedRequests() {
   const start = this.pageNumber2 * this.pageSize2;
 
-  return (this.received || []).slice(start, start + this.pageSize2);
+  return (this.received.slice().reverse() || []).slice(start, start + this.pageSize2);
 
 
 
@@ -147,22 +148,14 @@ getUnit(type:any){
 }
 
   getMemberRequests(memberId:any){
-    if(this.selectedCity.name=='Sent' || this.selectedCity==undefined){
+
       this.requestService.getMemberRequests(memberId).subscribe(
       (data)=>{
           this.requests=data
 
       }
     )
-    }
-    else if(this.selectedCity.name=='Received'){
-      this.requestService.getReceivedRequests(memberId).subscribe(
-        (data)=>{
-            this.requests=data
 
-        }
-      )
-    }
 
   }
 
@@ -221,7 +214,7 @@ this._hubConnection = new HubConnectionBuilder()
       }
     });
 
-    
+
 
   }
 
