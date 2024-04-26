@@ -51,20 +51,20 @@ export class DashnavComponent {
 
   showDialog() {
     this.visible = true;
-    if(this.new){
-      this.new.forEach((element:any) => {
-          this.notificationService.updateStatus(element.id).subscribe(
+
+
+          this.notificationService.updateStatus(this.id).subscribe(
             (data)=>{
               this.getNotificationCount(this.id)
-              console.log("success")
-              this.new=this.notification.filter((element:any)=>element.status=="new")
+
+
             },
             (error)=>{
               console.log(error)
             }
           )
-      });
-    }
+
+
 
 
     }
@@ -155,7 +155,6 @@ export class DashnavComponent {
   getNotification(memberId:any){
     this.notificationService.getUserNotification(memberId).subscribe((data)=>{
       this.notification=data
-      this.new=this.notification.filter((notification: any)=> notification.status=="new")
 
     },
     (error)=>{

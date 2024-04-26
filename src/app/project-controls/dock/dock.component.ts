@@ -17,7 +17,9 @@ export class DockComponent {
   activeItem: MenuItem | undefined;
 
   ngOnInit() {
+    if(localStorage.getItem("position")=="manager"){
       this.items = [
+
           { label: 'Dashboard', icon: 'fa fa-bar-chart',routerLink:"projectDashboard" },
           { label: 'Timeline', icon: 'far fa-stream',routerLink:"timeline" },
           { label: 'Team', icon: 'fa fa-group',routerLink:"members" },
@@ -26,5 +28,22 @@ export class DockComponent {
       ];
 
       this.activeItem = this.items[0];
+    }
+
+    if(localStorage.getItem("position")!="manager"){
+      this.items = [
+
+          
+          { label: 'Timeline', icon: 'far fa-stream',routerLink:"timeline" },
+          { label: 'Team', icon: 'fa fa-group',routerLink:"members" },
+          { label: 'Tasks', icon: 'pi pi-fw pi-file',routerLink:"projectTasks" },
+          { label: 'Announcements', icon: 'fa fa-group',routerLink:"announcements" },
+      ];
+
+      this.activeItem = this.items[0];
+    }
+
+
+
   }
 }

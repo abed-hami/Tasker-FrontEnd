@@ -227,7 +227,7 @@
         </tr>
       </thead>
       <tbody >
-        @for(task of paginatedTasks.slice().reverse(); track task.id){
+        @for(task of paginatedTasks; track task.id){
 
               <tr (click)="showDetailsDialog(task.taskId)" class="cursor-pointer" >
           <td class="p-4 border-b border-blue-gray-50">

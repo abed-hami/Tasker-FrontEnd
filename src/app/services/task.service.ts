@@ -24,6 +24,10 @@ export class TaskService {
     return this.http.put("https://localhost:7183/api/Task/"+object.id,object)
   }
 
+  getProjectTaskCount(id:any){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectTaskCount/"+id)
+  }
+
   checkBudget(id:any,amount:any){
     return this.http.get('https://localhost:7183/api/Task/IsSufficientBudget/'+id+"/"+amount);
   }
@@ -33,6 +37,10 @@ export class TaskService {
 
   getCountByStatus(id:any,status:any){
     return this.http.get("https://localhost:7183/api/Task/GetCountByStatus/"+id+ "/" + status);
+  }
+
+  getProjectCountByStatus(id:any,status:any){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectCountByStatus/"+id+ "/" + status);
   }
 
   getCountByPriority(id:any,priority:any){

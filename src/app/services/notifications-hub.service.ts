@@ -23,6 +23,6 @@ export class NotificationsHubService {
   }
 
   updateStatus(id:any){
-    return this.http.put("https://localhost:7183/api/Notification/UpdateStatus/"+id,null);
+    return this.http.put("https://localhost:7183/api/Notification/UpdateNotificationStatus/"+id,null);
   }
 }

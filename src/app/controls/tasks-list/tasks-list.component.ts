@@ -48,7 +48,7 @@ export class TasksListComponent {
 
   get filteredProjects() {
     if (!this.searchTerm) {
-      return this.tasks;
+      return this.tasks.slice().reverse();
     }
 
     return this.tasks.filter((task: any) =>
@@ -98,7 +98,7 @@ export class TasksListComponent {
   private _hubConnection!: HubConnection;
   token:any
   ngOnInit(){
-  
+
     this.getUserInfo()
 
     this._hubConnection = new HubConnectionBuilder()
