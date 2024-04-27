@@ -17,10 +17,12 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { Request } from '../../models/request';
 import { RequestService } from '../../services/request.service';
 import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
+import { MemberService } from '../../services/member.service';
+import { CustomDatePipe } from '../../pipe/custom-date.pipe';
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
-  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule],
+  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule,CustomDatePipe],
   templateUrl: './tasks-list.component.html',
   styleUrl: './tasks-list.component.css'
 })
@@ -36,9 +38,24 @@ export class TasksListComponent {
   count:any
   completed:any
   request:Request=new Request()
-  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService){}
+  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private upload:MemberService){}
   pageSize = 4;
   pageNumber = 0;
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    this.upload.upload(file).subscribe(
+      (response:any) => {
+        console.log( response.url);
+        this.comment.comment1 = response.url
+      },
+      (error) => {
+        console.error('Error uploading file:', error);
+
+      }
+    );
+  }
 
   get totalPages() {
     return Math.ceil(this.tasks.length / this.pageSize);

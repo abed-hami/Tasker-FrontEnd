@@ -25,10 +25,12 @@ import { subtask } from '../../models/subtasks';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
+import { CustomDatePipe } from '../../pipe/custom-date.pipe';
+import { MemberService } from '../../services/member.service';
 @Component({
   selector: 'app-project-tasks',
   standalone: true,
-  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule,DropdownModule],
+  imports: [CommonModule,DialogModule,DividerModule,ButtonModule,FormsModule,RouterModule,ProgressBarModule,DropdownModule,CustomDatePipe],
   templateUrl: './project-tasks.component.html',
   styleUrl: './project-tasks.component.css'
 })
@@ -48,7 +50,7 @@ export class ProjectTasksComponent {
   completed:any
   request:Request=new Request()
   options:any
-  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private teamService:TeamService,private phaseService:PhasesService,private projectService:ProjectService){}
+  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private teamService:TeamService,private upload:MemberService,private projectService:ProjectService){}
   pageSize = 4;
   pageNumber = 0;
   pageNumber2 = 0;
@@ -59,6 +61,21 @@ export class ProjectTasksComponent {
   subObject : subtask=new subtask()
 
   taskInfo:any
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+
+    this.upload.upload(file).subscribe(
+      (response:any) => {
+        console.log( response.url);
+        this.comment.comment1 = response.url
+      },
+      (error) => {
+        console.error('Error uploading file:', error);
+
+      }
+    );
+  }
 
   getTaskById(id:any){
     this.taskService.getTaskById(id).subscribe(
@@ -106,13 +123,7 @@ export class ProjectTasksComponent {
     return Math.ceil(this.filteredCompletedProjects.length / this.pageSize);
   }
 
-  getPhasesByProject(id:any){
-    this.phaseService.getProjectPhases(id).subscribe(
-      (data)=>{
-        this.phases=data
-      }
-    )
-  }
+
   searchTerm: string = '';
 
   searchTerm2:string=''
@@ -196,7 +207,7 @@ export class ProjectTasksComponent {
     this.position=localStorage.getItem("position")
     this.getUserInfo()
     this.getTeamByProject(this.projectId)
-    this.getPhasesByProject(this.projectId)
+
     this.options = [
 
       { name: 'Pending' },

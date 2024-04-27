@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { TaskService } from '../../services/task.service';
+import { CookiesService } from '../../services/cookies.service';
 @Component({
   selector: 'app-polar-graph',
   standalone: true,
@@ -12,7 +13,7 @@ import { TaskService } from '../../services/task.service';
 export class PolarGraphComponent {
 
 
-  constructor(private taskService:TaskService){}
+  constructor(private taskService:TaskService,private cookie:CookiesService){}
 
   data: any;
   testing:any
@@ -20,9 +21,10 @@ export class PolarGraphComponent {
   inprogress:any
   onhold:any
   projectId:any
+  memberId:any
 
-  getProjectTaskCount(id:any,status:any){
-    this.taskService.getProjectCountByStatus(id,status).subscribe((data)=>{
+  getProjectTaskCount(id:any,status:any,memberId:any){
+    this.taskService.getProjectCountByStatus(id,status,memberId).subscribe((data)=>{
       if(status=="testing"){
         this.testing=data
         console.log("testing "+this.testing)
@@ -44,12 +46,25 @@ export class PolarGraphComponent {
     options: any;
 
     ngOnInit() {
+      this.memberId= this.cookie.getCookieId()
       this.projectId=localStorage.getItem("projectId")
 
-        this.getProjectTaskCount(this.projectId,"testing")
-        this.getProjectTaskCount(this.projectId,"pending")
-        this.getProjectTaskCount(this.projectId,"on-hold")
-        this.getProjectTaskCount(this.projectId,"in-progress")
+      if(localStorage.getItem("position")=="manager"){
+        this.getProjectTaskCount(this.projectId,"testing",0)
+        this.getProjectTaskCount(this.projectId,"pending",0)
+        this.getProjectTaskCount(this.projectId,"on-hold",0)
+        this.getProjectTaskCount(this.projectId,"in-progress",0)
+
+      }
+
+      if(localStorage.getItem("position")!="manager"){
+        this.getProjectTaskCount(this.projectId,"testing",this.memberId)
+        this.getProjectTaskCount(this.projectId,"pending",this.memberId)
+        this.getProjectTaskCount(this.projectId,"on-hold",this.memberId)
+        this.getProjectTaskCount(this.projectId,"in-progress",this.memberId)
+
+      }
+
 
     }
 

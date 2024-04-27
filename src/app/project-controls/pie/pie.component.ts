@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { TaskService } from '../../services/task.service';
+import { CookiesService } from '../../services/cookies.service';
 @Component({
   selector: 'app-pie',
   standalone: true,
@@ -17,11 +18,12 @@ export class PieComponent {
     pending:any
     overdue:any
     projectId:any
+    memberId:any
 
-    constructor(private taskService:TaskService){}
+    constructor(private taskService:TaskService,private cookie:CookiesService){}
 
-    getProjectTaskCount(id:any,status:any){
-      this.taskService.getProjectCountByStatus(id,status).subscribe((data)=>{
+    getProjectTaskCount(id:any,status:any,memberId:any){
+      this.taskService.getProjectCountByStatus(id,status,memberId).subscribe((data)=>{
         if(status=="completed"){
           this.done=data
 
@@ -70,11 +72,22 @@ export class PieComponent {
 
 
     ngOnInit() {
+      this.memberId=this.cookie.getCookieId()
       this.projectId=localStorage.getItem("projectId")
 
-      this.getProjectTaskCount(this.projectId,"overdue")
-      this.getProjectTaskCount(this.projectId,"completed")
-      this.getProjectTaskCount(this.projectId,"null")
+      if(localStorage.getItem("position")=="manager"){
+        this.getProjectTaskCount(this.projectId,"overdue",0)
+      this.getProjectTaskCount(this.projectId,"completed",0)
+      this.getProjectTaskCount(this.projectId,"null",0)
+      }
+
+      if(localStorage.getItem("position")!="manager"){
+        this.getProjectTaskCount(this.projectId,"overdue",this.memberId)
+      this.getProjectTaskCount(this.projectId,"completed",this.memberId)
+      this.getProjectTaskCount(this.projectId,"null",this.memberId)
+      }
+
+
 
 
 

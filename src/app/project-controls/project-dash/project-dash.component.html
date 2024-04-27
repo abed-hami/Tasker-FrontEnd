@@ -11,7 +11,21 @@
       <app-pie></app-pie>
     </div>
   </div>
+
 </div>
-<app-workload></app-workload>
+@if(position=="manager"){
+  <div class="grid grid-cols-1 gap-4 mb-2">
+
+  <div class="bg-white rounded-xl shadow-md overflow-hidden mt-5 mx-4   ">
+  <div class="p-4">
+    <app-workload></app-workload>
+  </div>
+</div>
+</div>
+}
+
+
+
+
 
 

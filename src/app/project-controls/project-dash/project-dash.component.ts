@@ -15,4 +15,10 @@ import { WorkloadComponent } from "../workload/workload.component";
 })
 export class ProjectDashComponent {
 
+  position:any
+
+  ngOnInit(){
+    this.position=localStorage.getItem('position')
+  }
+
 }

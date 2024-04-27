@@ -21,7 +21,7 @@ export class ProfileTableComponent {
   type='password'
   id:any
   member:any
-
+  uploading = false;
   oldPassword:any
   newPassword:any
   confirmedPassword:any=""
@@ -45,6 +45,8 @@ export class ProfileTableComponent {
 
       this.memberService.updatePassword(this.userObject.id,this.oldPassword,this.newPassword).subscribe((data)=>{
       this.toast.showSuccess("Password Updated!")
+
+
     },(error)=>{
       this.toast.showError("Wrong Password")
     }
@@ -53,6 +55,22 @@ export class ProfileTableComponent {
 
 
 
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    this.uploading=true
+    this.memberService.upload(file).subscribe(
+      (response:any) => {
+        console.log( response.url);
+        this.userObject.picture=response.url
+        this.uploading=false
+      },
+      (error) => {
+        console.error('Error uploading file:', error);
+
+      }
+    );
   }
 
   isValidLength(){
@@ -66,6 +84,9 @@ export class ProfileTableComponent {
     return !this.oldPassword || !this.newPassword || !this.confirmedPassword;
   }
 
+
+
+
   getMemberInfoById(id:any){
     this.memberService.getMemberById(id).subscribe(
       (data:any)=>{
@@ -75,6 +96,8 @@ export class ProfileTableComponent {
         this.userObject.firstName=data.firstName
         this.userObject.lastName=data.lastName
         this.userObject.position=data.position
+        this.userObject.picture =data.picture
+
         console.log(data)
       }
     )
@@ -84,6 +107,7 @@ export class ProfileTableComponent {
     this.memberService.updateUserInfo(this.userObject).subscribe(
       (data)=>{
         this.toast.showSuccess("User Info Updated Successfully!")
+        this.getMemberInfoById(this.userObject.id)
       }
     )
 

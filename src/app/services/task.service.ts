@@ -39,12 +39,20 @@ export class TaskService {
     return this.http.get("https://localhost:7183/api/Task/GetCountByStatus/"+id+ "/" + status);
   }
 
-  getProjectCountByStatus(id:any,status:any){
-    return this.http.get("https://localhost:7183/api/Task/GetProjectCountByStatus/"+id+ "/" + status);
+  getProjectCountByStatus(id:any,status:any,memberId:any){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectCountByStatus/"+id+ "/" + status+"/"+memberId);
   }
 
   getCountByPriority(id:any,priority:any){
     return this.http.get("https://localhost:7183/api/Task/GetCountByPriority/"+id+ "/" + priority);
+  }
+
+  getWorkload(projectId:any){
+    return this.http.get("https://localhost:7183/api/Task/GetWorkload/"+projectId)
+  }
+
+  getProjectMemberCount(projectId:number, memberId: number){
+    return this.http.get("https://localhost:7183/api/Task/GetProjectMemberCount/"+projectId+ "/" + memberId);
   }
 
   UpdateTaskStatus(id:any,status:any){
