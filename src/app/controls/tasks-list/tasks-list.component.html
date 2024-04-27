@@ -80,34 +80,78 @@
 
         <div class="mt-6">
           <h3 class="font-bold text-lg mb-4">Comments</h3>
-          <div class="overflow-y-auto max-h-60">
+          <div class="overflow-y-auto overflow-x-auto max-h-60">
             <ng-container *ngFor="let comment of comments">
-              <div class="border rounded-md p-3 mb-3">
-                <div class="flex items-center gap-3">
-                  <img src="assets/images/profile.jpg"
-                       class="object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400">
-                  <h3 class="font-bold text-base">{{comment.memberName}}</h3>
+                <div class="border rounded-md p-3 mb-3">
+                    <div class="flex items-center gap-3">
+                        <img src="{{comment.memberPhoto}}"
+                            class="object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400">
+                        <h3 class="font-bold text-base">{{comment.memberName}}</h3>
+                    </div>
+                    <p class="text-gray-600 mt-2 text-base word-break" style="word-wrap: break-word;">{{comment.comment}}</p>
+                    <p class="text-gray-300 text-xs mt-1">{{comment.commentDate|customDate}} {{comment.commentDate| date: 'h:mm a' }}</p>
                 </div>
-                <p class="text-gray-600 mt-2 text-base">{{comment.comment}}</p>
-                <p class="text-gray-300 text-xs mt-1">{{comment.commentDate|date}}</p>
-              </div>
             </ng-container>
-          </div>
-
+        </div>
 
           <form #form="ngForm" (submit)="form.reset()" class="mb-8">
-            <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"
-                      name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1"></textarea>
-            <div class="flex justify-end">
-              <button type="submit" class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600" (click)="addComment()">Post Comment</button>
+            <div class="flex bg-gray-100 rounded-full border border-gray-100 leading-normal resize-none w-full h-10 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4">
+              <div class="fileUploadWrapper mr-2">
+                <label for="file">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
+                    <circle
+                      stroke-width="20"
+                      stroke="#6c6c6c"
+                      fill="none"
+                      r="158.5"
+                      cy="168.5"
+                      cx="168.5"
+                    ></circle>
+                    <path
+                      stroke-linecap="round"
+                      stroke-width="25"
+                      stroke="#6c6c6c"
+                      d="M167.759 79V259"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-width="25"
+                      stroke="#6c6c6c"
+                      d="M79 167.138H259"
+                    ></path>
+                  </svg>
+                  <span class="tooltip">Upload a file</span>
+                </label>
+                <input type="file" id="file" name="file" (change)="onFileSelected($event)" />
+              </div>
+              <input type="text" class="bg-gray-100 w-full"
+                      name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1">
+
+                      <button id="sendButton" (click)="addComment()" >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                          <path
+                            fill="none"
+                            d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
+                          ></path>
+                          <path
+                            stroke-linejoin="round"
+                            stroke-linecap="round"
+                            stroke-width="33.67"
+                            stroke="#6c6c6c"
+                            d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
+                          ></path>
+                        </svg>
+                      </button>
             </div>
+
+
           </form>
         </div>
       </div>
-      <div class="border-l h-screen"></div>
-      <div>
-        <div class="flex flex-col max-h-60 overflow-auto mb-10 overflow-x-hidden">
-          <h3 class="font-bold text-lg mb-3 ml-2 sticky top-0 bg-white">Subtasks <span class="ml-2 text-blue-500 text-sm">{{completed}} <span class="text-black">/</span> {{count}}</span></h3>
+      <div class="border-l h-screen "></div>
+      <div class="">
+        <div class="flex flex-col max-h-40 overflow-auto mb-10 overflow-x-hidden">
+          <h3 class="font-bold text-lg mb-3 ml-2 px-2 sticky top-0 bg-white">Subtasks <span class="ml-2 text-blue-500 text-sm">{{completed}} <span class="text-black">/</span> {{count}}</span></h3>
 
 
           <div class="flex flex-col mb-8 gap-3.5 flex-1 px-4 mt-1" *ngIf="subTasks">
@@ -127,7 +171,7 @@
 
       </div>
 
-      <div class="request px-4 py-10">
+      <div class="request px-4 py-10 border-b">
 
         <h3 class="font-bold text-lg mb-2">Requests</h3>
         <form #requestForm="ngForm" (submit)="requestForm.reset()">
@@ -143,13 +187,62 @@
 
             <input type="number" name="amount" id="amount" [(ngModel)]="request.amount" class="w-full bg-gray-100 rounded border border-gray-400 leading-normal py-2 px-3 font-medium text-base focus:outline-none focus:bg-white mb-4" placeholder="Enter amount" >
 
-            <textarea name="description" id="description" [(ngModel)]="request.description" class="w-auto bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-24 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"  placeholder="Type your request here"></textarea>
+            <input name="description" id="description" [(ngModel)]="request.description" class="w-auto bg-gray-100 rounded border border-gray-400 leading-normal resize-none h-14 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"  placeholder="Type your request here">
 
             <button (click)="sendRequest(taskId)" type="submit" class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600">Submit</button>
 
           </div>
       </form>
     </div>
+
+    <div class="flex flex-col max-h-40 overflow-auto mb-10 overflow-x-hidden">
+      <h3 class="font-bold text-lg mb-3 ml-2 px-2 sticky top-0 bg-white flex gap-3">Files <div class="fileUploadWrapper mr-2 mt-1">
+        <label for="file">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
+            <circle
+              stroke-width="20"
+              stroke="#6c6c6c"
+              fill="none"
+              r="158.5"
+              cy="168.5"
+              cx="168.5"
+            ></circle>
+            <path
+              stroke-linecap="round"
+              stroke-width="25"
+              stroke="#6c6c6c"
+              d="M167.759 79V259"
+            ></path>
+            <path
+              stroke-linecap="round"
+              stroke-width="25"
+              stroke="#6c6c6c"
+              d="M79 167.138H259"
+            ></path>
+          </svg>
+
+        </label>
+        <input type="file" id="file" name="file" (change)="onFileSelected($event)" />
+      </div> </h3>
+
+
+      <div class="flex flex-col mb-8 gap-3.5 flex-1 px-4 mt-1" *ngIf="subTasks">
+          <ul class="flex flex-col gap-3.5 w-full sm:max-w-md mx-auto">
+              <li class="w bg-gray-100 p-3 rounded-md" *ngFor="let sub of subTasks">
+                  <div class="flex justify-between items-center">
+                      <div class="mr-4">{{sub.name}}</div>
+                      <div>
+                          <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id,sub.taskId)" [checked]="sub.status === 'Completed'"/>
+                      </div>
+                  </div>
+              </li>
+          </ul>
+      </div>
+
+
+
+  </div>
+
       </div>
 
 
@@ -240,7 +333,7 @@
           </td>
           <td class="p-4 border-b border-blue-gray-50">
             <div class="flex items-center gap-3">
-              <img src="assets/images/{{task.managerPhoto}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
+              <img src="{{task.managerPhoto}}" alt="John Michael" class="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md">
               <div class="flex flex-col">
                 <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">{{task.managerName}}</p>
                 <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">{{task.managerEmail}}</p>
@@ -299,4 +392,5 @@
   </div>
     </div>
 }
+
 

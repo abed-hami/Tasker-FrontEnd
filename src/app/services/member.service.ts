@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Form } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,12 @@ export class MemberService {
 
   getMemberById(id:any){
     return this.http.get("https://localhost:7183/api/Member/"+id)
+  }
+
+  upload(file:File){
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    return this.http.post("https://localhost:7183/api/Member/UploadFile", formData);
   }
 
 

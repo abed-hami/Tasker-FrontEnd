@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+import { TaskService } from '../../services/task.service';
 @Component({
   selector: 'app-workload',
   standalone: true,
@@ -9,41 +10,67 @@ import { ChartModule } from 'primeng/chart';
   styleUrl: './workload.component.css'
 })
 export class WorkloadComponent {
+
+  constructor(private taskService: TaskService){}
   data: any;
 
   options: any;
+  members:any=[]
+  done:any=[]
+  pending:any=[]
+  budget:any=[]
+
+
+  getWorkload(projectId:any){
+    this.taskService.getWorkload(projectId).subscribe(
+      (data:any)=>{
+        data.forEach((item: { memberName: any; completedTaskCount: any; totalBudget: any; taskCount: any; }) => {
+          this.members.push(item.memberName);
+          this.done.push(item.completedTaskCount);
+          this.budget.push(item.totalBudget);
+          this.pending.push(item.taskCount);
+        });
+        this.getChart()
+
+      }
+    )
+  }
 
   ngOnInit() {
-      const documentStyle = getComputedStyle(document.documentElement);
+    this.getWorkload(localStorage.getItem("projectId"))
+  }
+
+  getChart(){
+    const documentStyle = getComputedStyle(document.documentElement);
       const textColor = documentStyle.getPropertyValue('--text-color');
       const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
       const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
       this.data = {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July','January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: this.members,
           datasets: [
               {
                   type: 'line',
-                  label: 'Dataset 1',
+                  label: 'Budget',
                   borderColor: documentStyle.getPropertyValue('--blue-500'),
                   borderWidth: 2,
                   fill: false,
                   tension: 0.4,
-                  data: [50, 25, 12, 48, 56, 76, 42,50, 25, 12, 48, 56, 76, 42]
+                  data: this.budget
               },
               {
                   type: 'bar',
-                  label: 'Dataset 2',
+                  label: 'Pending',
                   backgroundColor: documentStyle.getPropertyValue('--green-500'),
-                  data: [21, 84, 24, 75, 37, 65, 34,21, 84, 24, 75, 37, 65, 34],
+                  data: this.pending,
                   borderColor: 'white',
                   borderWidth: 2
               },
               {
                   type: 'bar',
-                  label: 'Dataset 3',
+                  label: 'Done',
                   backgroundColor: documentStyle.getPropertyValue('--orange-500'),
-                  data: [41, 52, 24, 74, 23, 21, 32,41, 52, 24, 74, 23, 21, 32]
+                  data: this.done
               }
           ]
       };

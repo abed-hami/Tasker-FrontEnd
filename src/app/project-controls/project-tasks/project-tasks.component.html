@@ -429,31 +429,75 @@
 
   </div>
 
-        <div class="mt-6">
-          <h3 class="font-bold text-lg mb-4">Comments</h3>
-          <div class="overflow-y-auto max-h-60">
-            <ng-container *ngFor="let comment of comments">
-              <div class="border rounded-md p-3 mb-3">
-                <div class="flex items-center gap-3">
-                  <img src="assets/images/profile.jpg"
-                       class="object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400">
+  <div class="mt-6">
+    <h3 class="font-bold text-lg mb-4">Comments</h3>
+    <div class="overflow-y-auto overflow-x-auto max-h-60">
+      <ng-container *ngFor="let comment of comments">
+          <div class="border rounded-md p-3 mb-3">
+              <div class="flex items-center gap-3">
+                  <img src="{{comment.memberPhoto}}"
+                      class="object-cover w-8 h-8 rounded-full border-2 border-emerald-400 shadow-emerald-400">
                   <h3 class="font-bold text-base">{{comment.memberName}}</h3>
-                </div>
-                <p class="text-gray-600 mt-2 text-base">{{comment.comment}}</p>
-                <p class="text-gray-300 text-xs mt-1">{{comment.commentDate|date}}</p>
               </div>
-            </ng-container>
+              <p class="text-gray-600 mt-2 text-base word-break" style="word-wrap: break-word;">{{comment.comment}}</p>
+              <p class="text-gray-300 text-xs mt-1">{{comment.commentDate|customDate }} {{comment.commentDate| date: 'h:mm a' }} </p>
           </div>
+      </ng-container>
+  </div>
 
-          <!-- Comment Form -->
-          <form #form="ngForm" (submit)="form.reset()" class="mb-8">
-            <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4"
-                      name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1"></textarea>
-            <div class="flex justify-end">
-              <button type="submit" class="px-4 py-2 rounded-md text-white text-base bg-blue-500 hover:bg-blue-600" (click)="addComment()">Post Comment</button>
-            </div>
-          </form>
+    <form #form="ngForm" (submit)="form.reset()" class="mb-8">
+      <div class="flex bg-gray-100 rounded-full border border-gray-100 leading-normal resize-none w-full h-10 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4">
+        <div class="fileUploadWrapper mr-2">
+          <label for="file">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
+              <circle
+                stroke-width="20"
+                stroke="#6c6c6c"
+                fill="none"
+                r="158.5"
+                cy="168.5"
+                cx="168.5"
+              ></circle>
+              <path
+                stroke-linecap="round"
+                stroke-width="25"
+                stroke="#6c6c6c"
+                d="M167.759 79V259"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-width="25"
+                stroke="#6c6c6c"
+                d="M79 167.138H259"
+              ></path>
+            </svg>
+            <span class="tooltip">Upload a file</span>
+          </label>
+          <input type="file" id="file" name="file" (change)="onFileSelected($event)" />
         </div>
+        <input type="text" class="bg-gray-100 w-full"
+                name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1">
+
+                <button id="sendButton" (click)="addComment()" >
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                    <path
+                      fill="none"
+                      d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
+                    ></path>
+                    <path
+                      stroke-linejoin="round"
+                      stroke-linecap="round"
+                      stroke-width="33.67"
+                      stroke="#6c6c6c"
+                      d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
+                    ></path>
+                  </svg>
+                </button>
+      </div>
+
+
+    </form>
+  </div>
       </div>
       <div class="border-l h-screen"></div>
       <div class="" style="width: 350px !important;">

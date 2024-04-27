@@ -63,7 +63,8 @@
         <div class="text-gray-600">
           <!-- Profile Picture -->
           <div class="flex justify-center mb-4">
-            <img src="assets/images/profile.jpg" alt="Profile Picture" class="rounded-full w-32 h-32">
+            <img src="{{userObject.picture}}" alt="Profile Picture" class="rounded-full w-32 h-32">
+
           </div>
           <!-- Profile Information -->
           <p class="font-medium text-lg flex justify-center mb-4">Profile Information</p>
@@ -93,6 +94,27 @@
                 <label for="position">Position</label>
                 <input type="text" name="position" id="position" class=" border mt-1 rounded px-2 w-full bg-gray-50 py-3" value="" [(ngModel)]="userObject.position" />
               </div>
+              <div class="mb-2 flex gap-3">
+              <div class="grid w-full max-w-xs items-center gap-1.5">
+                <label
+                  class="text-sm text-gray-400 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >Picture</label
+                >
+                <input
+                  class="flex w-full rounded-md border border-blue-300 border-input bg-white text-sm text-gray-400 file:border-0 file:bg-blue-600 file:text-white file:text-sm file:font-medium"
+                  type="file"
+                  id="picture"  (change)="onFileSelected($event)"
+                />
+              </div>
+              @if(!uploading){
+                <div class="loader mt-5 " >
+                  <div class="scanner" >
+                    <span style="font-size:13px !important">uploading...</span>
+                  </div>
+                </div>
+              }
+            </div>
+
             </div>
             <div>
               <div class="mt-2 mb-1">
