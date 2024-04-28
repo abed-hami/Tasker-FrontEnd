@@ -5,6 +5,7 @@ import { SignupService } from '../../services/signup.service';
 import { signup } from '../../models/signup';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-signup',
@@ -17,11 +18,11 @@ export class SignupComponent {
 
   registerObject:signup = new signup()
 
-  constructor(private http:HttpClient, private signupService:SignupService){}
+  constructor(private http:HttpClient, private signupService:SignupService,private toast:ToastService){}
 
   validateAndSignup(signupForm:any) {
     if (signupForm.invalid) {
-      alert("Please fill out all required fields correctly.");
+      this.toast.showWarn("Please fill out all required fields correctly.");
       signupForm.reset()
       return;
     }
@@ -37,17 +38,17 @@ export class SignupComponent {
     const position  = document.getElementById( "position" ) as HTMLInputElement;
 
     if(lname.value==="" || fname.value==="" || email.value===''||pass.value===''||position.value===''){
-      alert("please fill all forms")
+      
     }
     else{
        this.signupService.signup(this.registerObject).subscribe(
       (data:any)=>{
 
-        alert("member created successfully")
+        this.toast.showSuccess("member created successfully")
         signupForm.reset()
       },
       (error:any)=>{
-        alert("error in registration")
+        this.toast.showError("error in registration")
 
       }
     )
