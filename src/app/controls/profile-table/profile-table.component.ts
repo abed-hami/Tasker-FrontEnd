@@ -57,20 +57,13 @@ export class ProfileTableComponent {
 
   }
 
+  profilePic:any
+
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     this.uploading=true
-    this.memberService.upload(file).subscribe(
-      (response:any) => {
-        console.log( response.url);
-        this.userObject.picture=response.url
-        this.uploading=false
-      },
-      (error) => {
-        console.error('Error uploading file:', error);
+    this.profilePic=file
 
-      }
-    );
   }
 
   isValidLength(){
@@ -106,12 +99,27 @@ export class ProfileTableComponent {
   updateUserInfo(){
     this.memberService.updateUserInfo(this.userObject).subscribe(
       (data)=>{
+
         this.toast.showSuccess("User Info Updated Successfully!")
         this.getMemberInfoById(this.userObject.id)
       }
     )
 
 
+  }
+
+  update(){
+    this.memberService.upload(this.profilePic).subscribe(
+      (response:any) => {
+
+        this.userObject.picture=response.url
+        this.updateUserInfo()
+      },
+      (error) => {
+        console.error('Error uploading file:', error);
+
+      }
+    );
   }
 
   ngOnInit(){

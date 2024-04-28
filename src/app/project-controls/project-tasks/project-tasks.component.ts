@@ -27,6 +27,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
 import { CustomDatePipe } from '../../pipe/custom-date.pipe';
 import { MemberService } from '../../services/member.service';
+import { FileUploadedService } from '../../services/file-uploaded.service';
+import { FilesUploaded } from '../../models/filesUploaded';
 @Component({
   selector: 'app-project-tasks',
   standalone: true,
@@ -50,7 +52,7 @@ export class ProjectTasksComponent {
   completed:any
   request:Request=new Request()
   options:any
-  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private teamService:TeamService,private upload:MemberService,private projectService:ProjectService){}
+  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private teamService:TeamService,private upload:MemberService,private projectService:ProjectService,private file:FileUploadedService){}
   pageSize = 4;
   pageNumber = 0;
   pageNumber2 = 0;
@@ -62,20 +64,43 @@ export class ProjectTasksComponent {
 
   taskInfo:any
 
+  uploadedFile:any
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
+    this.uploadedFile = file;
+this.uploaded=true
+  }
 
-    this.upload.upload(file).subscribe(
+  uploadFile(){
+    this.upload.upload(this.uploadedFile).subscribe(
       (response:any) => {
         console.log( response.url);
-        this.comment.comment1 = response.url
+        this.FileObject.memberId =this.id
+        this.FileObject.name=response.name
+        this.FileObject.url=response.url
+        this.FileObject.taskId=this.taskId
+        this.insertFile()
       },
       (error) => {
         console.error('Error uploading file:', error);
 
       }
     );
+
+
+
   }
+
+  insertFile(){
+    this.file.uploadFile(this.FileObject).subscribe(
+      (data)=>{
+          this.uploaded=false
+          this.getTaskFiles(this.FileObject.taskId)
+      }
+    )
+  }
+
+  FileObject:FilesUploaded = new FilesUploaded()
 
   getTaskById(id:any){
     this.taskService.getTaskById(id).subscribe(
@@ -478,6 +503,7 @@ export class ProjectTasksComponent {
     this.getSubTasks(id)
     this.getCompletedCount(id)
     this.getAllSubCount(id)
+    this.getTaskFiles(this.taskId)
 
     this.width=`style="width: ${this.getProgress(id)}%"`
   }
@@ -550,6 +576,19 @@ export class ProjectTasksComponent {
     this.comment.taskId=this.taskId
     this.comment.memberId= this.cookie.getCookieId()
 
+  }
+  uploaded=false
+
+  
+
+  taskFiles:any
+
+  getTaskFiles(taskId:any){
+    this.file.getFilesByTaskId(taskId).subscribe(
+      (data)=>{
+        this.taskFiles=data
+      }
+    )
   }
 
   addComment(){

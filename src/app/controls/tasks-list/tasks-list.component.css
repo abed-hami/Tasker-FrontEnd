@@ -107,7 +107,7 @@ tbody{
  .input:focus, input:hover {
   outline: none;
   border-color: transparent;
-  
+
   box-shadow: 0 0 0 0px transparent;
  }
 
@@ -235,3 +235,21 @@ tbody{
 
 
 
+
+
+.upload-label {
+
+  padding: 0px 2px;
+  background-color: #d6d7d8; /* Change this to the color of your choice */
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.upload-label:hover {
+  background-color: #2881c9; /* Change this to the color of your choice */
+}
+
+.upload-icon {
+  width: 14px;
+  height: 14px;
+}

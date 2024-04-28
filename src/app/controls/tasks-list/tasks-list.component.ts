@@ -19,6 +19,9 @@ import { RequestService } from '../../services/request.service';
 import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
 import { MemberService } from '../../services/member.service';
 import { CustomDatePipe } from '../../pipe/custom-date.pipe';
+import { FilesUploaded } from '../../models/filesUploaded';
+import { FileUploadedService } from '../../services/file-uploaded.service';
+
 @Component({
   selector: 'app-tasks-list',
   standalone: true,
@@ -29,7 +32,7 @@ import { CustomDatePipe } from '../../pipe/custom-date.pipe';
 export class TasksListComponent {
   visible1=false
   visible2=false
-
+  FileObject:FilesUploaded = new FilesUploaded()
   id:any
   tasks:any
   subTasks:any
@@ -38,24 +41,57 @@ export class TasksListComponent {
   count:any
   completed:any
   request:Request=new Request()
-  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private upload:MemberService){}
+  constructor(private taskService:TaskService, private loginService:LoginService,private subTaskService:SubtasksService,private toast:ToastService,private commentsService:CommentsService,private cookie:CookiesService, private requestService:RequestService,private upload:MemberService,private file:FileUploadedService){}
   pageSize = 4;
   pageNumber = 0;
-
+  uploaded=false
+  uploadedFile:any
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
+    this.uploadedFile = file;
+this.uploaded=true
+  }
 
-    this.upload.upload(file).subscribe(
+  uploadFile(){
+    this.upload.upload(this.uploadedFile).subscribe(
       (response:any) => {
         console.log( response.url);
-        this.comment.comment1 = response.url
+        this.FileObject.memberId =this.id
+        this.FileObject.name=response.name
+        this.FileObject.url=response.url
+        this.FileObject.taskId=this.taskId
+        this.insertFile()
       },
       (error) => {
         console.error('Error uploading file:', error);
 
       }
     );
+
+
+
   }
+
+  insertFile(){
+    this.file.uploadFile(this.FileObject).subscribe(
+      (data)=>{
+          this.uploaded=false
+          this.getTaskFiles(this.FileObject.taskId)
+      }
+    )
+  }
+
+  taskFiles:any
+
+  getTaskFiles(taskId:any){
+    this.file.getFilesByTaskId(taskId).subscribe(
+      (data)=>{
+        this.taskFiles=data
+      }
+    )
+  }
+
+
 
   get totalPages() {
     return Math.ceil(this.tasks.length / this.pageSize);
@@ -234,6 +270,7 @@ export class TasksListComponent {
     this.getSubTasks(id)
     this.getCompletedCount(id)
     this.getAllSubCount(id)
+    this.getTaskFiles(this.taskId)
 
     this.width=`style="width: ${this.getProgress(id)}%"`
   }

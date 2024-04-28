@@ -16,6 +16,7 @@ import { NotificationsHubService } from '../../services/notifications-hub.servic
 import { Pipe, PipeTransform } from '@angular/core';
 import { CustomDatePipe } from '../../pipe/custom-date.pipe';
 import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
+import { MemberService } from '../../services/member.service';
 @Component({
     selector: 'app-dashnav',
     standalone: true,
@@ -27,7 +28,7 @@ import { HubConnection, HubConnectionBuilder,LogLevel } from '@aspnet/signalr';
 
 export class DashnavComponent {
 
-  constructor(private userService:LoginService,private cookieService:CookiesService,private router: Router, private notificationService:NotificationsHubService,){}
+  constructor(private userService:LoginService,private cookieService:CookiesService,private router: Router, private notificationService:NotificationsHubService,private memberService:MemberService){}
 
 
   name:any
@@ -141,6 +142,19 @@ export class DashnavComponent {
         this.id= data.id;
         this.getNotification(data.id)
         this.getNotificationCount(data.id)
+        this.getMemberInfoById(data.id)
+
+      }
+    )
+
+  }
+
+  member:any
+  getMemberInfoById(id:any){
+    this.memberService.getMemberById(id).subscribe(
+      (data:any)=>{
+
+        this.member=data
 
       }
     )

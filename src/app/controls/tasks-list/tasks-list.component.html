@@ -96,34 +96,7 @@
 
           <form #form="ngForm" (submit)="form.reset()" class="mb-8">
             <div class="flex bg-gray-100 rounded-full border border-gray-100 leading-normal resize-none w-full h-10 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4">
-              <div class="fileUploadWrapper mr-2">
-                <label for="file">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
-                    <circle
-                      stroke-width="20"
-                      stroke="#6c6c6c"
-                      fill="none"
-                      r="158.5"
-                      cy="168.5"
-                      cx="168.5"
-                    ></circle>
-                    <path
-                      stroke-linecap="round"
-                      stroke-width="25"
-                      stroke="#6c6c6c"
-                      d="M167.759 79V259"
-                    ></path>
-                    <path
-                      stroke-linecap="round"
-                      stroke-width="25"
-                      stroke="#6c6c6c"
-                      d="M79 167.138H259"
-                    ></path>
-                  </svg>
-                  <span class="tooltip">Upload a file</span>
-                </label>
-                <input type="file" id="file" name="file" (change)="onFileSelected($event)" />
-              </div>
+
               <input type="text" class="bg-gray-100 w-full"
                       name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1">
 
@@ -196,7 +169,9 @@
     </div>
 
     <div class="flex flex-col max-h-40 overflow-auto mb-10 overflow-x-hidden">
-      <h3 class="font-bold text-lg mb-3 ml-2 px-2 sticky top-0 bg-white flex gap-3">Files <div class="fileUploadWrapper mr-2 mt-1">
+      <h3 class="font-bold text-lg mb-3 ml-2 px-2 sticky top-0 bg-white flex gap-3">Files
+        @if(!uploaded){
+          <div class="fileUploadWrapper mr-2 mt-1">
         <label for="file">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
             <circle
@@ -209,13 +184,13 @@
             ></circle>
             <path
               stroke-linecap="round"
-              stroke-width="25"
+              stroke-width="20"
               stroke="#6c6c6c"
               d="M167.759 79V259"
             ></path>
             <path
               stroke-linecap="round"
-              stroke-width="25"
+              stroke-width="20"
               stroke="#6c6c6c"
               d="M79 167.138H259"
             ></path>
@@ -223,17 +198,34 @@
 
         </label>
         <input type="file" id="file" name="file" (change)="onFileSelected($event)" />
-      </div> </h3>
+      </div>
+        }
+        @if(uploaded){
+
+          <div class="fileUploadWrapper ">
+            <label for="submit" class="upload-label flex items-center justify-center bg-gray-200 rounded-full p-2 hover:bg-gray-300 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="upload-icon h-6 w-6 text-gray-700">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+            </label>
+            <input type="button" id="submit" name="submit" (click)="uploadFile()" />
+          </div>
 
 
-      <div class="flex flex-col mb-8 gap-3.5 flex-1 px-4 mt-1" *ngIf="subTasks">
+
+
+        }
+         </h3>
+
+
+      <div class="flex flex-col mb-8 gap-3.5 flex-1 px-4 mt-1" *ngIf="taskFiles">
           <ul class="flex flex-col gap-3.5 w-full sm:max-w-md mx-auto">
-              <li class="w bg-gray-100 p-3 rounded-md" *ngFor="let sub of subTasks">
+              <li class="w   rounded-md" *ngFor="let sub of taskFiles">
                   <div class="flex justify-between items-center">
-                      <div class="mr-4">{{sub.name}}</div>
-                      <div>
-                          <input type="checkbox" class="form-checkbox h-5 w-5 text-primary focus:outline-none focus:ring-2 focus:ring-primary dark:text-primary" (click)="updateStatus(sub.id,sub.taskId)" [checked]="sub.status === 'Completed'"/>
+                      <div class="mr-4">
+                        <i class="fas fa-paperclip text-blue-500 mr-2"></i><a href="{{sub.url}}" download>{{sub.name}}</a>
                       </div>
+
                   </div>
               </li>
           </ul>
