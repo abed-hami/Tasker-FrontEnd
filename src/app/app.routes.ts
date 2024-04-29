@@ -24,14 +24,16 @@ import { TimelineComponent } from './project-controls/timeline/timeline.componen
 import { ProjectTasksComponent } from './project-controls/project-tasks/project-tasks.component';
 import { AnnouncementsComponent } from './project-controls/announcements/announcements.component';
 import { ProjectDashComponent } from './project-controls/project-dash/project-dash.component';
+import { ProjectDetailsComponent } from './project-controls/project-details/project-details.component';
+import { authGuard } from './guard/auth.guard';
 
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   {
-    path: 'dashboard', component: DashboardComponent, children: [
+    path: 'dashboard', component: DashboardComponent,canActivate:[authGuard], children: [
       { path: '', component: HomedashComponent },
       { path: 'calendar', component: CalendarComponent },
       {
@@ -56,6 +58,7 @@ export const routes: Routes = [
           {path:'projectTasks',component:ProjectTasksComponent},
           {path:'timeline',component:TimelineComponent},
           {path:'announcements',component:AnnouncementsComponent},
+          {path:'details',component:ProjectDetailsComponent},
         ] }
 
         ]

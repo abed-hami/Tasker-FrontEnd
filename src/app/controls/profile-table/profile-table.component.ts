@@ -109,7 +109,8 @@ export class ProfileTableComponent {
   }
 
   update(){
-    this.memberService.upload(this.profilePic).subscribe(
+    if(this.profilePic){
+      this.memberService.upload(this.profilePic).subscribe(
       (response:any) => {
 
         this.userObject.picture=response.url
@@ -120,6 +121,11 @@ export class ProfileTableComponent {
 
       }
     );
+    }
+    else{
+      this.updateUserInfo()
+    }
+
   }
 
   ngOnInit(){

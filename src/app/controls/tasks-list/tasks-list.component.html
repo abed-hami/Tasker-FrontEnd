@@ -97,7 +97,7 @@
           <form #form="ngForm" (submit)="form.reset()" class="mb-8">
             <div class="flex bg-gray-100 rounded-full border border-gray-100 leading-normal resize-none w-full h-10 py-2 px-3 font-medium text-base placeholder-gray-700 focus:outline-none focus:bg-white mb-4">
 
-              <input type="text" class="bg-gray-100 w-full"
+              <input type="text" class="bg-gray-100 w-full" autocomplete="off"
                       name="body" placeholder="Type Your Comment" required [(ngModel)]="comment.comment1">
 
                       <button id="sendButton" (click)="addComment()" >

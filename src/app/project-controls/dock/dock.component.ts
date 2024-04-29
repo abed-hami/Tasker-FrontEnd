@@ -25,6 +25,7 @@ export class DockComponent {
           { label: 'Team', icon: 'fa fa-group',routerLink:"members" },
           { label: 'Tasks', icon: 'fas fa-tasks',routerLink:"projectTasks" },
           { label: 'Announcements', icon: 'fa fa-bullhorn',routerLink:"announcements" },
+          { label: 'Details', icon: 'far fa-edit',routerLink:"details" },
       ];
 
       this.activeItem = this.items[0];

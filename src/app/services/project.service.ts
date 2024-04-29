@@ -14,8 +14,13 @@ export class ProjectService {
     return this.http.post("https://localhost:7183/api/Project",project)
   }
 
-  getUserProjects(userId:any){
-      return this.http.get("https://localhost:7183/api/Team/GetByMember/"+userId);
+  updateProject(project:any){
+    return this.http.put("https://localhost:7183/api/Project/"+project.id,project)
+  }
+
+
+  getUserProjects(userId:any,status:any){
+      return this.http.get("https://localhost:7183/api/Team/GetByMember/"+userId+"/"+status);
   }
 
   getProject(id:any){

@@ -131,7 +131,7 @@ this.uploaded=true
         this.getTasks()
       },
       (error)=>{
-        this.toast.showWarn("Project Budget Insufficient")
+        console.log(error)
       }
     )
   }
@@ -579,7 +579,7 @@ this.uploaded=true
   }
   uploaded=false
 
-  
+
 
   taskFiles:any
 
