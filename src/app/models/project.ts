@@ -1,4 +1,5 @@
 export class projects{
+    id=""
     name=""
     startDate=""
     endDate=""

@@ -23,7 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
     imports: [DialogModule, FormsModule, ToastrModule, DockComponent,CommonModule,RouterModule,DropdownModule]
 })
 export class ProjectsListComponent {
-  selectedCity={name:"All"};
+  selectedCity={name:"Pending"};
   invitations:any
   manager:any={
     projectId:0,
@@ -50,6 +50,7 @@ export class ProjectsListComponent {
 
   pageSize = 4;
   pageNumber = 0;
+  pageCompletedNumber = 0;
   options: any
   get totalPages() {
     return Math.ceil(this.filteredProjects.length / this.pageSize);
@@ -65,6 +66,16 @@ export class ProjectsListComponent {
     }
 
     return this.projects.filter((project: any) =>
+      project.projectName.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
+
+  get filteredCompletedProjects() {
+    if (!this.searchTerm) {
+      return this.completed;
+    }
+
+    return this.completed.filter((project: any) =>
       project.projectName.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
@@ -86,6 +97,14 @@ export class ProjectsListComponent {
   get paginatedInvitedProjects() {
     const start = this.pageNumber * this.pageSize;
     return (this.invitations || []).slice(start, start + this.pageSize);
+  }
+
+  get totalCompletedPages() {
+    return Math.ceil(this.completed.length / this.pageSize);
+  }
+  get paginatedCompletedProjects() {
+    const start = this.pageCompletedNumber * this.pageSize;
+    return (this.filteredCompletedProjects || []).slice(start, start + this.pageSize);
   }
 
   goToPage2(page: number) {
@@ -116,9 +135,9 @@ export class ProjectsListComponent {
     this.projectService.acceptInvitation(this.teamId).subscribe(
       (data)=>{
         this.toastr.showSuccess("Project Invitation Accepted")
-        this.selectedCity.name='All'
+        this.selectedCity.name='Pending'
         this.visible2=false
-        this.getProjectByMember(this.cookie.getCookieId())
+        this.getProjectByMember(this.cookie.getCookieId(),"pending")
       }
     )
   }
@@ -149,18 +168,29 @@ export class ProjectsListComponent {
     showDialog() {
         this.visible = true;
     }
+
+    getColor(status:any){
+      if(status=="completed"){
+        return "green"
+      }
+      else if(status=="pending"){
+        return "blue"
+      }
+      return "gray"
+    }
     route:any
 
     ngOnInit(){
 
-     
+
       this.getUserInfo()
 
       this.getInvitations(this.cookie.getCookieId())
 
       this.options = [
 
-        { name: 'All' },
+        { name: 'Pending' },
+        { name: 'Completed' },
         { name: 'Invited' },
 
 
@@ -193,7 +223,8 @@ export class ProjectsListComponent {
       this.Loginservice.getUserInfo().subscribe(
         (data:any)=>{
           this.id=data.id
-          this.getProjectByMember(this.id)
+          this.getProjectByMember(this.id,"pending")
+          this.getProjectByMember(this.id,"completed")
           this.email=data.email
           this.project.memberId=data.id
         },
@@ -215,11 +246,22 @@ export class ProjectsListComponent {
       )
     }
 
-    getProjectByMember(id:any){
-      this.projectService.getUserProjects(id).subscribe(
-        (data)=>{
-          this.projects=data
+    completed:any
 
+    getProjectByMember(id:any,status:any){
+      this.projectService.getUserProjects(id,status).subscribe(
+        (data)=>{
+          if(status=="pending"){
+            this.projects=data
+          }
+          if(status=="completed"){
+            this.completed=data
+          }
+
+
+        },
+        (error)=>{
+          console.log(error)
         }
 
       )
