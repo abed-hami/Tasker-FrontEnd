@@ -45,7 +45,7 @@ export const routes: Routes = [
       {path:'request',component:RequestsComponent,
         children:[{path:'',component:RequestsListComponent}]
     },
-      { path: 'todo', component: TodoComponent },
+      { path: 'kanban', component: TodoComponent },
       { path: 'profile', component: ProfileComponent },
       {
         path: 'projects', component: ProjectsComponent,
