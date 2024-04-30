@@ -36,10 +36,12 @@ export class CalendarComponent {
       (data: any) => {
         this.tasks = data.map((task: { taskName: any; taskStart: any; taskDeadline: any; taskDescription: any; taskPriority: any; }) => ({
           title: task.taskName,
-          
+
           date: this.formatDate(task.taskDeadline),
           description: task.taskDescription,
           priority: task.taskPriority,
+          color: this.getColorByPriority(task.taskPriority),
+
 
         }));
         this.updateCalendarOptions();
@@ -61,12 +63,12 @@ export class CalendarComponent {
 
   getColorByPriority(priority: string): string {
     switch (priority) {
-      case 'high' :
-        return 'red';
-      case 'medium' :
-        return 'yellow';
-      default:
-        return 'green';
+      case 'high':
+    return '#CC0000';
+  case 'medium':
+    return '#FFA500';
+  default:
+    return '#008000';
     }
   }
 
